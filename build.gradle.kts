@@ -56,6 +56,20 @@ val compileCss by tasks.registering(Exec::class) {
     commandLine = listOf("pnpm", "run", "build:css")
 }
 
+val jsAssetsSpec: CopySpec = copySpec {
+    from(
+        files(
+            "node_modules/htmx.org/dist/htmx.min.js",
+            "node_modules/flowbite/dist/flowbite.min.js"
+        )
+    )
+}
+
+val copyJsAssets by tasks.registering(Copy::class) {
+    into(layout.projectDirectory.dir("src/main/resources/static"))
+    with(jsAssetsSpec)
+}
+
 tasks.named<ProcessResources>("processResources") {
-    dependsOn(compileCss)
+    dependsOn(compileCss, copyJsAssets)
 }

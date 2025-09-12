@@ -14,6 +14,9 @@ importers:
       flowbite:
         specifier: ^3.1.2
         version: 3.1.2
+      htmx.org:
+        specifier: ^2.0.7
+        version: 2.0.7
       tailwindcss:
         specifier: ^4.1.13
         version: 4.1.13
@@ -288,6 +291,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  htmx.org@2.0.7:
+    resolution: {integrity: sha512-YiJqF3U5KyO28VC5mPfehKJPF+n1Gni+cupK+D69TF0nm7wY6AXn3a4mPWIikfAXtl1u1F1+ZhSCS7KT8pVmqA==}
 
   is-core-module@2.16.1:
     resolution: {integrity: sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==}
@@ -695,6 +701,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  htmx.org@2.0.7: {}
 
   is-core-module@2.16.1:
     dependencies:
