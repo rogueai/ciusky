@@ -1,8 +1,7 @@
 package com.rogueai.collection.api;
 
-import com.rogueai.collection.db.dto.PersonEntity;
-import com.rogueai.collection.service.UserService;
-import com.rogueai.collection.service.model.Person;
+import com.rogueai.collection.service.CiuskyService;
+import com.rogueai.collection.service.model.Ciusky;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,41 +11,22 @@ import java.util.List;
 @RequestMapping(value = "/v1/api", produces = "application/json")
 public class TestApi {
 
-    private final UserService userService;
+    private final CiuskyService ciuskyService;
 
-    public TestApi(UserService userService) {
-        this.userService = userService;
+    public TestApi(CiuskyService ciuskyService) {
+        this.ciuskyService = ciuskyService;
     }
 
     @GetMapping(value = "/person")
     @ResponseBody
-    public List<Person> getAll() {
-        return userService.getAll();
+    public List<Ciusky> getAll() {
+        return ciuskyService.getAll();
     }
 
     @GetMapping(value = "/person/{id}")
     @ResponseBody
-    public Person getPerson(@PathVariable long id) {
-        return userService.get(id);
-    }
-
-    @PostMapping(value = "/person")
-    @ResponseBody
-    public int insert(@RequestBody PersonEntity person) {
-        return userService.insert(person);
-    }
-
-    @PutMapping(value = "/person")
-    @ResponseBody
-    public int update(@RequestBody PersonEntity person) {
-        return userService.update(person);
-    }
-
-    @DeleteMapping(value = "/person/{id}")
-    @ResponseBody
-    public boolean delete(@PathVariable long id) {
-        return userService.delete(id);
-
+    public Ciusky getPerson(@PathVariable long id) {
+        return ciuskyService.get(id);
     }
 
 }

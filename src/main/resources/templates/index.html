@@ -243,8 +243,20 @@
 </header>
 
 <ul>
-    <li th:each="item : ${list}" th:text="${item}"></li>
+    <li th:each="item : ${listTag}" th:text="${item}"></li>
 </ul>
+<ul>
+    <li th:each="item : ${listCiusky}">
+        <p th:text="${item.id}"></p>
+        <p th:text="${item.title}"></p>
+        <p th:text="${item.description}"></p>
+        <p th:text="${item.quality}"></p>
+        <p th:text="${item.paidPrice}"></p>
+        <p th:text="${item.marketPrice}"></p>
+        <p th:text="${item.tags}"></p>
+    </li>
+</ul>
+
 
 </body>
 </html>
