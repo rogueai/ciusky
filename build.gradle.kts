@@ -10,7 +10,7 @@ plugins {
 
 group = "com.rogueai"
 version = "0.0.1-SNAPSHOT"
-description = "collection"
+description = "ciusky"
 
 java {
     toolchain {
@@ -39,8 +39,23 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // auto reload spring boot classes and thymleaf templates
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// Task to run Tailwind CSS build
+val compileCss by tasks.registering(Exec::class) {
+    group = "build"
+    description = "Compile Tailwind CSS using npm script"
+
+    workingDir = file(".")
+    commandLine = listOf("pnpm", "run", "build:css")
+}
+
+tasks.named<ProcessResources>("processResources") {
+    dependsOn(compileCss)
 }
