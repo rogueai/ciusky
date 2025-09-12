@@ -3,6 +3,9 @@ plugins {
     war
     id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
+    kotlin("jvm") version "2.2.20"
+    kotlin("plugin.spring") version "2.2.20"
+    kotlin("kapt") version "2.2.20"
 }
 
 group = "com.rogueai"
@@ -30,7 +33,7 @@ dependencies {
     implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5")
     implementation("org.mapstruct:mapstruct:1.6.3")
-    implementation("org.mapstruct:mapstruct-processor:1.6.3")
+    kapt("org.mapstruct:mapstruct-processor:1.6.3")
     runtimeOnly("com.h2database:h2")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
