@@ -1,45 +1,48 @@
 package com.rogueai.collection.api;
 
-import com.rogueai.collection.db.dto.PersonDto;
+import com.rogueai.collection.db.dto.PersonEntity;
 import com.rogueai.collection.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.rogueai.collection.service.model.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/v1/api")
+@RequestMapping(value = "/v1/api", produces = "application/json")
 public class TestApi {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @GetMapping(value = "/person", produces = "application/json")
+    public TestApi(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping(value = "/person")
     @ResponseBody
-    public List<PersonDto> getAll() {
+    public List<Person> getAll() {
         return userService.getAll();
     }
 
-    @GetMapping(value = "/person/{id}", produces = "application/json")
+    @GetMapping(value = "/person/{id}")
     @ResponseBody
-    public PersonDto getPerson(@PathVariable long id) {
+    public Person getPerson(@PathVariable long id) {
         return userService.get(id);
     }
 
-    @PostMapping(value = "/person", produces = "application/json")
+    @PostMapping(value = "/person")
     @ResponseBody
-    public int insert(@RequestBody PersonDto person) {
+    public int insert(@RequestBody PersonEntity person) {
         return userService.insert(person);
     }
 
-    @PutMapping(value = "/person", produces = "application/json")
+    @PutMapping(value = "/person")
     @ResponseBody
-    public int update(@RequestBody PersonDto person) {
+    public int update(@RequestBody PersonEntity person) {
         return userService.update(person);
     }
 
-    @DeleteMapping(value = "/person/{id}", produces = "application/json")
+    @DeleteMapping(value = "/person/{id}")
     @ResponseBody
     public boolean delete(@PathVariable long id) {
         return userService.delete(id);

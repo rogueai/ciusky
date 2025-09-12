@@ -11,8 +11,11 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 @Configuration
 public class AppConfig {
 
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private final ResourceLoader resourceLoader;
+
+    public AppConfig(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
     @Bean
     public DriverManagerDataSource dataSource() {
@@ -46,7 +49,7 @@ public class AppConfig {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource());
         dataSourceInitializer.setDatabasePopulator(databasePopulator());
-        dataSourceInitializer.setEnabled(true);
+        dataSourceInitializer.setEnabled(false);
         dataSourceInitializer.setCheckInitializationQuery("SELECT INIT_DATE FROM INFO");
         return dataSourceInitializer;
     }

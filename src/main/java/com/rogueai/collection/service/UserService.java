@@ -1,34 +1,48 @@
 package com.rogueai.collection.service;
 
-import com.rogueai.collection.db.dto.PersonDto;
-import com.rogueai.collection.db.mapper.IPersonMapper;
+import com.rogueai.collection.db.dto.PersonEntity;
+import com.rogueai.collection.db.sql.IPersonSql;
+import com.rogueai.collection.service.mapper.UserMapper;
+import com.rogueai.collection.service.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private IPersonMapper personMapper;
+    private final UserMapper userMapper;
 
-    public List<PersonDto> getAll() {
-        return personMapper.list();
+    private final IPersonSql personMapper;
+
+    public UserService(UserMapper userMapper, IPersonSql personMapper) {
+        this.userMapper = userMapper;
+        this.personMapper = personMapper;
     }
 
-    public PersonDto get(Long id) {
-        return personMapper.getPerson(id);
+    public List<Person> getAll() {
+        List<PersonEntity> list = personMapper.list();
+        return userMapper.toPersonList(list);
     }
 
-    public int insert(PersonDto dto) {
+    public Person get(Long id) {
+        PersonEntity entity = personMapper.getPerson(id);
+        return userMapper.toPerson(entity);
+    }
+
+    @Transactional
+    public int insert(PersonEntity dto) {
         return personMapper.insert(dto);
     }
 
-    public int update(PersonDto dto) {
+    @Transactional
+    public int update(PersonEntity dto) {
         return personMapper.update(dto);
     }
 
+    @Transactional
     public boolean delete(Long id) {
         int rows = personMapper.delete(id);
         return rows != 0;

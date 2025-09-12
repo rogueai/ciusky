@@ -1,6 +1,6 @@
 package com.rogueai.collection.db.dto;
 
-public class PersonDto {
+public class PersonEntity {
 
     public long id;
 
