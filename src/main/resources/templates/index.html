@@ -9,13 +9,13 @@
     <link th:href="@{/main.css}" rel="stylesheet"/>
     <link th:href="@{/custom.css}" rel="stylesheet"/>
 
-    <script th:src="@{/flowbite.min.js}"></script>
+    <!--    <script th:src="@{/flowbite.min.js}"></script>-->
     <script th:src="@{/htmx.min.js}"></script>
     <script th:src="@{/main.js}"></script>
 
     <script>
         htmx.onLoad(function () {
-            initFlowbite();
+            // initFlowbite();
         })
     </script>
 </head>
@@ -37,9 +37,9 @@
 </header>
 <main class="p-6">
 
-<!--    <ul>-->
-<!--        <li th:each="item : ${listTag}" th:text="${item}"></li>-->
-<!--    </ul>-->
+    <!--    <ul>-->
+    <!--        <li th:each="item : ${listTag}" th:text="${item}"></li>-->
+    <!--    </ul>-->
 
     <div class="relative overflow-x-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -55,12 +55,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${listCiusky}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+            <tr th:each="item : ${listCiusky}"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                 <td class="px-6 py-4" th:text="${item.id}"></td>
                 <td class="px-6 py-4" th:text="${item.title}"></td>
                 <td class="px-6 py-4" th:text="${item.description}"></td>
-                <td class="px-6 py-4" th:text="${item.quality}"></td>
-                <td class="px-6 py-4" th:text="${item.paidPrice}"></td>
+                <td class="px-6 py-4">
+                    <div th:replace="components/rating.html :: rating(value=${item.quality})"></div>
+                </td>
+                <td class="px-6 py-4" th:text="${item.paidPrice}">
+                </td>
                 <td class="px-6 py-4" th:text="${item.marketPrice}"></td>
                 <td class="px-6 py-4" th:text="${item.tags}"></td>
             </tr>
