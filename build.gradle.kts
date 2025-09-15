@@ -1,4 +1,5 @@
 import com.github.gradle.node.pnpm.task.PnpmInstallTask
+import com.github.gradle.node.pnpm.task.PnpmTask
 
 plugins {
     java
@@ -56,12 +57,8 @@ tasks.withType<Test> {
 
 val pnpmInstall = tasks.withType<PnpmInstallTask>()
 
-// Task to run Tailwind CSS build
-val compileCss by tasks.registering(Exec::class) {
-    group = "build"
-    description = "Compile Tailwind CSS using npm script"
-    workingDir = file(".")
-    commandLine = listOf("pnpm", "run", "build:css")
+val compileCss by tasks.registering(PnpmTask::class) {
+    args = listOf("run", "build:css")
     dependsOn(pnpmInstall)
 }
 
