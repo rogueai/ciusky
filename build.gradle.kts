@@ -62,19 +62,17 @@ val compileCss by tasks.registering(PnpmTask::class) {
     dependsOn(pnpmInstall)
 }
 
-val jsAssetsSpec: CopySpec = copySpec {
-    from(
-        files(
-            "node_modules/htmx.org/dist/htmx.min.js",
-            "node_modules/flowbite/dist/flowbite.min.js"
-        )
-    )
-}
-
 val copyJsAssets by tasks.registering(Copy::class) {
     dependsOn(pnpmInstall)
     into(layout.projectDirectory.dir("src/main/resources/static"))
-    with(jsAssetsSpec)
+    with(copySpec {
+        from(
+            files(
+                "node_modules/htmx.org/dist/htmx.min.js",
+                "node_modules/flowbite/dist/flowbite.min.js"
+            )
+        )
+    })
 }
 
 tasks.named<ProcessResources>("processResources") {
