@@ -12,7 +12,7 @@ plugins {
     kotlin("kapt") version "2.2.20"
 }
 
-group = "com.rogueai"
+group = "dev.rogueai"
 version = "0.0.1-SNAPSHOT"
 description = "ciusky"
 
