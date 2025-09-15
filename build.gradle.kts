@@ -1,8 +1,11 @@
+import com.github.gradle.node.pnpm.task.PnpmInstallTask
+
 plugins {
     java
     war
     id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
+    id("com.github.node-gradle.node") version "7.1.0"
     kotlin("jvm") version "2.2.20"
     kotlin("plugin.spring") version "2.2.20"
     kotlin("kapt") version "2.2.20"
@@ -16,6 +19,10 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+node {
+    download = true
 }
 
 tasks.withType<JavaCompile> {
@@ -47,13 +54,15 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+val pnpmInstall = tasks.withType<PnpmInstallTask>()
+
 // Task to run Tailwind CSS build
 val compileCss by tasks.registering(Exec::class) {
     group = "build"
     description = "Compile Tailwind CSS using npm script"
-
     workingDir = file(".")
     commandLine = listOf("pnpm", "run", "build:css")
+    dependsOn(pnpmInstall)
 }
 
 val jsAssetsSpec: CopySpec = copySpec {
@@ -66,6 +75,7 @@ val jsAssetsSpec: CopySpec = copySpec {
 }
 
 val copyJsAssets by tasks.registering(Copy::class) {
+    dependsOn(pnpmInstall)
     into(layout.projectDirectory.dir("src/main/resources/static"))
     with(jsAssetsSpec)
 }
