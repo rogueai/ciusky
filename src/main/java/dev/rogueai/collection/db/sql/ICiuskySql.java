@@ -26,7 +26,8 @@ public interface ICiuskySql {
                     many = @Many(select = "getTags", fetchType = FetchType.DEFAULT)) })
     CiuskyEntity getPerson(Long id);
 
-    @Insert("INSERT INTO CIUSKY (TITLE, DESCRIPTION, TYPE_OPTION, QUALITY, PAID_PRICE, MARKET_PRICE) " + "VALUES (#{title}, #{description}, #{typeOption}, #{quality}, #{paidPrice}, #{marketPrice})")
+    @Insert("INSERT INTO CIUSKY (TITLE, DESCRIPTION, TYPE_OPTION, QUALITY, PAID_PRICE, MARKET_PRICE) "
+            + "VALUES (#{title}, #{description}, #{type.id}, #{quality}, #{paidPrice}, #{marketPrice})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int insert(CiuskyEntity person);
 
