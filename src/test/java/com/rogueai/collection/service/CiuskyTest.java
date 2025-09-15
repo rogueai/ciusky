@@ -24,34 +24,21 @@ import java.util.StringTokenizer;
 @ContextConfiguration(classes = { TestConfig.class, DbConfig.class})
 public class CiuskyTest {
 
-    @Value("classpath:/ps1-games-list.txt")
-    Resource resource;
-
-    @Autowired
-    private DriverManagerDataSource dataSource;
-
     @Autowired
     private CiuskyService ciuskyService;
 
     @Test
     void insert() throws IOException {
 
-        Assert.isTrue(resource.exists(), "File not found.");
-
-        List<String> lines =  Files.readAllLines(resource.getFile().toPath());
-
         List<Ciusky> list = new ArrayList<>();
-        for(String line : lines) {
-            StringTokenizer tokenizer = new StringTokenizer(line, "\t");
-
+        for (int i = 0; i < 10000; i++) {
             Ciusky ciusky = new Ciusky();
-            ciusky.title = tokenizer.nextToken();
+            ciusky.title = Randomizer.randomString(200);
             ciusky.typeOption = 4;
             ciusky.quality = Randomizer.random(0, 1, 2, 3, 4, 5);
             ciusky.paidPrice = Randomizer.random();
             ciusky.marketPrice = Randomizer.random();
             list.add(ciusky);
-            System.out.println(ciusky);
         }
         ciuskyService.saveAll(list);
 
