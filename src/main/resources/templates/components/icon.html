@@ -1,0 +1,6 @@
+<!-- fragments/icon.html -->
+<svg th:fragment="icon(name, classes)"
+     class="w-4 h-4 ms-1"
+     th:classappend="${classes}">
+    <use th:href="@{'/images/icons.svg#' + ${name}}"></use>
+</svg>
