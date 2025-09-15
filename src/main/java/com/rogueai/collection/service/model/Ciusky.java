@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Ciusky {
 
-    public long id;
+    public Long id;
 
     public String title;
 

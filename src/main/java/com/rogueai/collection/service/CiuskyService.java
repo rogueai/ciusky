@@ -31,4 +31,19 @@ public class CiuskyService {
         return objectMapper.toCiusky(entity);
     }
 
+
+    public Ciusky save(Ciusky model) {
+        CiuskyEntity entity = objectMapper.fromCiusky(model);
+        ciuskySql.insert(entity);
+        return objectMapper.toCiusky(entity);
+    }
+
+    @Transactional
+    public void saveAll(List<Ciusky> models) {
+        for (Ciusky model : models) {
+            CiuskyEntity entity = objectMapper.fromCiusky(model);
+            ciuskySql.insert(entity);
+        }
+    }
+
 }

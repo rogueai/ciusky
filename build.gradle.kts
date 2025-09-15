@@ -36,6 +36,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.apache.commons:commons-lang3:3.18.0")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1")
