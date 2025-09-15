@@ -1,7 +1,9 @@
 package dev.rogueai.collection.service.mapper;
 
 import dev.rogueai.collection.db.dto.CiuskyEntity;
+import dev.rogueai.collection.db.dto.TagEntity;
 import dev.rogueai.collection.service.model.Ciusky;
+import dev.rogueai.collection.service.model.Tag;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -18,5 +20,9 @@ public interface ObjectMapper {
     List<Ciusky> toCiuskyList(List<CiuskyEntity> entityList);
 
     List<CiuskyEntity> fromCiuskyList(List<Ciusky> modelList);
+
+    Tag toTag(TagEntity entity);
+
+    TagEntity fromTag(Tag model);
 
 }

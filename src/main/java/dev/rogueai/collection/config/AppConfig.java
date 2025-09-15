@@ -1,19 +1,33 @@
 package dev.rogueai.collection.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+import java.io.File;
+import java.nio.file.Path;
+
 @Configuration
 public class AppConfig {
 
+    @Value("${ciusky.data}")
+    private String ciuskyData;
+
     private final ResourceLoader resourceLoader;
+
 
     public AppConfig(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
+    }
+
+    @Bean
+    public Path imageDir() {
+        return Path.of(ciuskyData);
     }
 
     @Bean
@@ -21,7 +35,7 @@ public class AppConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
         // This create a new database in the home directory called ~/collections so it is persisted between runs
-        dataSource.setUrl("jdbc:h2:~/collections;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO");
+        dataSource.setUrl("jdbc:h2:" + ciuskyData + "/collections;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO");
         return dataSource;
     }
 
@@ -36,7 +50,7 @@ public class AppConfig {
         // The first time the db is created every drops should fail.
         resourceDatabasePopulator.setIgnoreFailedDrops(true);
         // The order of the scripts is important.
-        String[] scripts = new String[] { "classpath:/scripts/drop.sql", "classpath:/scripts/schema.sql", "classpath:/scripts/basic.sql", "classpath:/scripts/data.sql" };
+        String[] scripts = new String[] { "classpath:/scripts/drop.sql", "classpath:/scripts/schema.sql", "classpath:/scripts/basic.sql" };
         for (String script : scripts) {
             resourceDatabasePopulator.addScript(resourceLoader.getResource(script));
         }

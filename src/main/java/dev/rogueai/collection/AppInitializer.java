@@ -1,0 +1,71 @@
+package dev.rogueai.collection;
+
+import dev.rogueai.collection.service.CiuskyService;
+import dev.rogueai.collection.service.ImageService;
+import dev.rogueai.collection.service.Randomizer;
+import dev.rogueai.collection.service.model.Ciusky;
+import dev.rogueai.collection.service.model.CiuskyType;
+import dev.rogueai.collection.service.model.Tag;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Component
+@DependsOn(value = "dataSourceInitializer")
+public class AppInitializer {
+
+    @Autowired
+    private CiuskyService ciuskyService;
+
+    @Autowired
+    private ImageService imageService;
+
+    @PostConstruct
+    public void init() throws IOException {
+        List<Ciusky> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+
+            Ciusky ciusky = new Ciusky();
+            ciusky.title = Randomizer.string(10);
+            ciusky.description = Randomizer.string(50);
+            ciusky.type = new CiuskyType(4L);
+            ciusky.quality = Randomizer.any(0, 1, 2, 3, 4, 5);
+            ciusky.purchasePlace = Randomizer.string(10);
+            ciusky.purchaseDate = Randomizer.date();
+            ciusky.paidPrice = Randomizer.bigDecimal();
+            ciusky.marketPrice = Randomizer.bigDecimal();
+            ciusky.notes = Randomizer.string(10);
+
+            ciusky.tags = new ArrayList<>();
+            ciusky.tags.add(new Tag( //
+                    "console", //
+                    Randomizer.any("ps1", "ps2", "ps2", "ita", "eng", "pal")));
+            ciusky.tags.add(new Tag( //
+                    "region",
+                    Randomizer.any("ps1", "ps2", "ps2", "ita", "eng", "pal")));
+            ciusky.tags.add(new Tag( //
+                    "language",
+                    Randomizer.any("ps1", "ps2", "ps2", "ita", "eng", "pal")));
+            list.add(ciusky);
+
+        }
+
+        ciuskyService.saveAll(list);
+
+        for (Ciusky ciusky : list) {
+            for (int i = 0; i <= Randomizer.any(0, 1, 2, 3, 4); i++) {
+                String name = Randomizer.string(10) + ".png";
+                byte[] image = Randomizer.image(100, 100);
+                imageService.addResource(ciusky.id, name, image);
+            }
+        }
+
+    }
+}

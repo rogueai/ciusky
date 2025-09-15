@@ -28,4 +28,6 @@ public class Ciusky {
 
     public List<Tag> tags;
 
+    public List<String> uuidImages;
+
 }
