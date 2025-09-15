@@ -45,31 +45,48 @@
     <!--    </ul>-->
 
     <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="csk-table">
+            <thead>
             <tr>
-                <th scope="col" class="px-6 py-3">ID</th>
-                <th scope="col" class="px-6 py-3">Title</th>
-                <th scope="col" class="px-6 py-3">Description</th>
-                <th scope="col" class="px-6 py-3">Quality</th>
-                <th scope="col" class="px-6 py-3">Paid</th>
-                <th scope="col" class="px-6 py-3">Value</th>
-                <th scope="col" class="px-6 py-3">Tags</th>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Quality</th>
+                <th scope="col">Paid</th>
+                <th scope="col">Value</th>
+                <th scope="col">Tags</th>
+                <th scope="col">Images</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${listCiusky}"
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <td class="px-6 py-4" th:text="${item.id}"></td>
-                <td class="px-6 py-4" th:text="${item.title}"></td>
-                <td class="px-6 py-4" th:text="${item.description}"></td>
-                <td class="px-6 py-4">
-                    <div th:replace="components/rating.html :: rating(value=${item.quality})"></div>
+            <tr th:each="item : ${listCiusky}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.title}"></td>
+                <td th:text="${item.description}"></td>
+                <td>
+                    <div th:replace="~{components/rating.html :: rating(value=${item.quality})}"></div>
                 </td>
-                <td class="px-6 py-4" th:text="${item.paidPrice}">
+                <td th:text="${item.paidPrice}">
                 </td>
-                <td class="px-6 py-4" th:text="${item.marketPrice}"></td>
-                <td class="px-6 py-4" th:text="${item.tags}"></td>
+                <td th:text="${item.marketPrice}"></td>
+                <td th:text="${item.tags}"></td>
+<!--                <td>-->
+<!--                    <div class="flex -space-x-3">-->
+<!--                        <img th:src="@{'/images/image-4@2x.jpg'}" alt="u1" class="z-50 w-10 h-10 rounded-sm ring-2 ring-gray-300 dark:ring-gray-500" />-->
+<!--                        <img th:src="@{'/images/image-4@2x.jpg'}" alt="u2" class="z-40 w-10 h-10 rounded-sm ring-2 ring-gray-300 dark:ring-gray-500" />-->
+<!--                        <img th:src="@{'/images/image-4@2x.jpg'}" alt="u3" class="z-30 w-10 h-10 rounded-sm ring-2 ring-gray-300 dark:ring-gray-500" />-->
+<!--                        &lt;!&ndash; last item could be a '+N' badge &ndash;&gt;-->
+<!--                        <div class="z-50 w-10 h-10 rounded-sm bg-gray-300 dark:hover:bg-gray-500 flex items-center justify-center text-sm font-medium ring-2 ring-gray-300 dark:ring-gray-500">+3</div>-->
+<!--                    </div>-->
+<!--                </td>-->
+                <td>
+                    <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
+                        <img class="w-10 h-10 rounded-sm" alt="Thumbnail" th:src="@{'/images/image-4@2x.jpg'}" />
+                        <img class="w-10 h-10 rounded-sm" alt="Thumbnail" th:src="@{'/images/image-4@2x.jpg'}" />
+                        <img class="w-10 h-10 rounded-sm" alt="Thumbnail" th:src="@{'/images/image-4@2x.jpg'}" />
+                        <div class="w-10 h-10 rounded-sm bg-gray-200 flex items-center justify-center text-sm font-medium">+3</div>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
