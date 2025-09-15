@@ -4,6 +4,7 @@ import com.rogueai.collection.Randomizer;
 import com.rogueai.collection.TestConfig;
 import com.rogueai.collection.db.DbConfig;
 import com.rogueai.collection.service.model.Ciusky;
+import com.rogueai.collection.service.model.CiuskyType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +35,7 @@ public class CiuskyTest {
         for (int i = 0; i < 10000; i++) {
             Ciusky ciusky = new Ciusky();
             ciusky.title = Randomizer.randomString(200);
-            ciusky.typeOption = 4;
+            ciusky.type = new CiuskyType(4L);
             ciusky.quality = Randomizer.random(0, 1, 2, 3, 4, 5);
             ciusky.paidPrice = Randomizer.random();
             ciusky.marketPrice = Randomizer.random();

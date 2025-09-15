@@ -1,8 +1,7 @@
 package com.rogueai.collection.service.model;
 
-import com.rogueai.collection.db.dto.TagEntity;
-
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public class Ciusky {
@@ -13,18 +12,20 @@ public class Ciusky {
 
     public String description;
 
-    public long typeOption;
+    public CiuskyType type;
 
     public int quality;
+
+    public String purchasePlace;
+
+    public Date purchaseDate;
 
     public BigDecimal paidPrice;
 
     public BigDecimal marketPrice;
 
+    public String notes;
+
     public List<Tag> tags;
 
-    @Override
-    public String toString() {
-        return "Ciusky{" + "id=" + id + ", title='" + title + '\'' + ", description='" + description + '\'' + ", typeOption=" + typeOption + ", quality=" + quality + ", paidPrice=" + paidPrice + ", marketPrice=" + marketPrice + ", tags=" + tags + '}';
-    }
 }

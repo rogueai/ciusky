@@ -2,8 +2,7 @@ package com.rogueai.collection.db.dto;
 
 public class TagEntity {
 
-    public long id;
+    public String key;
 
-    public String tag;
-
+    public String value;
 }

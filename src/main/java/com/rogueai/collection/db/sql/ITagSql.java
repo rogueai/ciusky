@@ -1,13 +1,13 @@
 package com.rogueai.collection.db.sql;
 
 
-import com.rogueai.collection.db.dto.TagEntity;
+
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 public interface ITagSql {
-
+    /*
     @Select("SELECT * FROM TAG_OPTION")
     List<TagEntity> all();
 
@@ -26,5 +26,6 @@ public interface ITagSql {
 
     @Delete("DELETE TAG_OPTION WHERE ID = #{id}")
     int delete(Long id);
+    */
 
 }

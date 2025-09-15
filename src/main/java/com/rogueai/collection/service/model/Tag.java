@@ -2,12 +2,12 @@ package com.rogueai.collection.service.model;
 
 public class Tag {
 
-    public long id;
+    public String key;
 
-    public String tag;
+    public String value;
 
     @Override
     public String toString() {
-        return "Tag{" + "id=" + id + ", tag='" + tag + '\'' + '}';
+        return "Tag{" + "key='" + key + '\'' + ", value='" + value + '\'' + '}';
     }
 }

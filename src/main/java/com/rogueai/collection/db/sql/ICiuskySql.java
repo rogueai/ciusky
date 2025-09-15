@@ -2,6 +2,7 @@ package com.rogueai.collection.db.sql;
 
 import com.rogueai.collection.db.dto.CiuskyEntity;
 import com.rogueai.collection.db.dto.TagEntity;
+import com.rogueai.collection.db.dto.CiuskyTypeEntity;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
@@ -11,8 +12,10 @@ public interface ICiuskySql {
 
     @Select("SELECT * FROM CIUSKY")
     @Results(value = { //
-            @Result(property = "id", column = "id"), //
-            @Result(property = "tags", javaType = List.class, column = "id", //
+            @Result(property = "id", column = "ID"), //
+            @Result(property = "type", column = "TYPE_OPTION", //
+                    one = @One(select = "getType", fetchType = FetchType.DEFAULT)), //
+            @Result(property = "tags", javaType = List.class, column = "ID", //
                     many = @Many(select = "getTags", fetchType = FetchType.DEFAULT)) })
     List<CiuskyEntity> list();
 
@@ -30,7 +33,12 @@ public interface ICiuskySql {
     @Delete("DELETE CIUSKY WHERE ID = #{id}")
     int delete(Long id);
 
-    @Select("SELECT opt.* from TAG_OPTION opt INNER JOIN CIUSKY_TAG ct ON opt.ID = ct.TAG_OPTION WHERE ct.ID = #{id}")
+    @Select("SELECT ID, DESCR FROM TYPE_OPTION WHERE ID = #{id}")
+    List<CiuskyTypeEntity> getType(Long id);
+
+    @Select("SELECT `KEY`, `VALUE` FROM CIUSKY_TAG WHERE ID = #{id}")
     List<TagEntity> getTags(Long id);
+
+
 
 }

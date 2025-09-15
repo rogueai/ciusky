@@ -51,6 +51,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Type</th>
                 <th scope="col">Quality</th>
                 <th scope="col">Paid</th>
                 <th scope="col">Value</th>
@@ -63,6 +64,7 @@
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.title}"></td>
                 <td th:text="${item.description}"></td>
+                <td th:text="${item.type.descr}"></td>
                 <td>
                     <div th:replace="~{components/rating.html :: rating(value=${item.quality})}"></div>
                 </td>
