@@ -71,7 +71,14 @@
                 <td th:text="${item.paidPrice}">
                 </td>
                 <td th:text="${item.marketPrice}"></td>
-                <td th:text="${item.tags}"></td>
+                <td>
+                    <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
+                        <span th:each="tag : ${item.tags}"
+                              th:with="tagColor=${@colors.getColor(tag.key)}"
+                              th:class="'csk-tag-'+ ${tagColor}"
+                              th:text="|${tag.key}: ${tag.value}|"></span>
+                    </div>
+                </td>
                 <td>
                     <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
                         <img class="w-10 h-10 rounded-sm" alt="Thumbnail" th:src="@{'/images/image-4@2x.jpg'}" />
