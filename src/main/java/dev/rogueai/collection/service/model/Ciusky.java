@@ -1,6 +1,7 @@
 package dev.rogueai.collection.service.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -111,6 +112,9 @@ public class Ciusky {
     }
 
     public List<Tag> getTags() {
+        if (tags == null) {
+            tags = new ArrayList<>();
+        }
         return tags;
     }
 

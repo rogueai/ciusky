@@ -47,6 +47,38 @@ public class CiuskyService {
     }
 
     @Transactional
+    private void insert(Ciusky model) {
+        CiuskyEntity entity = objectMapper.fromCiusky(model);
+        ciuskySql.insertCiusky(entity);
+        model.setId(entity.id);
+        if (model.getType() == 2L && model instanceof Book) {
+            BookEntity bookEntity = objectMapper.fromBook((Book) model);
+            ciuskySql.insertBook(bookEntity);
+        }
+        for (Tag tag :  model.getTags()) {
+            TagEntity tagEntity = objectMapper.fromTag(tag);
+            tagSql.insert(model.getId(), tagEntity);
+        }
+    }
+
+    @Transactional
+    private void update(Ciusky model) {
+        CiuskyEntity entity = objectMapper.fromCiusky(model);
+        ciuskySql.updateCiusky(entity);
+        model.setId(entity.id);
+        if (model.getType() == 2L && model instanceof Book) {
+            BookEntity bookEntity = objectMapper.fromBook((Book) model);
+            ciuskySql.updateBook(bookEntity);
+        }
+
+        tagSql.delete(model.getId());
+        for (Tag tag :  model.getTags()) {
+            TagEntity tagEntity = objectMapper.fromTag(tag);
+            tagSql.insert(model.getId(), tagEntity);
+        }
+    }
+
+    @Transactional
     public void save(Ciusky model) {
         if (model.getId() == null)  {
             insert(model);
@@ -56,33 +88,10 @@ public class CiuskyService {
         }
     }
 
-    private void insert(Ciusky model) {
-        CiuskyEntity entity = objectMapper.fromCiusky(model);
-        ciuskySql.insertCiusky(entity);
-        model.setId(entity.id);
-        if (model.getType() == 2L && model instanceof Book) {
-            BookEntity bookEntity = objectMapper.fromBook((Book) model);
-            ciuskySql.insertBook(bookEntity);
-        }
-    }
-
-    private void update(Ciusky model) {
-        CiuskyEntity entity = objectMapper.fromCiusky(model);
-        ciuskySql.updateCiusky(entity);
-        model.setId(entity.id);
-        if (model.getType() == 2L && model instanceof Book) {
-            BookEntity bookEntity = objectMapper.fromBook((Book) model);
-            ciuskySql.updateBook(bookEntity);
-        }
-    }
-
     @Transactional
     public void saveAll(List<Ciusky> models) {
         for (Ciusky model : models) {
             save(model);
-            for (Tag tag : model.getTags()) {
-                tagSql.insert(model.getId(), objectMapper.fromTag(tag));
-            }
         }
     }
 

@@ -14,8 +14,7 @@
         <table class="csk-table">
             <thead>
             <tr>
-
-                <ht scope="col"></ht>
+                <th scope="col"></th>
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
@@ -24,7 +23,6 @@
                 <th scope="col">Paid</th>
                 <th scope="col">Value</th>
                 <th scope="col">Tags</th>
-                <th scope="col">Count</th>
                 <th scope="col">Images</th>
             </tr>
             </thead>
@@ -57,7 +55,6 @@
                               th:text="|${tag.key}: ${tag.value}|"></span>
                     </div>
                 </td>
-                <td th:text="${#lists.size(item.uuidImages)}"></td>
                 <td>
                     <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
                         <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3" loading="lazy"
