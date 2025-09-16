@@ -58,7 +58,7 @@ public class CiuskyController {
     @PostMapping({"/ciusky"})
     public String save(@ModelAttribute Ciusky ciusky, Model model) {
         ciuskyService.save(ciusky);
-        return "forward:/ciusky/" + ciusky.id;
+        return "redirect:/ciusky/" + ciusky.getId();
     }
 
     @GetMapping({"/image/{uuid}"})

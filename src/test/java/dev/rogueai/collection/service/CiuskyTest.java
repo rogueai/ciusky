@@ -25,11 +25,11 @@ public class CiuskyTest {
         List<Ciusky> list = new ArrayList<>();
         for (int i = 0; i < 10000; i++) {
             Ciusky ciusky = new Ciusky();
-            ciusky.title = Randomizer.string(200);
-            ciusky.type = 4L;
-            ciusky.quality = Randomizer.any(0, 1, 2, 3, 4, 5);
-            ciusky.paidPrice = Randomizer.bigDecimal();
-            ciusky.marketPrice = Randomizer.bigDecimal();
+            ciusky.setTitle(Randomizer.string(200));
+            ciusky.setType(4L);
+            ciusky.setQuality(Randomizer.any(0, 1, 2, 3, 4, 5));
+            ciusky.setPaidPrice(Randomizer.bigDecimal());
+            ciusky.setMarketPrice(Randomizer.bigDecimal());
             list.add(ciusky);
         }
         ciuskyService.saveAll(list);

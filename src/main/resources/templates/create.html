@@ -8,6 +8,7 @@
 
 
     <form action="#" th:action="@{/ciusky}" th:object="${ciusky}" method="post" class="max-w-xl mx-auto">
+        <input th:field="*{id}" type="hidden" id="id" />
         <div class="mb-5">
             <label for="title" class="csk-input-label">Title</label>
             <input th:field="*{title}" type="text" id="title" class="csk-input" placeholder="" required/>

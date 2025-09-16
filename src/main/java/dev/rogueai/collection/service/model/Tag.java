@@ -2,9 +2,9 @@ package dev.rogueai.collection.service.model;
 
 public class Tag {
 
-    public String key;
+    private String key;
 
-    public String value;
+    private String value;
 
     public Tag() {
 
@@ -15,8 +15,19 @@ public class Tag {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
-        return "Tag{" + "key='" + key + '\'' + ", value='" + value + '\'' + '}';
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

@@ -2,7 +2,23 @@ package dev.rogueai.collection.service.model;
 
 public class Option {
 
-    public long id;
+    private long id;
 
-    public String descr;
+    private String descr;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDescr() {
+        return descr;
+    }
+
+    public void setDescr(String descr) {
+        this.descr = descr;
+    }
 }

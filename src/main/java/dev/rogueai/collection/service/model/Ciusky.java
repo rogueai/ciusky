@@ -6,37 +6,29 @@ import java.util.List;
 
 public class Ciusky {
 
-    public Long id;
+    private Long id;
 
-    public String title;
+    private String title;
 
-    public String description;
+    private String description;
 
-    public long type;
+    private long type;
 
-    public int quality;
+    private int quality;
 
-    public String purchasePlace;
+    private String purchasePlace;
 
-    public Date purchaseDate;
+    private Date purchaseDate;
 
-    public BigDecimal paidPrice;
+    private BigDecimal paidPrice;
 
-    public BigDecimal marketPrice;
+    private BigDecimal marketPrice;
 
-    public String notes;
+    private String notes;
 
-    public List<Tag> tags;
+    private List<Tag> tags;
 
-    public List<String> uuidImages;
-
-    public String getPurchasePlace() {
-        return purchasePlace;
-    }
-
-    public void setPurchasePlace(String purchasePlace) {
-        this.purchasePlace = purchasePlace;
-    }
+    private List<CiuskyImage> images;
 
     public Long getId() {
         return id;
@@ -76,6 +68,14 @@ public class Ciusky {
 
     public void setQuality(int quality) {
         this.quality = quality;
+    }
+
+    public String getPurchasePlace() {
+        return purchasePlace;
+    }
+
+    public void setPurchasePlace(String purchasePlace) {
+        this.purchasePlace = purchasePlace;
     }
 
     public Date getPurchaseDate() {
@@ -118,11 +118,11 @@ public class Ciusky {
         this.tags = tags;
     }
 
-    public List<String> getUuidImages() {
-        return uuidImages;
+    public List<CiuskyImage> getImages() {
+        return images;
     }
 
-    public void setUuidImages(List<String> uuidImages) {
-        this.uuidImages = uuidImages;
+    public void setImages(List<CiuskyImage> images) {
+        this.images = images;
     }
 }

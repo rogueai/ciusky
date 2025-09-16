@@ -1,5 +1,7 @@
 package dev.rogueai.collection.db.dto;
 
+import dev.rogueai.collection.service.model.Tag;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;

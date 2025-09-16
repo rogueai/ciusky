@@ -30,26 +30,23 @@ public class AppInitializer {
         for (int i = 0; i < 10; i++) {
 
             Ciusky ciusky = new Ciusky();
-            ciusky.title = Randomizer.string(10);
-            ciusky.description = Randomizer.string(50);
-            ciusky.type = Randomizer.any(1,2,3,4,5,6,7);
-            ciusky.quality = Randomizer.any(0, 1, 2, 3, 4, 5);
-            ciusky.purchasePlace = Randomizer.string(10);
-            ciusky.purchaseDate = Randomizer.date();
-            ciusky.paidPrice = Randomizer.bigDecimal();
-            ciusky.marketPrice = Randomizer.bigDecimal();
-            ciusky.notes = Randomizer.string(10);
+            ciusky.setTitle(Randomizer.string(10));
+            ciusky.setDescription(Randomizer.string(50));
+            ciusky.setType(Randomizer.any(1,2,3,4,5,6,7));
+            ciusky.setQuality(Randomizer.any(0, 1, 2, 3, 4, 5));
 
-            ciusky.tags = new ArrayList<>();
-            ciusky.tags.add(new Tag( //
+            ArrayList<Tag> tags = new ArrayList<>();
+
+            tags.add(new Tag( //
                     "console", //
                     Randomizer.any("ps1", "ps2", "ps2", "ita", "eng", "pal")));
-            ciusky.tags.add(new Tag( //
+            tags.add(new Tag( //
                     "region",
                     Randomizer.any("ps1", "ps2", "ps2", "ita", "eng", "pal")));
-            ciusky.tags.add(new Tag( //
+            tags.add(new Tag( //
                     "language",
                     Randomizer.any("ps1", "ps2", "ps2", "ita", "eng", "pal")));
+            ciusky.setTags(tags);
             list.add(ciusky);
 
         }
@@ -60,7 +57,7 @@ public class AppInitializer {
             for (int i = 0; i <= Randomizer.any(0, 1, 2, 3, 4); i++) {
                 String name = Randomizer.string(10) + ".png";
                 byte[] image = Randomizer.image(100, 100);
-                imageService.addResource(ciusky.id, name, image);
+                imageService.addResource(ciusky.getId(), name, image);
             }
         }
 
