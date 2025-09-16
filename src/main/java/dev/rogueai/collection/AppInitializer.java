@@ -4,7 +4,6 @@ import dev.rogueai.collection.service.CiuskyService;
 import dev.rogueai.collection.service.ImageService;
 import dev.rogueai.collection.service.Randomizer;
 import dev.rogueai.collection.service.model.Ciusky;
-import dev.rogueai.collection.service.model.CiuskyType;
 import dev.rogueai.collection.service.model.Tag;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -35,7 +32,7 @@ public class AppInitializer {
             Ciusky ciusky = new Ciusky();
             ciusky.title = Randomizer.string(10);
             ciusky.description = Randomizer.string(50);
-            ciusky.type = new CiuskyType(4L);
+            ciusky.type = Randomizer.any(1,2,3,4,5,6,7);
             ciusky.quality = Randomizer.any(0, 1, 2, 3, 4, 5);
             ciusky.purchasePlace = Randomizer.string(10);
             ciusky.purchaseDate = Randomizer.date();

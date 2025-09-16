@@ -12,7 +12,7 @@ public class CiuskyEntity {
 
     public String description;
 
-    public CiuskyTypeEntity type;
+    public long type;
 
     public int quality;
 
@@ -25,9 +25,5 @@ public class CiuskyEntity {
     public BigDecimal marketPrice;
 
     public String notes;
-
-    public List<TagEntity> tags;
-
-    public List<String> uuidImages;
 
 }

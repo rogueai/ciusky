@@ -65,7 +65,7 @@
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.title}"></td>
                 <td th:text="${item.description}"></td>
-                <td th:text="${item.type.descr}"></td>
+                <td th:text="${item.typeDescription}"></td>
                 <td>
                     <div th:replace="~{components/rating.html :: rating(value=${item.quality})}"></div>
                 </td>

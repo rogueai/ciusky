@@ -1,8 +1,8 @@
 package dev.rogueai.collection.controller;
 
-import dev.rogueai.collection.service.CiuskyService;
+import dev.rogueai.collection.service.CiuskySearchService;
 import dev.rogueai.collection.service.ImageService;
-import dev.rogueai.collection.service.model.Ciusky;
+import dev.rogueai.collection.service.model.CiuskySearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +18,14 @@ import java.util.List;
 public class CiuskyController {
 
     @Autowired
-    private CiuskyService ciuskyService;
+    private CiuskySearchService ciuskySearchService;
 
     @Autowired
     private ImageService imageService;
 
     @GetMapping({"/"})
     public String list(Model model) {
-        List<Ciusky> listCiusky = ciuskyService.getAll();
+        List<CiuskySearch> listCiusky = ciuskySearchService.findAll();
         model.addAttribute("listCiusky", listCiusky);
         return "index";
     }

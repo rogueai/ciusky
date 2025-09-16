@@ -1,18 +1,22 @@
 package dev.rogueai.collection.service.model;
 
+import dev.rogueai.collection.db.dto.TagEntity;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class Ciusky {
+public class CiuskySearch {
 
-    public Long id;
+    public long id;
 
     public String title;
 
     public String description;
 
-    public long type;
+    public long typeId;
+
+    public String typeDescription;
 
     public int quality;
 
@@ -29,5 +33,4 @@ public class Ciusky {
     public List<Tag> tags;
 
     public List<String> uuidImages;
-
 }

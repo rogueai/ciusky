@@ -1,5 +1,6 @@
 package dev.rogueai.collection;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+import java.nio.file.Path;
+
 @Configuration
 @ComponentScan(basePackages = "dev.rogueai.collection.service")
 public class TestConfig {
@@ -17,6 +20,11 @@ public class TestConfig {
 
     public TestConfig(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
+    }
+
+    @Bean
+    public Path imageDir() {
+        return Path.of(System.getProperty("java.io.tmpdir"));
     }
 
     @Bean
