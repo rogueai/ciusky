@@ -26,6 +26,10 @@ public class CiuskyService {
     @Autowired
     ITagSql tagSql;
 
+    public Ciusky get(Long id) {
+        return objectMapper.toCiusky(ciuskySql.getCiusky(id));
+    }
+
     @Transactional
     public void save(Ciusky model) {
         CiuskyEntity entity = objectMapper.fromCiusky(model);
