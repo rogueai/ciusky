@@ -35,7 +35,7 @@ public class AppConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
         // This create a new database in the home directory called ~/collections so it is persisted between runs
-        dataSource.setUrl("jdbc:h2:" + ciuskyData + "/collections;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO");
+        dataSource.setUrl("jdbc:h2:" + ciuskyData + "/collections;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1");
         return dataSource;
     }
 
