@@ -974,8 +974,14 @@
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
+  .right-4 {
+    right: calc(var(--spacing) * 4);
+  }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
+  }
+  .bottom-4 {
+    bottom: calc(var(--spacing) * 4);
   }
   .bottom-\[60px\] {
     bottom: 60px;
@@ -1015,6 +1021,9 @@
     @media (width >= 96rem) {
       max-width: 96rem;
     }
+  }
+  .mx-auto {
+    margin-inline: auto;
   }
   .ms-1 {
     margin-inline-start: calc(var(--spacing) * 1);
@@ -1336,6 +1345,9 @@
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
+  .mb-5 {
+    margin-bottom: calc(var(--spacing) * 5);
+  }
   .apexcharts-xaxistooltip {
     .apexcharts-canvas & {
       color: var(--color-gray-500) !important;
@@ -1536,6 +1548,9 @@
   .max-w-2xl {
     max-width: var(--container-2xl);
   }
+  .max-w-xl {
+    max-width: var(--container-xl);
+  }
   .datatable-input {
     .datatable-wrapper .datatable-search & {
       color: var(--color-gray-900);
@@ -1714,6 +1729,9 @@
   }
   .overflow-y-auto {
     overflow-y: auto;
+  }
+  .rounded-full {
+    border-radius: calc(infinity * 1px);
   }
   .rounded-lg {
     border-radius: var(--radius-lg);
@@ -1934,8 +1952,14 @@
       background-color: var(--color-gray-700);
     }
   }
+  .bg-blue-600 {
+    background-color: var(--color-blue-600);
+  }
   .bg-blue-700 {
     background-color: var(--color-blue-700);
+  }
+  .bg-gray-50 {
+    background-color: var(--color-gray-50);
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
@@ -2028,6 +2052,9 @@
   }
   .p-2\.5 {
     padding: calc(var(--spacing) * 2.5);
+  }
+  .p-3 {
+    padding: calc(var(--spacing) * 3);
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
@@ -2309,6 +2336,13 @@
       }
     }
   }
+  .hover\:bg-blue-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-blue-700);
+      }
+    }
+  }
   .hover\:bg-blue-800 {
     &:hover {
       @media (hover: hover) {
@@ -2363,6 +2397,11 @@
       z-index: 10;
     }
   }
+  .focus\:border-blue-500 {
+    &:focus {
+      border-color: var(--color-blue-500);
+    }
+  }
   .focus\:ring-2 {
     &:focus {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
@@ -2380,6 +2419,11 @@
       --tw-ring-color: var(--color-blue-300);
     }
   }
+  .focus\:ring-blue-500 {
+    &:focus {
+      --tw-ring-color: var(--color-blue-500);
+    }
+  }
   .focus\:ring-gray-200 {
     &:focus {
       --tw-ring-color: var(--color-gray-200);
@@ -2391,9 +2435,34 @@
       outline-style: none;
     }
   }
+  .sm\:w-auto {
+    @media (width >= 40rem) {
+      width: auto;
+    }
+  }
   .md\:inset-0 {
     @media (width >= 48rem) {
       inset: calc(var(--spacing) * 0);
+    }
+  }
+  .md\:right-6 {
+    @media (width >= 48rem) {
+      right: calc(var(--spacing) * 6);
+    }
+  }
+  .md\:bottom-6 {
+    @media (width >= 48rem) {
+      bottom: calc(var(--spacing) * 6);
+    }
+  }
+  .lg\:right-8 {
+    @media (width >= 64rem) {
+      right: calc(var(--spacing) * 8);
+    }
+  }
+  .lg\:bottom-8 {
+    @media (width >= 64rem) {
+      bottom: calc(var(--spacing) * 8);
     }
   }
   .lg\:order-2 {
@@ -2509,6 +2578,13 @@
       color: var(--color-white);
     }
   }
+  .dark\:placeholder-gray-400 {
+    @media (prefers-color-scheme: dark) {
+      &::placeholder {
+        color: var(--color-gray-400);
+      }
+    }
+  }
   .dark\:hover\:bg-blue-700 {
     @media (prefers-color-scheme: dark) {
       &:hover {
@@ -2560,6 +2636,20 @@
         @media (hover: hover) {
           color: var(--color-white);
         }
+      }
+    }
+  }
+  .dark\:focus\:border-blue-500 {
+    @media (prefers-color-scheme: dark) {
+      &:focus {
+        border-color: var(--color-blue-500);
+      }
+    }
+  }
+  .dark\:focus\:ring-blue-500 {
+    @media (prefers-color-scheme: dark) {
+      &:focus {
+        --tw-ring-color: var(--color-blue-500);
       }
     }
   }
@@ -2623,6 +2713,49 @@
 .csk-table > tbody > tr > td {
   padding-inline: calc(var(--spacing) * 2);
   padding-block: calc(var(--spacing) * 2);
+}
+.csk-input {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--color-gray-300);
+  background-color: var(--color-gray-50);
+  padding: calc(var(--spacing) * 2.5);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  color: var(--color-gray-900);
+  &:focus {
+    border-color: var(--color-blue-500);
+  }
+  &:focus {
+    --tw-ring-color: var(--color-blue-500);
+  }
+  @media (prefers-color-scheme: dark) {
+    border-color: var(--color-gray-600);
+  }
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-gray-700);
+  }
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-white);
+  }
+  @media (prefers-color-scheme: dark) {
+    &::placeholder {
+      color: var(--color-gray-400);
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    &:focus {
+      border-color: var(--color-blue-500);
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    &:focus {
+      --tw-ring-color: var(--color-blue-500);
+    }
+  }
 }
 .csk-tag-blue {
   border-radius: var(--radius-sm);

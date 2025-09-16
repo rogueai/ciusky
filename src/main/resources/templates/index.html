@@ -1,43 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head th:replace="~{layout/head.html :: head}">
     <title>Ciusky</title>
-
-    <link th:href="@{/main.css}" rel="stylesheet"/>
-    <link th:href="@{/custom.css}" rel="stylesheet"/>
-
-    <!--    <script th:src="@{/flowbite.min.js}"></script>-->
-    <script th:src="@{/htmx.min.js}"></script>
-    <script th:src="@{/main.js}"></script>
-
-    <script>
-        htmx.onLoad(function () {
-            // initFlowbite();
-        })
-    </script>
 </head>
 <body class="dark:bg-gray-900 antialiased">
-<header class="antialiased">
-    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-        <div class="flex flex-wrap justify-between items-center">
-            <div class="flex justify-start items-center">
-                <a href="#" class="flex mr-4">
-                    <svg class="w-[48px] h-[48px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M9.98189 4.50602c1.24881-.67469 2.78741-.67469 4.03621 0l3.9638 2.14148c.3634.19632.6862.44109.9612.72273l-6.9288 3.60207L5.20654 7.225c.2403-.22108.51215-.41573.81157-.5775l3.96378-2.14148ZM4.16678 8.84364C4.05757 9.18783 4 9.5493 4 9.91844v4.28296c0 1.3494.7693 2.5963 2.01811 3.2709l3.96378 2.1415c.32051.1732.66011.3019 1.00901.3862v-7.4L4.16678 8.84364ZM13.009 20c.3489-.0843.6886-.213 1.0091-.3862l3.9638-2.1415C19.2307 16.7977 20 15.5508 20 14.2014V9.91844c0-.30001-.038-.59496-.1109-.87967L13.009 12.6155V20Z"/>
-                    </svg>
-
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Ciusky</span>
-                </a>
-            </div>
-            <div class="flex items-center lg:order-2">
-
-            </div>
-        </div>
-    </nav>
-</header>
+<header th:replace="~{layout/header.html :: header}"></header>
 <main class="p-6">
 
     <!--    <ul>-->
@@ -83,13 +49,30 @@
                 <td th:text="${#lists.size(item.uuidImages)}"></td>
                 <td>
                     <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
-                        <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3"  loading="lazy" class="w-10 h-10 rounded-sm" alt="Thumbnail" th:src="@{/image/{uuid}?thumbnail=true(uuid=${uuid})}" />
-                        <div th:text="'+' + ${#lists.size(item.uuidImages) - 3}" th:if="${#lists.size(item.uuidImages)} > 3" class="w-10 h-10 rounded-sm bg-gray-200 flex items-center justify-center text-sm font-medium"></div>
+                        <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3" loading="lazy"
+                             class="w-10 h-10 rounded-sm" alt="Thumbnail"
+                             th:src="@{/image/{uuid}?thumbnail=true(uuid=${uuid})}"/>
+                        <div th:text="'+' + ${#lists.size(item.uuidImages) - 3}"
+                             th:if="${#lists.size(item.uuidImages)} > 3"
+                             class="w-10 h-10 rounded-sm bg-gray-200 flex items-center justify-center text-sm font-medium"></div>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="fixed right-4 bottom-4 z-50 md:right-6 md:bottom-6 lg:right-8 lg:bottom-8">
+        <form th:action="@{/create}" method="get" class="inline">
+            <button type="submit"
+                    aria-label="Create"
+                    class="inline-flex items-center justify-center p-3 rounded-full text-white bg-blue-600 hover:bg-blue-700">
+                <!-- default icon: plus -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+                </svg>
+            </button>
+        </form>
     </div>
 </main>
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +29,11 @@ public class CiuskyController {
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll();
         model.addAttribute("listCiusky", listCiusky);
         return "index";
+    }
+
+    @GetMapping({"/create"})
+    public String create(Model model) {
+        return "create";
     }
 
     @GetMapping({"/image/{uuid}"})
