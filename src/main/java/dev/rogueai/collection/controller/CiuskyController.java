@@ -1,6 +1,7 @@
 package dev.rogueai.collection.controller;
 
 import dev.rogueai.collection.service.CiuskySearchService;
+import dev.rogueai.collection.service.DomainService;
 import dev.rogueai.collection.service.ImageService;
 import dev.rogueai.collection.service.model.CiuskySearch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class CiuskyController {
     private CiuskySearchService ciuskySearchService;
 
     @Autowired
+    private DomainService domainService;
+
+    @Autowired
     private ImageService imageService;
 
     @GetMapping({"/"})
@@ -33,6 +37,7 @@ public class CiuskyController {
 
     @GetMapping({"/create"})
     public String create(Model model) {
+        model.addAttribute("types", domainService.types());
         return "create";
     }
 

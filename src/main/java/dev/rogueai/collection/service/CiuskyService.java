@@ -28,7 +28,6 @@ public class CiuskyService {
 
     @Transactional
     public void save(Ciusky model) {
-
         CiuskyEntity entity = objectMapper.fromCiusky(model);
         ciuskySql.insertCiusky(entity);
         model.id = entity.id;
@@ -37,7 +36,6 @@ public class CiuskyService {
             BookEntity bookEntity = objectMapper.fromBook((Book) model);
             ciuskySql.insertBook(bookEntity);
         }
-
     }
 
     @Transactional
