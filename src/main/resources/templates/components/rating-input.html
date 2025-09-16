@@ -1,0 +1,6 @@
+<div th:fragment="rating-input(field, value)" class="flex items-center">
+    <th:block th:each="i: ${#numbers.sequence(1, 5)}">
+        <label th:for="|star-${i}|" th:insert="~{components/icon :: icon('star', '')}" class="text-yellow-300 peer-checked:text-gray-300 dark:peer-checked:text-gray-500 "></label>
+        <input type="radio" th:id="|star-${i}|" th:field="*{__${field}__}" name="rating" th:value="${i}" class="peer hidden" />
+    </th:block>
+</div>

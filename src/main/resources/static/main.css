@@ -2343,6 +2343,11 @@
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
   }
+  .peer-checked\:text-gray-300 {
+    &:is(:where(.peer):checked ~ *) {
+      color: var(--color-gray-300);
+    }
+  }
   .hover\:border-gray-300 {
     &:hover {
       @media (hover: hover) {
@@ -2596,6 +2601,13 @@
     @media (prefers-color-scheme: dark) {
       &::placeholder {
         color: var(--color-gray-400);
+      }
+    }
+  }
+  .dark\:peer-checked\:text-gray-500 {
+    @media (prefers-color-scheme: dark) {
+      &:is(:where(.peer):checked ~ *) {
+        color: var(--color-gray-500);
       }
     }
   }
