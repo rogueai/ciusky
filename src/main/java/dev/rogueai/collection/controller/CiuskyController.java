@@ -1,15 +1,15 @@
 package dev.rogueai.collection.controller;
 
 import dev.rogueai.collection.service.CiuskySearchService;
-import dev.rogueai.collection.service.DomainService;
+import dev.rogueai.collection.service.OptionService;
 import dev.rogueai.collection.service.ImageService;
 import dev.rogueai.collection.service.model.CiuskySearch;
+import dev.rogueai.collection.service.model.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +23,7 @@ public class CiuskyController {
     private CiuskySearchService ciuskySearchService;
 
     @Autowired
-    private DomainService domainService;
+    private OptionService optionService;
 
     @Autowired
     private ImageService imageService;
@@ -37,7 +37,8 @@ public class CiuskyController {
 
     @GetMapping({"/create"})
     public String create(Model model) {
-        model.addAttribute("types", domainService.types());
+        List<Option> types = optionService.types();
+        model.addAttribute("types", types);
         return "create";
     }
 

@@ -1,6 +1,6 @@
 package dev.rogueai.collection.service.model;
 
-public class Domain {
+public class Option {
 
     public long id;
 
