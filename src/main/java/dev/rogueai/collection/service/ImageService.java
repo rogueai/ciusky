@@ -1,13 +1,13 @@
 package dev.rogueai.collection.service;
 
 import dev.rogueai.collection.db.dto.CiuskyImageEntity;
-import dev.rogueai.collection.db.sql.IImageSql;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,22 +18,20 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class ImageService {
+public class ImageService extends AbstractService {
 
     private static final int THUMBNAIL_SIZE = 100;
+
+    private byte[] defaultImage;
 
     @Autowired
     private Path imageDir;
 
-    @Autowired
-    private IImageSql imageSql;
-
-    private byte[] defaultImage;
-
     @PostConstruct
     public void init() throws IOException {
+        Assert.isTrue(Files.isDirectory(imageDir), "Invalid directory: " + imageDir.toString());
         try (InputStream resourceAsStream = getClass().getResourceAsStream("/static/images/image-4@2x.jpg")) {
-            assert resourceAsStream != null;
+            Assert.notNull(resourceAsStream, "Default image non found");
             defaultImage = resourceAsStream.readAllBytes();
         }
     }

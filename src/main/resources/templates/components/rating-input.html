@@ -1,4 +1,4 @@
-<div th:fragment="rating-input(field)" class="flex items-center">
+<div th:fragment="rating-input(field)" class="flex items-center" xmlns:th="http://www.thymeleaf.org">
     <!-- handle 0-values with a hidden star -->
     <label for="star-0" th:insert="~{components/icon :: icon('star', 'w-4 h-4 ms-1')}" class="text-yellow-300 peer-checked:text-gray-300 dark:peer-checked:text-gray-500 hidden"></label>
     <input type="radio" id="star-0" th:field="*{__${field}__}" name="rating" th:value="0" class="peer hidden" />

@@ -1,4 +1,4 @@
-<div th:fragment="rating(value)" class="flex items-center">
+<div th:fragment="rating(value)" class="flex items-center" xmlns:th="http://www.thymeleaf.org">
     <th:block th:each="i: ${#numbers.sequence(1, 5)}">
         <div th:replace="~{components/icon :: icon('star', ${i <= value ? 'w-4 h-4 ms-1 text-yellow-300' : 'w-4 h-4 ms-1 text-gray-300 dark:text-gray-500'})}"></div>
     </th:block>

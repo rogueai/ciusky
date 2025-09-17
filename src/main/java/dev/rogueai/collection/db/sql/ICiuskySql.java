@@ -2,11 +2,11 @@ package dev.rogueai.collection.db.sql;
 
 import dev.rogueai.collection.db.dto.BookEntity;
 import dev.rogueai.collection.db.dto.CiuskyEntity;
-import dev.rogueai.collection.db.dto.TagEntity;
-import dev.rogueai.collection.service.model.Ciusky;
-import org.apache.ibatis.annotations.*;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface ICiuskySql {
 
@@ -14,7 +14,7 @@ public interface ICiuskySql {
             "PURCHASE_DATE, PAID_PRICE, MARKET_PRICE, NOTES FROM CIUSKY WHERE ID = #{id}")
     CiuskyEntity getCiusky(Long id);
 
-    @Select("SELECT ID, AUTHOR, FORMAT, PUBLISHER, PUBLISH_DATE, ISBN_13, `LANGUAGE` FROM BOOK FROM WHERE ID = #{id}")
+    @Select("SELECT ID, AUTHOR, FORMAT, PUBLISHER, PUBLISH_DATE, ISBN_13, `LANGUAGE` FROM BOOK WHERE ID = #{id}")
     BookEntity getBook(Long id);
 
     @Insert("INSERT INTO CIUSKY (TITLE, DESCRIPTION, TYPE_OPTION, QUALITY, PURCHASE_PLACE, PURCHASE_DATE, PAID_PRICE, MARKET_PRICE, NOTES) " //

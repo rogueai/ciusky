@@ -1,4 +1,4 @@
-<table th:fragment="ciusky-table" id="ciusky-table" class="csk-table">
+<table th:fragment="ciusky-table" id="ciusky-table" class="csk-table" xmlns:th="http://www.thymeleaf.org">
     <thead>
     <tr>
         <th scope="col"></th>
@@ -34,22 +34,21 @@
         <td>
             <div th:replace="~{components/rating.html :: rating(value=${item.quality})}"></div>
         </td>
-        <td th:text="${item.paidPrice}">
-        </td>
+        <td th:text="${item.paidPrice}"></td>
         <td th:text="${item.marketPrice}"></td>
         <td>
             <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
-                        <span th:each="tag : ${item.tags}"
-                              th:with="tagColor=${@colors.getColor(tag.key)}"
-                              th:class="'csk-tag-'+ ${tagColor}"
-                              th:text="|${tag.key}: ${tag.value}|"></span>
+                <span th:class="'csk-tag-'+ ${tagColor}"
+                      th:each="tag : ${item.tags}"
+                      th:text="|${tag.key}: ${tag.value}|"
+                      th:with="tagColor=${@colors.getColor(tag.key)}"></span>
             </div>
         </td>
         <td>
             <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
-                <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3" loading="lazy"
-                     class="w-10 h-10 rounded-sm" alt="Thumbnail"
-                     th:src="@{/image/{uuid}?thumbnail=true(uuid=${uuid})}"/>
+                <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3"
+                     th:src="@{/image/{uuid}?thumbnail=true(uuid=${uuid})}"
+                     loading="lazy" class="w-10 h-10 rounded-sm" alt="Thumbnail" />
                 <div th:text="'+' + ${#lists.size(item.uuidImages) - 3}"
                      th:if="${#lists.size(item.uuidImages)} > 3"
                      class="w-10 h-10 rounded-sm bg-gray-200 flex items-center justify-center text-sm font-medium"></div>
@@ -58,3 +57,4 @@
     </tr>
     </tbody>
 </table>
+

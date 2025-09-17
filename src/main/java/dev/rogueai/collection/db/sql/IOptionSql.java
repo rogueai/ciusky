@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-public interface IOption {
+public interface IOptionSql {
 
     @Select("SELECT ID, DESCR FROM TYPE_OPTION")
     List<Option> allOptions();
