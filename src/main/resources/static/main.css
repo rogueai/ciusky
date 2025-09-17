@@ -2886,6 +2886,13 @@
     }
   }
 }
+tr.htmx-swapping td {
+  opacity: 0%;
+  --tw-duration: 500ms;
+  transition-duration: 500ms;
+  --tw-ease: var(--ease-out);
+  transition-timing-function: var(--ease-out);
+}
 .csk-table {
   width: 100%;
   text-align: left;
@@ -3779,6 +3786,10 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -3835,6 +3846,7 @@
       --tw-drop-shadow-alpha: 100%;
       --tw-drop-shadow-size: initial;
       --tw-ease: initial;
+      --tw-duration: initial;
     }
   }
 }

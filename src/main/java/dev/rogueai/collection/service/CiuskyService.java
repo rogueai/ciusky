@@ -10,6 +10,7 @@ import dev.rogueai.collection.db.sql.ITagSql;
 import dev.rogueai.collection.service.mapper.ObjectMapper;
 import dev.rogueai.collection.service.model.Book;
 import dev.rogueai.collection.service.model.Ciusky;
+import dev.rogueai.collection.service.model.ECiuskyType;
 import dev.rogueai.collection.service.model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,16 @@ public class CiuskyService {
     ITagSql tagSql;
 
     public Ciusky get(Long id) {
-
         CiuskyEntity entity = ciuskySql.getCiusky(id);
-        Ciusky model = objectMapper.toCiusky(entity);
+
+        Ciusky model;
+        if (ECiuskyType.from(entity.type) == ECiuskyType.BOOK) {
+            BookEntity bookEntity = ciuskySql.getBook(id);
+            model = objectMapper.toBook(entity, bookEntity);
+        }
+        else {
+            model = objectMapper.toCiusky(entity);
+        }
 
         List<TagEntity> tagsEntity = tagSql.getTags(id);
         model.setTags(objectMapper.toTagList(tagsEntity));
@@ -46,12 +54,16 @@ public class CiuskyService {
         return model;
     }
 
+    public void delete(Long id) {
+        ciuskySql.delete(id);
+    }
+
     @Transactional
     private void insert(Ciusky model) {
         CiuskyEntity entity = objectMapper.fromCiusky(model);
         ciuskySql.insertCiusky(entity);
         model.setId(entity.id);
-        if (model.getType() == 2L && model instanceof Book) {
+        if (ECiuskyType.from(model.getType()) == ECiuskyType.BOOK && model instanceof Book) {
             BookEntity bookEntity = objectMapper.fromBook((Book) model);
             ciuskySql.insertBook(bookEntity);
         }
@@ -77,6 +89,7 @@ public class CiuskyService {
             tagSql.insert(model.getId(), tagEntity);
         }
     }
+
 
     @Transactional
     public void save(Ciusky model) {

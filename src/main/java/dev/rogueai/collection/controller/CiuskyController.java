@@ -12,13 +12,13 @@ import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class CiuskyController {
@@ -61,7 +61,7 @@ public class CiuskyController {
         List<Option> types = optionService.types();
         model.addAttribute("types", types);
 
-        Ciusky ciusky = id != null ?  ciuskyService.get(id) : new Ciusky();
+        Ciusky ciusky = id != null ? ciuskyService.get(id) : new Ciusky();
         model.addAttribute("ciusky", ciusky);
         return "create";
     }
@@ -70,6 +70,19 @@ public class CiuskyController {
     public String save(@ModelAttribute Ciusky ciusky, Model model) {
         ciuskyService.save(ciusky);
         return "redirect:/ciusky/" + ciusky.getId();
+    }
+
+    /**
+     * Delete a Ciusky. Responds with a 200 status code and empty content, indicating that the row should be replaced with nothing.
+     *
+     * @param id ciusky id
+     * @return OK
+     */
+    @HxRequest()
+    @DeleteMapping({ "/ciusky/{id}" })
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        ciuskyService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping({ "/image/{uuid}" })

@@ -2,10 +2,7 @@ package dev.rogueai.collection.service.mapper;
 
 import dev.rogueai.collection.db.dto.*;
 import dev.rogueai.collection.service.model.*;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -21,6 +18,9 @@ public interface ObjectMapper {
     CiuskyEntity fromCiusky(Ciusky model);
 
     BookEntity fromBook(Book model);
+
+    @Mapping(target = "id", source = "ciuskyEntity.id")
+    Book toBook(CiuskyEntity ciuskyEntity, BookEntity bookEntity);
 
     Tag toTag(TagEntity entity);
 

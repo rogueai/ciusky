@@ -17,11 +17,9 @@ public class Queries {
                WHERE("REGEXP_LIKE(c.TITLE, #{text}, 'i')");
                OR().WHERE("REGEXP_LIKE(c.DESCRIPTION, #{text}, 'i')");
             }
-
             if (type != null) {
                 WHERE("t.ID = #{type}");
             }
-
             //ORDER_BY("C.ID");
         }}.toString();
     }

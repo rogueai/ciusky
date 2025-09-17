@@ -4,6 +4,11 @@
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
+/* HTMLX */
+tr.htmx-swapping td {
+    @apply duration-500 ease-out opacity-0
+}
+
 .csk-table {
     @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400
 }

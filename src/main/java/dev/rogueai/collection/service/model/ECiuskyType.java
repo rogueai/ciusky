@@ -1,0 +1,38 @@
+package dev.rogueai.collection.service.model;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public enum ECiuskyType {
+
+    UNKNOWN(0L ), //
+    CONSOLE(1L),  //
+    BOOK(2L), //
+    SOFTWARE(3L), //
+    GAME(4L), //
+    COMPUTER(5L), //
+    PERIPHERAL_DEVICE(6L), //
+    GADGET(7L);
+
+    private static final Map<Long, ECiuskyType> BY_ID = new HashMap<>();
+
+    static {
+        for (ECiuskyType e : values()) {
+            BY_ID.put(e.getValue(), e);
+        }
+    }
+
+    private final Long id;
+
+    ECiuskyType(Long id) {
+        this.id = id;
+    }
+
+    public static ECiuskyType from(Long id) {
+        return BY_ID.getOrDefault(id, UNKNOWN);
+    }
+
+    public long getValue() {
+        return id;
+    }
+}
