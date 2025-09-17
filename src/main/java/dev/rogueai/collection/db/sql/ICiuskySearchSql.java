@@ -17,7 +17,7 @@ public interface ICiuskySearchSql {
             @Result(property = "uuidImages", javaType = List.class, column = "ID", //
                     many = @Many(select = "getImages", fetchType = FetchType.EAGER)) //
     })
-    List<CiuskySearchEntity> filter();
+    List<CiuskySearchEntity> filter(String text, Long type);
 
     @Select("SELECT `KEY`, `VALUE` FROM CIUSKY_TAG WHERE ID = #{id}")
     List<TagEntity> getTags(Long id);
