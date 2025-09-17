@@ -1,0 +1,55 @@
+<table th:fragment="ciusky-table" id="ciusky-table" class="csk-table">
+    <thead>
+    <tr>
+        <th scope="col"></th>
+        <th scope="col">ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Type</th>
+        <th scope="col">Quality</th>
+        <th scope="col">Paid</th>
+        <th scope="col">Value</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Images</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${listCiusky}">
+        <td>
+            <a th:href="@{/ciusky/{id}(id=${item.id})}">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                </svg>
+            </a>
+        </td>
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.title}"></td>
+        <td th:text="${item.description}"></td>
+        <td th:text="${item.typeDescription}"></td>
+        <td>
+            <div th:replace="~{components/rating.html :: rating(value=${item.quality})}"></div>
+        </td>
+        <td th:text="${item.paidPrice}">
+        </td>
+        <td th:text="${item.marketPrice}"></td>
+        <td>
+            <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
+                        <span th:each="tag : ${item.tags}"
+                              th:with="tagColor=${@colors.getColor(tag.key)}"
+                              th:class="'csk-tag-'+ ${tagColor}"
+                              th:text="|${tag.key}: ${tag.value}|"></span>
+            </div>
+        </td>
+        <td>
+            <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
+                <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3" loading="lazy"
+                     class="w-10 h-10 rounded-sm" alt="Thumbnail"
+                     th:src="@{/image/{uuid}?thumbnail=true(uuid=${uuid})}"/>
+                <div th:text="'+' + ${#lists.size(item.uuidImages) - 3}"
+                     th:if="${#lists.size(item.uuidImages)} > 3"
+                     class="w-10 h-10 rounded-sm bg-gray-200 flex items-center justify-center text-sm font-medium"></div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
