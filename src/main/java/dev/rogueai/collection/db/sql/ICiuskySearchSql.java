@@ -1,6 +1,5 @@
 package dev.rogueai.collection.db.sql;
 
-import dev.rogueai.collection.db.dto.CiuskyEntity;
 import dev.rogueai.collection.db.dto.CiuskySearchEntity;
 import dev.rogueai.collection.db.dto.TagEntity;
 import org.apache.ibatis.annotations.*;
@@ -14,9 +13,9 @@ public interface ICiuskySearchSql {
     @Results(value = { //
             @Result(property = "id", column = "ID"), //
             @Result(property = "tags", javaType = List.class, column = "ID", //
-                    many = @Many(select = "getTags", fetchType = FetchType.DEFAULT)), //
+                    many = @Many(select = "getTags", fetchType = FetchType.EAGER)), //
             @Result(property = "uuidImages", javaType = List.class, column = "ID", //
-                    many = @Many(select = "getImages", fetchType = FetchType.DEFAULT)) //
+                    many = @Many(select = "getImages", fetchType = FetchType.EAGER)) //
     })
     List<CiuskySearchEntity> filter();
 

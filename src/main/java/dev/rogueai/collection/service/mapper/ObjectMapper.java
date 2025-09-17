@@ -5,10 +5,11 @@ import dev.rogueai.collection.service.model.*;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ObjectMapper {
 
     CiuskySearch toCiuskySearch(CiuskySearchEntity entity);
@@ -20,10 +21,6 @@ public interface ObjectMapper {
     CiuskyEntity fromCiusky(Ciusky model);
 
     BookEntity fromBook(Book model);
-
-    List<Ciusky> toCiuskyList(List<CiuskyEntity> entityList);
-
-    List<CiuskyEntity> fromCiuskyList(List<Ciusky> modelList);
 
     Tag toTag(TagEntity entity);
 

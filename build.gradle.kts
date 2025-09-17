@@ -37,7 +37,8 @@ repositories {
 
 dependencies {
     implementation("org.apache.commons:commons-lang3:3.18.0")
-    implementation("org.apache.commons:commons-io:1.3.2")
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation("commons-io:commons-io:2.20.0")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1")

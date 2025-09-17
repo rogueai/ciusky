@@ -14,7 +14,7 @@ public interface IImageSql {
     List<CiuskyImageEntity> getImages(Long id);
 
     @Insert("INSERT INTO CIUSKY_IMG (ID, `UUID`, `NAME`) VALUES (#{id}, #{uuid}, #{name})")
-    int insert(CiuskyImageEntity entity);
+    void insert(CiuskyImageEntity entity);
 
     @Select("SELECT * from CIUSKY_IMG WHERE UUID = #{uuid}")
     CiuskyImageEntity getByUuid(String uuid);

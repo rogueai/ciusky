@@ -1,13 +1,5 @@
 package dev.rogueai.collection.config;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -19,14 +11,15 @@ import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
+import javax.sql.DataSource;
+import java.sql.*;
+
 public class DataSourceInitializer implements InitializingBean, DisposableBean {
 
     private static final Log logger = LogFactory.getLog(DataSourceInitializer.class);
 
-    @Nullable
     private DataSource dataSource;
 
-    @Nullable
     private DatabasePopulator databasePopulator;
 
     private boolean enabled = true;
@@ -48,7 +41,6 @@ public class DataSourceInitializer implements InitializingBean, DisposableBean {
      * Set the {@link DatabasePopulator} to execute during the bean initialization phase.
      *
      * @param databasePopulator the {@code DatabasePopulator} to use during initialization
-     * @see #setDatabaseCleaner
      */
     public void setDatabasePopulator(DatabasePopulator databasePopulator) {
         this.databasePopulator = databasePopulator;
@@ -81,7 +73,7 @@ public class DataSourceInitializer implements InitializingBean, DisposableBean {
     }
 
     /**
-     * Use the {@linkplain #setDatabaseCleaner database cleaner} to clean up the database.
+     * Use to clean up the database.
      */
     @Override
     public void destroy() {
