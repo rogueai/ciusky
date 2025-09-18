@@ -1,0 +1,17 @@
+<div th:fragment="tag-list(field)" class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
+    <span th:class="'csk-tag-'+ ${tagColor}"
+          th:each="tag : *{__${field}__}"
+          th:id="|badge-dismiss-${tag.key}-${tag.value}|"
+          th:with="tagColor=${@colors.getColor(tag.key)}">
+        [[${tag.key}]]: [[${tag.value}]]
+        <button type="button"
+                class="inline-flex items-center p-1 ms-2 text-sm text-[[${tagColor}]]-400 bg-transparent rounded-xs hover:bg-[[${tagColor}]]-200 hover:text-[[${tagColor}]]-900 dark:hover:bg-[[${tagColor}]]-800 dark:hover:text-[[${tagColor}]]-300"
+                th:data-dismiss-target="'#' + |badge-dismiss-${tag.key}-${tag.value}|" aria-label="Remove">
+            <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Remove badge</span>
+        </button>
+    </span>
+</div>
