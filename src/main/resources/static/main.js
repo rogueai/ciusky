@@ -1,5 +1,5 @@
 htmx.onLoad(function () {
-    
+
     initFlowbite();
 
     // Handles HX-Trigger: { "showToast": { "message": "...", "success": true } }

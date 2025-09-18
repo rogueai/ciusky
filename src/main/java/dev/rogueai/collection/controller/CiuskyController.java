@@ -9,7 +9,6 @@ import dev.rogueai.collection.service.model.CiuskyFilter;
 import dev.rogueai.collection.service.model.CiuskySearch;
 import dev.rogueai.collection.service.model.Option;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
-import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxReswap;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
 import org.apache.commons.logging.Log;
@@ -19,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -113,14 +111,4 @@ public class CiuskyController {
         return imageService.getResource(uuid, thumbnail);
     }
 
-    /**
-     * TODO: For now this works only works for htmx
-     */
-    @HxRequest()
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleError(Exception ex, HtmxResponse htmxResponse) {
-        htmxResponse.setReswap(HtmxReswap.none());
-        htmxResponse.addTriggerAfterSettle("showToast", new ToastMessage(false, "TUTTO ROTTO"));
-        return ResponseEntity.ok().build();
-    }
 }
