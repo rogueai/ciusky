@@ -1,6 +1,6 @@
 package dev.rogueai.collection.service.model;
 
-import dev.rogueai.collection.db.dto.TagEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,6 +22,7 @@ public class CiuskySearch {
 
     private String purchasePlace;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date purchaseDate;
 
     private BigDecimal paidPrice;

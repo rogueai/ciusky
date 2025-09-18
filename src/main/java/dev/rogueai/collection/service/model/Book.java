@@ -1,5 +1,7 @@
 package dev.rogueai.collection.service.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Book extends Ciusky {
@@ -10,6 +12,7 @@ public class Book extends Ciusky {
 
     private String publisher;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date publishDate;
 
     private String isbn13;
