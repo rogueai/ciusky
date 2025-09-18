@@ -4,10 +4,10 @@
 </head>
 <body class="dark:bg-gray-900 antialiased">
 <header th:replace="~{layout/header.html :: header}"></header>
+<div th:insert="~{layout/toast.html}"></div>
 <main class="p-6">
 
-
-    <form action="#" th:action="@{/ciusky}" th:object="${ciusky}" method="post" class="max-w-xl mx-auto">
+    <form action="#" th:hx-post="@{/ciusky}" th:object="${ciusky}" hx-target="this" hx-swap="outerHTML" class="max-w-xl mx-auto">
         <input th:field="*{id}" type="hidden" id="id" />
         <div class="mb-5">
             <label for="title" class="csk-input-label">Title</label>
@@ -33,7 +33,7 @@
         <div class="mb-5">
             <label for="paidPrice" class="csk-input-label">Paid price</label>
             <div class="flex">
-                <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -48,7 +48,7 @@
         <div class="mb-5">
             <label for="marketPrice" class="csk-input-label">Market price</label>
             <div class="flex">
-                <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -70,7 +70,7 @@
         <div class="mb-5">
             <label for="purchaseDate" class="csk-input-label">Paid price</label>
             <div class="flex">
-                <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                     </svg>
