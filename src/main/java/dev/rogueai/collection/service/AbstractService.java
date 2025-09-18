@@ -10,20 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class AbstractService {
 
     @Autowired
-    IMapper mapper;
+    protected IMapper mapper;
 
     @Autowired
-    public ICiuskySearchSql searchSql;
+    protected ICiuskySearchSql searchSql;
 
     @Autowired
-    public ICiuskySql ciuskySql;
+    protected ICiuskySql ciuskySql;
 
     @Autowired
-    public IImageSql imageSql;
+    protected IImageSql imageSql;
 
     @Autowired
-    public IOptionSql optionSql;
+    protected IOptionSql optionSql;
 
     @Autowired
-    public ITagSql tagSql;
+    protected ITagSql tagSql;
 }

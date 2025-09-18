@@ -1,9 +1,10 @@
 package dev.rogueai.collection.db.sql;
 
-
-
 import dev.rogueai.collection.db.dto.TagEntity;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.List;
 
@@ -18,4 +19,9 @@ public interface ITagSql {
     @Delete("DELETE FROM CIUSKY_TAG WHERE ID = #{id}")
     void delete(Long id);
 
+    @SelectProvider(type = Queries.class, method = "searchTagKeys")
+    List<String> searchTagKeys(String partialKey);
+
+    @SelectProvider(type = Queries.class, method = "searchTagValues")
+    List<String> searchTagValues(String key, String partialValue);
 }
