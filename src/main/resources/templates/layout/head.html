@@ -10,13 +10,13 @@
     <link rel="preload" th:href="@{/images/icons.svg}" as="image" type="image/svg+xml">
     <link rel="prefetch" th:href="@{/images/icons.svg}" as="image" type="image/svg+xml">
 
-    <!-- <script th:src="@{/flowbite.min.js}"></script>-->
+    <script th:src="@{/flowbite.min.js}"></script>
     <script th:src="@{/htmx.min.js}"></script>
     <script th:src="@{/main.js}"></script>
 
     <script>
-        // htmx.onLoad(function () {
-        // initFlowbite();
-        // })
+        htmx.onLoad(function () {
+            initFlowbite();
+        })
     </script>
 </head>
