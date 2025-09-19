@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,6 +35,9 @@ import java.util.List;
 public class CiuskyController {
 
     private static final Log logger = LogFactory.getLog(CiuskyController.class);
+
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
     @Autowired
     private CiuskySearchService ciuskySearchService;
@@ -88,8 +93,10 @@ public class CiuskyController {
         model.addAttribute("types", types);
         model.addAttribute("ciusky", ciusky);
 
-        // We tell html to trigger a custom event showToast (see main.js)
-        htmxResponse.addTriggerAfterSettle("showToast", new ToastMessage(true, "Ciusky aggiornato! GG"));
+        Context context = new Context();
+        context.setVariable("toast", new ToastMessage(true, "Ciusky aggiornato! GG"));
+        String text = templateEngine.process("toast", context);
+        htmxResponse.addTrigger("showToast", text);
 
         /*
          TODO: instead of returning the entire page we should return only the updated form template

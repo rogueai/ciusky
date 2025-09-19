@@ -2,41 +2,30 @@ htmx.onLoad(function () {
 
     initFlowbite();
 
-    // Handles HX-Trigger: { "showToast": { "message": "...", "success": true } }
     document.body.addEventListener("showToast", (event) => {
-        const { message, success } = event.detail || {};
-        const type = success === false ? 'error' : 'success';
-        showToast(message || 'Done!', 5000, type);
+        if (event.processed) {
+            return true;
+        }
+        event.processed = true;
+        const html = (event.detail || {}).value;
+
+        const toastEl = document.getElementById('toast-default');
+        if (!toastEl) {
+            document.body.insertAdjacentHTML('beforeend', html);
+        }
+        else {
+            toastEl.outerHTML = html;
+        }
+
+        // We call initFlowbite otherwise the close modal button does not work
+        initFlowbite();
+
+        // TODO: I yet have to find a better method to close the dialog automatically.
+        clearTimeout(window.toastTimeout);
+        const $triggerEl = document.getElementById('toastTrigger');
+        window.toastTimeout = setTimeout(() => $triggerEl.click(), 5000);
+
+
+
     });
 })
-
-
-// HTMX toast notification
-// TODO: Quick and dirty toast
-const showToast = (message, duration = 5000, type = 'success') => {
-    // target element that will be dismissed
-    const $targetEl = document.getElementById('toast');
-    // optional trigger element
-    const $triggerEl = document.getElementById('toastTrigger');
-    const $toastText = document.getElementById('toast-text');
-    const $toastSuccessEl = document.getElementById('toast-success');
-    const $toastFailEl = document.getElementById('toast-fail');
-
-    $targetEl.classList.remove('hidden');
-    $targetEl.classList.remove('opacity-0');
-
-    if (type == 'success') {
-        $toastFailEl.classList.remove('inline-flex');
-        $toastSuccessEl.classList.add('inline-flex');
-    } else {
-        $toastSuccessEl.classList.remove('inline-flex');
-        $toastFailEl.classList.add('inline-flex');
-    }
-
-    // Set the message
-    $toastText.textContent = message;
-
-    // Auto-dismiss
-    clearTimeout(window.toastTimeout);
-    window.toastTimeout = setTimeout(() => $triggerEl.click(), duration);
-};
