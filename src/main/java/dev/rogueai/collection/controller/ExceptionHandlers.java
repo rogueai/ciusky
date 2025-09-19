@@ -22,7 +22,8 @@ public class ExceptionHandlers {
     public ResponseEntity<Void> generic(Exception ex, HtmxRequest htmxRequest, HtmxResponse htmxResponse) {
         if (htmxRequest.isHtmxRequest()) {
             htmxResponse.setReswap(HtmxReswap.none());
-            htmxResponse.addTriggerAfterSettle("showToast", new ToastMessage(false, "An error occurred while processing your request"));
+            htmxResponse.addTriggerAfterSettle("showToast",
+                    new ToastMessage(false, "An error occurred while processing your request"));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.internalServerError().build();
