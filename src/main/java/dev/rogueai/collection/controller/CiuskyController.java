@@ -1,5 +1,6 @@
 package dev.rogueai.collection.controller;
 
+import dev.rogueai.collection.service.CiuskyNotFoundException;
 import dev.rogueai.collection.service.CiuskySearchService;
 import dev.rogueai.collection.service.CiuskyService;
 import dev.rogueai.collection.service.ImageService;
@@ -58,7 +59,6 @@ public class CiuskyController {
     @PostMapping({ "/search" })
     public String search(@ModelAttribute CiuskyFilter filter, Model model) {
         logger.info("Search Endpoint invoked with params: " + filter);
-
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
         model.addAttribute("listCiusky", listCiusky);
         return "ciusky-table";
@@ -66,11 +66,16 @@ public class CiuskyController {
 
     @GetMapping({ "/ciusky", "/ciusky/{id}" })
     public String create(@PathVariable(required = false) Long id, Model model) {
-        List<Option> types = optionService.types();
-        model.addAttribute("types", types);
-        Ciusky ciusky = id != null ? ciuskyService.get(id) : new Ciusky();
-        model.addAttribute("ciusky", ciusky);
-        return "create";
+        try {
+            Ciusky ciusky = id != null ? ciuskyService.get(id) : new Ciusky();
+            model.addAttribute("ciusky", ciusky);
+            List<Option> types = optionService.types();
+            model.addAttribute("types", types);
+            return "create";
+        } catch (CiuskyNotFoundException e) {
+            logger.warn(e.getMessage(), e);
+            return "redirect:/";
+        }
     }
 
     @HxRequest

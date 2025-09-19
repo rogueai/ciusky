@@ -16,8 +16,11 @@ import java.util.List;
 @Service
 public class CiuskyService extends AbstractService {
 
-    public Ciusky get(Long id) {
+    public Ciusky get(Long id) throws CiuskyNotFoundException {
         CiuskyEntity entity = ciuskySql.getCiusky(id);
+        if (entity == null) {
+            throw new CiuskyNotFoundException("Could not find ciusky with id: " + id);
+        }
 
         Ciusky model;
         if (ECiuskyType.from(entity.type) == ECiuskyType.BOOK) {
