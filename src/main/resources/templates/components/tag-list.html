@@ -1,8 +1,10 @@
 <div th:fragment="tag-list(field)" class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
     <span th:class="'csk-tag-'+ ${tagColor}"
-          th:each="tag : *{__${field}__}"
+          th:each="tag, i : *{__${field}__}"
           th:id="|badge-dismiss-${tag.key}-${tag.value}|"
           th:with="tagColor=${@colors.getColor(tag.key)}">
+        <input type="hidden" th:field="*{__${field}__[__${i.index}__].key}">
+        <input type="hidden" th:field="*{__${field}__[__${i.index}__].value}">
         [[${tag.key}]]: [[${tag.value}]]
         <button type="button"
                 class="inline-flex items-center p-1 ms-2 text-sm text-[[${tagColor}]]-400 bg-transparent rounded-xs hover:bg-[[${tagColor}]]-200 hover:text-[[${tagColor}]]-900 dark:hover:bg-[[${tagColor}]]-800 dark:hover:text-[[${tagColor}]]-300"
