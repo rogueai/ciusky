@@ -14,6 +14,7 @@ import dev.rogueai.collection.service.model.Tag;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
+import org.apache.commons.lang3.Strings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-import org.thymeleaf.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,7 +57,7 @@ public class CiuskyController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping({"/"})
+    @GetMapping({ "/" })
     public String list(Model model) {
         CiuskyFilter filter = new CiuskyFilter("", null);
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
@@ -67,7 +67,7 @@ public class CiuskyController {
     }
 
     @HxRequest()
-    @PostMapping({"/search"})
+    @PostMapping({ "/search" })
     public String search(@ModelAttribute CiuskyFilter filter, Model model) {
         logger.info("Search Endpoint invoked with params: " + filter);
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
@@ -75,7 +75,7 @@ public class CiuskyController {
         return "ciusky-table";
     }
 
-    @GetMapping({"/ciusky", "/ciusky/{id}"})
+    @GetMapping({ "/ciusky", "/ciusky/{id}" })
     public String create(@PathVariable(required = false) Long id, Model model) {
         try {
             Ciusky ciusky = id != null ? ciuskyService.get(id) : new Ciusky();
@@ -91,7 +91,7 @@ public class CiuskyController {
 
     @HxRequest
     @HxReselect("form")
-    @PostMapping({"/ciusky"})
+    @PostMapping({ "/ciusky" })
     public String save(@ModelAttribute Ciusky ciusky, Model model, HtmxResponse htmxResponse) {
         ciuskyService.save(ciusky);
 
@@ -99,10 +99,7 @@ public class CiuskyController {
         model.addAttribute("types", types);
         model.addAttribute("ciusky", ciusky);
 
-        Context context = new Context();
-        context.setVariable("toast", new ToastMessage(true, "Ciusky aggiornato! GG"));
-        String text = templateEngine.process("toast", context);
-        htmxResponse.addTrigger("showToast", text);
+        htmxResponse.addTrigger("showToast", createToast(true, "Ciusky aggiornato! GG"));
 
         /*
          TODO: instead of returning the entire page we should return only the updated form template
@@ -112,31 +109,30 @@ public class CiuskyController {
     }
 
     /**
-     * Delete a Ciusky. Responds with a 200 status code and empty content, indicating that the row should be replaced
-     * with nothing.
+     * Delete a Ciusky. Responds with a 200 status code and empty content, indicating that the row should be replaced with nothing.
      *
      * @param id ciusky id
      * @return OK
      */
     @HxRequest()
-    @DeleteMapping({"/ciusky/{id}"})
+    @DeleteMapping({ "/ciusky/{id}" })
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         ciuskyService.delete(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping({"/image/{uuid}"})
+    @GetMapping({ "/image/{uuid}" })
     public @ResponseBody byte[] image(@PathVariable String uuid, @RequestParam(required = false, defaultValue = "false") boolean thumbnail) throws IOException {
         return imageService.getResource(uuid, thumbnail);
     }
 
     @HxRequest()
-    @GetMapping({"/ciusky/tag/search"})
+    @GetMapping({ "/ciusky/tag/search" })
     public String tagSearch(@RequestParam String rawTag, Model model) {
-        if (StringUtils.contains(rawTag, ":")) {
+        if (Strings.CI.contains(rawTag, ":")) {
             String[] split = rawTag.split(":");
             String key = split[0];
-            String value = split[1];
+            String value = split.length > 1 ? split[1] : null;
             List<String> values = tagService.getValues(key, value);
             model.addAttribute("tagSearchResult", values.stream().map(v -> key + ":" + v).collect(Collectors.toList()));
         } else {
@@ -147,20 +143,32 @@ public class CiuskyController {
     }
 
     @HxRequest()
-    @PostMapping({"/ciusky/tag/add"})
-    public String tagAdd(@ModelAttribute Ciusky ciusky, Model model) {
+    @PostMapping({ "/ciusky/tag/add" })
+    public String tagAdd(@ModelAttribute Ciusky ciusky, HtmxResponse htmxResponse) {
         String tag = ciusky.getRawTag();
         String[] split = tag.split(":");
-        ciusky.getTags().add(new Tag(split[0], split[1]));
-        ciusky.setRawTag(null);
+
+        if (Strings.CI.contains(tag, ":") && split.length == 2) {
+            ciusky.getTags().add(new Tag(split[0], split[1]));
+            ciusky.setRawTag(null);
+        } else {
+            // TODO: Whe should show a validation error on the input field instead.
+            htmxResponse.addTrigger("showToast", createToast(false, "Invalid Tag"));
+        }
         return "components/tag-input";
     }
 
     @HxRequest()
-    @PostMapping({"/ciusky/tag/delete/{id}"})
-    public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky, Model model) {
+    @PostMapping({ "/ciusky/tag/delete/{id}" })
+    public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky) {
         ciusky.getTags().remove(id);
         return "components/tag-input";
+    }
+
+    private String createToast(boolean success, String message) {
+        Context context = new Context();
+        context.setVariable("toast", new ToastMessage(success, message));
+        return templateEngine.process("toast", context);
     }
 
 }
