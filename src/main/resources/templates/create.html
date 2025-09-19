@@ -7,7 +7,8 @@
 <header th:replace="~{layout/header.html :: header}"></header>
 <main class="p-6">
 
-    <form action="#" th:hx-post="@{/ciusky}" th:object="${ciusky}" hx-target="this" hx-swap="outerHTML" class="max-w-xl mx-auto">
+    <form action="#" th:hx-post="@{/ciusky}" th:object="${ciusky}" hx-target="this" hx-swap="outerHTML"
+          class="max-w-xl mx-auto">
         <input th:field="*{id}" type="hidden" id="id"/>
         <div class="mb-5">
             <label for="title" class="csk-input-label">Title</label>
@@ -70,7 +71,7 @@
             <div class="flex">
                 <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                         xmlns="http://www.w3.org/2000/svg" fill="currentColor"  viewBox="0 0 20 20">
+                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                     </svg>
                 </span>
@@ -83,20 +84,7 @@
                        class="csk-input-addon"/>
             </div>
         </div>
-        <div class="mb-5">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
-            <div th:replace="~{components/tag-list.html :: tag-list('tags')}"></div>
-        </div>
-        <div class="mb-5">
-            <div class="flex">
-                <span class="inline-flex items-center p-2 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" style="width: 24px;height: 24px;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 640 640">
- <path d="M96.5 160L96.5 309.5C96.5 326.5 103.2 342.8 115.2 354.8L307.2 546.8C332.2 571.8 372.7 571.8 397.7 546.8L547.2 397.3C572.2 372.3 572.2 331.8 547.2 306.8L355.2 114.8C343.2 102.7 327 96 310 96L160.5 96C125.2 96 96.5 124.7 96.5 160zM208.5 176C226.2 176 240.5 190.3 240.5 208C240.5 225.7 226.2 240 208.5 240C190.8 240 176.5 225.7 176.5 208C176.5 190.3 190.8 176 208.5 176z"/>
-                    </svg>
-                </span>
-                <input id="tag" type="text" class="csk-input-addon">
-            </div>
-        </div>
+        <div th:replace="~{components/tag-input.html :: tag-input}"></div>
         <button type="submit"
                 class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded inline-flex items-center">
             <svg class="fill-current w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">

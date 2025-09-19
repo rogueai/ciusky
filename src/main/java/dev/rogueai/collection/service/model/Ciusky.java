@@ -34,6 +34,8 @@ public class Ciusky {
 
     private List<CiuskyImage> images;
 
+    private String rawTag;
+
     public Long getId() {
         return id;
     }
@@ -131,5 +133,13 @@ public class Ciusky {
 
     public void setImages(List<CiuskyImage> images) {
         this.images = images;
+    }
+
+    public String getRawTag() {
+        return rawTag;
+    }
+
+    public void setRawTag(String rawTag) {
+        this.rawTag = rawTag;
     }
 }
