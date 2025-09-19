@@ -132,15 +132,15 @@ public class CiuskyController {
 
     @HxRequest()
     @GetMapping({"/ciusky/tag/search"})
-    public String tagSearch(@RequestParam String filter, Model model) {
-        if (StringUtils.contains(filter, ":")) {
-            String[] split = filter.split(":");
+    public String tagSearch(@RequestParam String rawTag, Model model) {
+        if (StringUtils.contains(rawTag, ":")) {
+            String[] split = rawTag.split(":");
             String key = split[0];
             String value = split[1];
             List<String> values = tagService.getValues(key, value);
             model.addAttribute("tagSearchResult", values.stream().map(v -> key + ":" + v).collect(Collectors.toList()));
         } else {
-            List<String> keys = tagService.getKeys(filter);
+            List<String> keys = tagService.getKeys(rawTag);
             model.addAttribute("tagSearchResult", keys);
         }
         return "components/tag-search";

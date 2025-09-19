@@ -15,7 +15,6 @@
             </span>
             <input list="tag-search" id="tag" type="text" class="csk-input-addon" autocomplete="off"
                    hx-trigger="keyup delay:500ms changed"
-                   th:name="filter"
                    th:field="*{rawTag}"
                    th:hx-get="@{/ciusky/tag/search}"
                    hx-target="#tag-search"/>
