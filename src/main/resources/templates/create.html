@@ -29,7 +29,7 @@
         </div>
         <div class="mb-5">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quality</label>
-            <div th:replace="~{components/rating-input.html :: rating-input('quality')}"></div>
+            <div th:replace="~{components/rating :: input('quality')}"></div>
         </div>
         <div class="mb-5">
             <label for="paidPrice" class="csk-input-label">Paid price</label>
@@ -84,7 +84,7 @@
                        class="csk-input-addon"/>
             </div>
         </div>
-        <div th:replace="~{components/tag-input.html :: tag-input}"></div>
+        <div th:replace="~{components/tag :: input(${ciusky})}"></div>
         <button type="submit"
                 class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded inline-flex items-center">
             <svg class="fill-current w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">

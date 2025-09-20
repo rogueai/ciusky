@@ -142,7 +142,7 @@ public class CiuskyController {
             List<String> keys = tagService.getKeys(rawTag);
             model.addAttribute("tagSearchResult", keys);
         }
-        return "components/tag-search";
+        return "components/tag :: search";
     }
 
     @HxRequest()
@@ -158,14 +158,14 @@ public class CiuskyController {
             // TODO: Whe should show a validation error on the input field instead.
             htmxResponse.addTrigger("showToast", createToast(false, "Invalid Tag"));
         }
-        return "components/tag-input";
+        return "tag";
     }
 
     @HxRequest()
     @PostMapping({ "/ciusky/tag/delete/{id}" })
     public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky) {
         ciusky.getTags().remove(id);
-        return "components/tag-input";
+        return "tag";
     }
 
     private String createToast(boolean success, String message) {

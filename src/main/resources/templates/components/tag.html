@@ -1,8 +1,8 @@
 <!--/*@thymesVar id="ciusky" type="dev.rogueai.collection.service.model.Ciusky"*/-->
-<div id="tag-input" th:fragment="tag-input" th:object="${ciusky}">
+<div id="tag-input" th:fragment="input(ciusky)" th:object="${ciusky}">
     <div class="mb-5">
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
-        <div id="tag-list" th:replace="~{components/tag-list.html :: tag-list('tags')}"></div>
+        <div id="tag-list" th:replace="~{this::list(${ciusky})}"></div>
     </div>
     <div class="mb-5">
         <div class="flex">
@@ -18,7 +18,7 @@
                    th:field="*{rawTag}"
                    th:hx-get="@{/ciusky/tag/search}"
                    hx-target="#tag-search"/>
-            <datalist id="tag-search" th:replace="~{components/tag-search.html :: tag-search}"></datalist>
+            <datalist th:replace="~{:: search}"></datalist>
             <button th:hx-post="@{/ciusky/tag/add}"
                     hx-target="#tag-input"
                     type="button"
@@ -31,3 +31,31 @@
         </div>
     </div>
 </div>
+
+<!--/*@thymesVar id="tag" type="dev.rogueai.collection.service.model.Tag"*/-->
+<!--/*@thymesVar id="ciusky" type="dev.rogueai.collection.service.model.Ciusky"*/-->
+<div th:fragment="list(ciusky)" th:object="${ciusky}" class="flex flex-wrap gap-2 overflow-x-auto whitespace-nowrap py-1">
+    <span th:class="'csk-tag-'+ ${tagColor}"
+          th:each="tag, i : *{tags}"
+          th:id="|badge-dismiss-${tag.key}-${tag.value}|"
+          th:with="tagColor=${@colors.getColor(tag.key)}">
+        <input type="hidden" th:field="*{tags[__${i.index}__].key}">
+        <input type="hidden" th:field="*{tags[__${i.index}__].value}">
+        [[${tag.key}]]: [[${tag.value}]]
+        <button type="button"
+                th:hx-post="@{/ciusky/tag/delete/{id}(id=${i.index})}"
+                hx-target="#tag-input"
+                class="inline-flex items-center p-1 ms-2 text-sm text-[[${tagColor}]]-400 bg-transparent rounded-xs hover:bg-[[${tagColor}]]-200 hover:text-[[${tagColor}]]-900 dark:hover:bg-[[${tagColor}]]-800 dark:hover:text-[[${tagColor}]]-300"
+                aria-label="Remove">
+            <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Remove badge</span>
+        </button>
+    </span>
+</div>
+
+<datalist th:fragment="search" id="tag-search">
+    <option th:each="tag : ${tagSearchResult}" th:value="${tag}"></option>
+</datalist>

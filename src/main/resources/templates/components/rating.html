@@ -3,3 +3,13 @@
         <div th:replace="~{components/icon :: icon('star', ${i <= value ? 'w-4 h-4 ms-1 text-yellow-300' : 'w-4 h-4 ms-1 text-gray-300 dark:text-gray-500'})}"></div>
     </th:block>
 </div>
+
+<div th:fragment="input(field)" class="flex items-center" xmlns:th="http://www.thymeleaf.org">
+    <!-- handle 0-values with a hidden star -->
+    <label for="star-0" th:insert="~{components/icon :: icon('star', 'w-4 h-4 ms-1')}" class="text-yellow-300 peer-checked:text-gray-300 dark:peer-checked:text-gray-500 hidden"></label>
+    <input type="radio" id="star-0" th:field="*{__${field}__}" name="rating" th:value="0" class="peer hidden" />
+    <th:block th:each="i: ${#numbers.sequence(1, 5)}" th:with="value=${__${field}__}">
+        <label th:for="|star-${i}|" th:insert="~{components/icon :: icon('star', 'w-4 h-4 ms-1')}" class="text-yellow-300 peer-checked:text-gray-300 dark:peer-checked:text-gray-500 "></label>
+        <input type="radio" th:id="|star-${i}|" th:field="*{__${field}__}" name="rating" th:value="${i}" class="peer hidden" />
+    </th:block>
+</div>

@@ -21,7 +21,7 @@
         <td th:text="${item.description}"></td>
         <td th:text="${item.typeDescription}"></td>
         <td>
-            <div th:replace="~{components/rating.html :: rating(value=${item.quality})}"></div>
+            <div th:replace="~{components/rating :: rating(value=${item.quality})}"></div>
         </td>
         <td th:text="${item.paidPrice}"></td>
         <td th:text="${item.marketPrice}"></td>
