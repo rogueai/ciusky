@@ -1,16 +1,26 @@
 package dev.rogueai.collection.service.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CiuskyFilter {
 
     private String text;
 
-    private Long type;
+    private List<Long> types;
 
     public CiuskyFilter() {
     }
 
-    public CiuskyFilter(String text, Long type) {
+    public CiuskyFilter(String text, List<Option> types) {
         this.text = text;
+        if (types != null) {
+            this.types = types.stream().map(Option::getId).collect(Collectors.toList());
+        } else {
+            this.types = new ArrayList<>();
+        }
+
     }
 
     public String getText() {
@@ -21,16 +31,16 @@ public class CiuskyFilter {
         this.text = text;
     }
 
-    public Long getType() {
-        return type;
+    public List<Long> getTypes() {
+        return types;
     }
 
-    public void setType(Long type) {
-        this.type = type;
+    public void setTypes(List<Long> types) {
+        this.types = types;
     }
 
     @Override
     public String toString() {
-        return "CiuskyFilter{" + "text='" + text + '\'' + ", type=" + type + '}';
+        return "CiuskyFilter{" + "text='" + text + '\'' + ", types=" + types + '}';
     }
 }

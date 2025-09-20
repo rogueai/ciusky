@@ -9,12 +9,12 @@ htmx.onLoad(function () {
         event.processed = true;
         const html = (event.detail || {}).value;
 
-        const toastEl = document.getElementById('toast-default');
+        var toastEl = htmx.find("#toast-default")
         if (!toastEl) {
-            document.body.insertAdjacentHTML('beforeend', html);
+            htmx.swap("body", html, { swapStyle: 'beforeend'} );
         }
         else {
-            toastEl.outerHTML = html;
+            htmx.swap("#toast-default", html, { swapStyle: 'innerHTML'} );
         }
 
         // We call initFlowbite otherwise the close modal button does not work
@@ -24,8 +24,6 @@ htmx.onLoad(function () {
         clearTimeout(window.toastTimeout);
         const $triggerEl = document.getElementById('toastTrigger');
         window.toastTimeout = setTimeout(() => $triggerEl.click(), 5000);
-
-
 
     });
 })

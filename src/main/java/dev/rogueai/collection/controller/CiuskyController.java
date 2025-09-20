@@ -54,14 +54,17 @@ public class CiuskyController {
 
     @Autowired
     private ImageService imageService;
+
     @Autowired
     private TagService tagService;
 
     @GetMapping({ "/" })
     public String list(Model model) {
-        CiuskyFilter filter = new CiuskyFilter("", null);
+        List<Option> types = optionService.types();
+        CiuskyFilter filter = new CiuskyFilter("", types);
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
         model.addAttribute("ciuskyFilter", filter);
+        model.addAttribute("ciuskyTypes", types);
         model.addAttribute("listCiusky", listCiusky);
         return "index";
     }
