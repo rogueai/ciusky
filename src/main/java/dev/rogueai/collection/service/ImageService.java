@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -20,7 +21,9 @@ import java.util.UUID;
 @Service
 public class ImageService extends AbstractService {
 
-    private static final int THUMBNAIL_SIZE = 100;
+    private static final int THUMBNAIL_SIZE = 250;
+
+    private static final boolean MANTAIN_ASPECT_RATIO = false;
 
     private byte[] defaultImage;
 
@@ -78,9 +81,35 @@ public class ImageService extends AbstractService {
     private BufferedImage createThumbnail(byte[] image) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(image);
         BufferedImage original = ImageIO.read(bais);
-        BufferedImage thumbnail = new BufferedImage(THUMBNAIL_SIZE, THUMBNAIL_SIZE, BufferedImage.TYPE_INT_RGB);
-        thumbnail.createGraphics().drawImage(original.getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH), 0, 0, null);
-        return thumbnail;
+
+        if (MANTAIN_ASPECT_RATIO) {
+            Image scaled = original;
+            double scale;
+            double imw = original.getWidth();
+            double imh = original.getHeight();
+            if (THUMBNAIL_SIZE / imw < THUMBNAIL_SIZE / imh) {
+                scale = THUMBNAIL_SIZE / imw;
+                scaled = original.getScaledInstance((int) (scale * imw), (int) (scale * imh), Image.SCALE_SMOOTH);
+            } else if (THUMBNAIL_SIZE / imw > THUMBNAIL_SIZE / imh) {
+                scale = THUMBNAIL_SIZE / imh;
+                scaled = original.getScaledInstance((int) (scale * imw), (int) (scale * imh), Image.SCALE_SMOOTH);
+            } else if (THUMBNAIL_SIZE / imw == THUMBNAIL_SIZE / imh) {
+                scale = THUMBNAIL_SIZE / imw;
+                scaled = original.getScaledInstance((int) (scale * imw), (int) (scale * imh), Image.SCALE_SMOOTH);
+            }
+
+            // Create a buffered image with transparency
+            BufferedImage thumbnail = new BufferedImage(scaled.getWidth(null), scaled.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            // Draw the image on to the buffered image
+            Graphics2D bGr = thumbnail.createGraphics();
+            bGr.drawImage(scaled, 0, 0, null);
+            bGr.dispose();
+            return thumbnail;
+        } else {
+            BufferedImage thumbnail = new BufferedImage(THUMBNAIL_SIZE, THUMBNAIL_SIZE, BufferedImage.TYPE_INT_RGB);
+            thumbnail.createGraphics().drawImage(original.getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH), 0, 0, null);
+            return thumbnail;
+        }
     }
 
 }
