@@ -2,14 +2,6 @@ window.addEventListener("load", (event) => {
   initFlowbite();
 });
 
-htmx.on('#form-upload', 'htmx:beforeRequest', function(evt) {
-    const pr = htmx.find('#upload-progress');
-    htmx.toggleClass(pr, 'hidden');
-});
-htmx.on('#form-upload', 'htmx:beforeSwap', function(evt) {
-    const pr = htmx.find('#upload-progress');
-    htmx.toggleClass(pr, 'hidden');
-});
 
 htmx.onLoad(function () {
 
