@@ -38,7 +38,7 @@
         <td>
             <div class="flex gap-2 whitespace-nowrap py-1">
                 <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3"
-                     th:src="@{/image/{uuid}?thumbnail=true(uuid=${uuid})}"
+                     th:src="@{/ciusky/image/{uuid}?thumbnail=true(uuid=${uuid})}"
                      loading="lazy" class="w-10 h-10 rounded-sm" alt="Thumbnail"/>
                 <div th:text="'+' + ${#lists.size(item.uuidImages) - 3}"
                      th:if="${#lists.size(item.uuidImages)} > 3"

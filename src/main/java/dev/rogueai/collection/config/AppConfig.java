@@ -62,7 +62,7 @@ public class AppConfig {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource());
         dataSourceInitializer.setDatabasePopulator(databasePopulator());
-        dataSourceInitializer.setEnabled(true);
+        dataSourceInitializer.setEnabled(false);
         dataSourceInitializer.setCheckInitializationQuery("SELECT INIT_DATE FROM INFO");
         return dataSourceInitializer;
     }

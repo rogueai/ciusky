@@ -18,6 +18,7 @@ import org.apache.commons.lang3.Strings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -58,7 +60,7 @@ public class CiuskyController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping({ "/" })
+    @GetMapping({"/"})
     public String list(Model model) {
         List<Option> types = optionService.types();
         CiuskyFilter filter = new CiuskyFilter("", types);
@@ -70,7 +72,7 @@ public class CiuskyController {
     }
 
     @HxRequest()
-    @PostMapping({ "/search" })
+    @PostMapping({"/search"})
     public String search(@ModelAttribute CiuskyFilter filter, Model model) {
         logger.info("Search Endpoint invoked with params: " + filter);
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
@@ -78,7 +80,7 @@ public class CiuskyController {
         return "ciusky-table";
     }
 
-    @GetMapping({ "/ciusky", "/ciusky/{id}" })
+    @GetMapping({"/ciusky", "/ciusky/{id}"})
     public String create(@PathVariable(required = false) Long id, Model model) {
         try {
             Ciusky ciusky = id != null ? ciuskyService.get(id) : new Ciusky();
@@ -94,7 +96,7 @@ public class CiuskyController {
 
     @HxRequest
     @HxReselect("form")
-    @PostMapping({ "/ciusky" })
+    @PostMapping({"/ciusky"})
     public String save(@ModelAttribute Ciusky ciusky, Model model, HtmxResponse htmxResponse) {
         ciuskyService.save(ciusky);
 
@@ -112,25 +114,37 @@ public class CiuskyController {
     }
 
     /**
-     * Delete a Ciusky. Responds with a 200 status code and empty content, indicating that the row should be replaced with nothing.
+     * Delete a Ciusky. Responds with a 200 status code and empty content, indicating that the row should be replaced
+     * with nothing.
      *
      * @param id ciusky id
      * @return OK
      */
     @HxRequest()
-    @DeleteMapping({ "/ciusky/{id}" })
+    @DeleteMapping({"/ciusky/{id}"})
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         ciuskyService.delete(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping({ "/image/{uuid}" })
+    @GetMapping(value = {"/ciusky/image/{uuid}"}, produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] image(@PathVariable String uuid, @RequestParam(required = false, defaultValue = "false") boolean thumbnail) throws IOException {
         return imageService.getResource(uuid, thumbnail);
     }
 
     @HxRequest()
-    @GetMapping({ "/ciusky/tag/search" })
+    @PostMapping({"/ciusky/image/upload"})
+    public String imageUpload(@ModelAttribute Ciusky ciusky, @RequestParam("imageFiles") MultipartFile[] files, Model model) throws IOException, CiuskyNotFoundException {
+        for (MultipartFile file : files) {
+            imageService.addResource(ciusky.getId(), file.getName(), file.getBytes());
+        }
+        model.addAttribute("id", ciusky.getId());
+        model.addAttribute("images", ciuskyService.get(ciusky.getId()).getImages());
+        return "components/gallery :: gallery";
+    }
+
+    @HxRequest()
+    @GetMapping({"/ciusky/tag/search"})
     public String tagSearch(@RequestParam String rawTag, Model model) {
         if (Strings.CI.contains(rawTag, ":")) {
             String[] split = rawTag.split(":");
@@ -146,7 +160,7 @@ public class CiuskyController {
     }
 
     @HxRequest()
-    @PostMapping({ "/ciusky/tag/add" })
+    @PostMapping({"/ciusky/tag/add"})
     public String tagAdd(@ModelAttribute Ciusky ciusky, HtmxResponse htmxResponse) {
         String tag = ciusky.getRawTag();
         String[] split = tag.split(":");
@@ -162,7 +176,7 @@ public class CiuskyController {
     }
 
     @HxRequest()
-    @PostMapping({ "/ciusky/tag/delete/{id}" })
+    @PostMapping({"/ciusky/tag/delete/{id}"})
     public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky) {
         ciusky.getTags().remove(id);
         return "components/tag-input";
