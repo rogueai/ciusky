@@ -25,7 +25,7 @@ htmx.onLoad(function () {
             htmx.swap("body", html, { swapStyle: 'beforeend'} );
         }
         else {
-            htmx.swap("#toast-default", html, { swapStyle: 'outherHTML'} );
+            htmx.swap("#toast-default", html, { swapStyle: 'outerHTML'} );
         }
 
         // We call initFlowbite otherwise the close modal button does not work
@@ -34,7 +34,7 @@ htmx.onLoad(function () {
         // TODO: I yet have to find a better method to close the dialog automatically.
         clearTimeout(window.toastTimeout);
         const $triggerEl = document.getElementById('toastTrigger');
-        window.toastTimeout = setTimeout(() => $triggerEl.click(), 5000);
+        window.toastTimeout = setTimeout(() => $triggerEl.click(), 2000);
 
     });
 })

@@ -7,9 +7,9 @@
 <header th:replace="~{layout/header.html :: header}"></header>
 <main class="p-6 ">
 
-    <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-4">
+    <div id="forms" class="max-w-4xl mx-auto flex flex-col md:flex-row gap-4">
         <div class="w-full md:w-3/5">
-            <form action="#" th:hx-post="@{/ciusky}" th:object="${ciusky}" hx-target="this" hx-swap="outerHTML"
+            <form action="#" th:hx-post="@{/ciusky}" th:object="${ciusky}" hx-target="#forms" hx-swap="outerHTML"
                   class="max-w-xl mx-auto">
                 <div class="grid grid-cols-2 gap-2">
                     <input th:field="*{id}" type="hidden" id="id"/>
@@ -112,7 +112,7 @@
                     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                            id="imageFiles" th:name="'imageFiles'" type="file" accept="image/png, image/jpeg" multiple>
                 </div>
-                <div id="image-gallery" th:replace="~{components/gallery :: gallery(*{id}, *{images})}"></div>
+                <div id="image-gallery" th:replace="~{components/gallery :: gallery}"></div>
             </form>
         </div>
     </div>
