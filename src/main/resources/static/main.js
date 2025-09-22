@@ -25,7 +25,7 @@ htmx.onLoad(function () {
             htmx.swap("body", html, { swapStyle: 'beforeend'} );
         }
         else {
-            htmx.swap("#toast-default", html, { swapStyle: 'innerHTML'} );
+            htmx.swap("#toast-default", html, { swapStyle: 'outherHTML'} );
         }
 
         // We call initFlowbite otherwise the close modal button does not work
