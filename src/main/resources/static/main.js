@@ -1,6 +1,8 @@
-htmx.onLoad(function () {
+window.addEventListener("load", (event) => {
+  initFlowbite();
+});
 
-    initFlowbite();
+htmx.onLoad(function () {
 
     document.body.addEventListener("showToast", (event) => {
         if (event.processed) {

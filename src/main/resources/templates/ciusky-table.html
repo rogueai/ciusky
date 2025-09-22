@@ -17,8 +17,10 @@
     <tbody hx-target="closest tr" hx-swap="outerHTML swap:500ms">
     <tr th:each="item : ${listCiusky}">
         <td th:text="${item.id}"></td>
-        <td th:text="${item.title}"></td>
-        <td th:text="${item.description}"></td>
+        <td th:text="${item.title}" class="max-w-md" ></td>
+        <td class="max-w-md">
+            <p th:text="${item.description}" class="text-ellipsis overflow-hidden"></p>
+        </td>
         <td th:text="${item.typeDescription}"></td>
         <td>
             <div th:replace="~{components/rating.html :: rating(value=${item.quality})}"></div>
@@ -26,15 +28,15 @@
         <td th:text="${item.paidPrice}"></td>
         <td th:text="${item.marketPrice}"></td>
         <td>
-            <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
-                <span th:class="'csk-tag-'+ ${tagColor}"
+            <div class="flex flex-wrap gap-2 py-1 max-w-md">
+                <span th:class="'whitespace-nowrap csk-tag-'+ ${tagColor}"
                       th:each="tag : ${item.tags}"
                       th:text="|${tag.key}: ${tag.value}|"
                       th:with="tagColor=${@colors.getColor(tag.key)}"></span>
             </div>
         </td>
         <td>
-            <div class="flex gap-2 overflow-x-auto whitespace-nowrap py-1">
+            <div class="flex gap-2 whitespace-nowrap py-1">
                 <img th:each="uuid, iter: ${item.uuidImages}" th:if="${iter.index} < 3"
                      th:src="@{/image/{uuid}?thumbnail=true(uuid=${uuid})}"
                      loading="lazy" class="w-10 h-10 rounded-sm" alt="Thumbnail"/>
