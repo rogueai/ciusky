@@ -11,7 +11,7 @@ public enum ECiuskyType {
     SOFTWARE(3L), //
     GAME(4L), //
     COMPUTER(5L), //
-    PERIPHERAL_DEVICE(6L), //
+    PERIPHERAL(6L), //
     GADGET(7L);
 
     private static final Map<Long, ECiuskyType> BY_ID = new HashMap<>();
