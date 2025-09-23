@@ -24,7 +24,7 @@ public class AppInitializer {
     @Autowired
     private ImageService imageService;
 
-    @PostConstruct
+    // @PostConstruct
     public void init() throws IOException {
         List<Ciusky> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
