@@ -1,6 +1,6 @@
 <!--/*@thymesVar id="image" type="dev.rogueai.collection.service.model.CiuskyImage"*/-->
 <div id="image-gallery" th:fragment="gallery" th:object="${ciusky}">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 grid-flow-row-dense">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div th:each="image : ${ciusky.images}" class="relative group rounded-lg border-gray-600" onclick="toggleWideImage(this)">
             <img class="h-auto max-w-full mx-auto rounded-lg border-gray-600" alt=""
                  th:src="@{/ciusky/image/{uuid}(uuid=${image.getUuid()},thumbnail=true)}"
