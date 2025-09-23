@@ -59,6 +59,10 @@ public class ImageService extends AbstractService {
         return Files.readAllBytes(path);
     }
 
+    public void delete(Long ciuskyId, String uuid) {
+        imageSql.delete(ciuskyId, uuid);
+    }
+
     private Path getPath(CiuskyImageEntity cie, boolean thumbnail) {
         if (!thumbnail) {
             return Paths.get(String.format("%s/%s/%s-%s", imageDir.toString(), cie.id, cie.uuid, cie.name));

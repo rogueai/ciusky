@@ -1,12 +1,11 @@
 package dev.rogueai.collection.db.sql;
 
 import dev.rogueai.collection.db.dto.CiuskyImageEntity;
-import dev.rogueai.collection.db.dto.TagEntity;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface IImageSql {
 
@@ -15,6 +14,9 @@ public interface IImageSql {
 
     @Insert("INSERT INTO CIUSKY_IMG (ID, `UUID`, `NAME`) VALUES (#{id}, #{uuid}, #{name})")
     void insert(CiuskyImageEntity entity);
+
+    @Delete("DELETE CIUSKY_IMG WHERE ID = #{id} AND `UUID` = #{uuid})")
+    void delete(Long ciuskyId, String uuid);
 
     @Select("SELECT * from CIUSKY_IMG WHERE UUID = #{uuid}")
     CiuskyImageEntity getByUuid(String uuid);

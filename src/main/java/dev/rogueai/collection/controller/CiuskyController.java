@@ -142,6 +142,14 @@ public class CiuskyController {
     }
 
     @HxRequest()
+    @DeleteMapping({ "/ciusky/{id}/image/{uuid}" })
+    public String imageDelete(@PathVariable(required = true) Long id, @PathVariable(required = true) String uuid, Model model) throws CiuskyNotFoundException {
+        imageService.delete(id, uuid);
+        model.addAttribute("ciusky", ciuskyService.get(id));
+        return "components/gallery :: gallery";
+    }
+
+    @HxRequest()
     @GetMapping({ "/ciusky/tag/search" })
     public String tagSearch(@RequestParam String rawTag, Model model) {
         if (Strings.CI.contains(rawTag, ":")) {
