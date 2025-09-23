@@ -2,6 +2,13 @@ window.addEventListener("load", (event) => {
   initFlowbite();
 });
 
+window.addEventListener("htmx:afterSettle", (event) => {
+  // TODO: initFlowbite(); must be called after swapping otherwise flowbite componets does not works.
+  // TODO: the problem is, that in the search page, if called the dropdown not positioned correct
+  if (event.target.id != 'ciusky-table') {
+    initFlowbite();
+  }
+});
 
 htmx.onLoad(function () {
 
