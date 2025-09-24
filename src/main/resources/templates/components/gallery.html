@@ -8,7 +8,9 @@
                  th:src="@{/ciusky/image/{uuid}(uuid=${image.getUuid()},thumbnail=true)}"
                  th:data-src="@{/ciusky/image/{uuid}(uuid=${image.getUuid()},thumbnail=false)}"
             />
-            <span class="absolute top-1 right-0 hidden group-hover:inline-flex items-center justify-center w-6 h-6 me-2 text-sm font-semibold text-gray-800 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-gray-300">
+            <span th:hx-delete="@{/ciusky/{id}/image/{uuid}(id=${ciusky.getId()},uuid=${image.getUuid()})}"
+                  hx-trigger="click consume"
+                  class="absolute top-1 right-0 hidden group-hover:inline-flex items-center justify-center w-6 h-6 me-2 text-sm font-semibold text-gray-800 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-gray-300">
                 <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                      viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

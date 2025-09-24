@@ -171,14 +171,14 @@
                 <input type="hidden" th:field="*{id}" />
                 <div class="mb-5">
                     <label for="imageFiles" class="csk-input-label">Image gallery</label>
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    <input th:disabled="*{id == null}" th:classappend="*{id == null} ? 'cursor-not-allowed' : ''"
+                           class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                            id="imageFiles" th:name="'imageFiles'" type="file" accept="image/png, image/jpeg" multiple>
                 </div>
                 <div id="image-gallery" th:replace="~{components/gallery :: gallery}"></div>
             </form>
         </div>
     </div>
-
 </main>
 
 <script  th:inline="javascript">

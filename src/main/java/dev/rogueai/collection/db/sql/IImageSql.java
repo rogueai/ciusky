@@ -15,7 +15,7 @@ public interface IImageSql {
     @Insert("INSERT INTO CIUSKY_IMG (ID, `UUID`, `NAME`) VALUES (#{id}, #{uuid}, #{name})")
     void insert(CiuskyImageEntity entity);
 
-    @Delete("DELETE CIUSKY_IMG WHERE ID = #{id} AND `UUID` = #{uuid})")
+    @Delete("DELETE CIUSKY_IMG WHERE ID = #{ciuskyId} AND `UUID` = #{uuid}")
     void delete(Long ciuskyId, String uuid);
 
     @Select("SELECT * from CIUSKY_IMG WHERE UUID = #{uuid}")
