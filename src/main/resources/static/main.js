@@ -45,13 +45,13 @@ function toggleWideImage(el) {
 
 (function() {
     let api;
-    htmx.defineExtension('bazinga', {
+    htmx.defineExtension('tag', {
         init: function(apiRef) {
             api = apiRef;
         },
         getSelectors: function() {return null;},
         onEvent : function(name, evt) {
-            if (name == 'htmx:beforeProcessNode') {
+            if (name === 'htmx:beforeProcessNode') {
 
                // The form that contains me
                const formEl = htmx.closest(evt.target, 'form');
@@ -67,12 +67,12 @@ function toggleWideImage(el) {
                });
 
                // POST
-               const post_path = api.getAttributeValue(evt.target, "bazinga-post");
-               const post_target = api.getAttributeValue(evt.target, "bazinga-post-target");
+               const post_path = api.getAttributeValue(evt.target, "hx-tag-post");
+               const post_target = api.getAttributeValue(evt.target, "hx-tag-post-target");
 
                // GET
-               const get_path = api.getAttributeValue(evt.target, "bazinga-get");
-               const get_target = api.getAttributeValue(evt.target, "bazinga-get-target");
+               const get_path = api.getAttributeValue(evt.target, "hx-tag-get");
+               const get_target = api.getAttributeValue(evt.target, "hx-tag-get-target");
 
                htmx.on(evt.target, "keyup", function(evt) {
                  if (evt.keyCode === 13) {

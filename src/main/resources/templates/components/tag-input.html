@@ -15,11 +15,11 @@
             </span>
 
             <input list="tag-search" id="tag" type="text" autocomplete="off"
-                   hx-ext="bazinga"
-                   th:bazinga-get="@{/ciusky/tag/search}"
-                   bazinga-get-target="#tag-search"
-                   bazinga-post="@{/ciusky/tag/add}"
-                   bazinga-post-target="#tag-input"
+                   hx-ext="tag"
+                   th:hx-tag-get="@{/ciusky/tag/search}"
+                   hx-tag-get-target="#tag-search"
+                   th:hx-tag-post="@{/ciusky/tag/add}"
+                   hx-tag-post-target="#tag-input"
                    th:field="*{rawTag}" class="csk-input-addon" />
 
             <datalist id="tag-search" th:replace="~{components/tag-search.html :: tag-search}"></datalist>
