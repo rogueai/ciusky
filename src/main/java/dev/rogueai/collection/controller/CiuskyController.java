@@ -6,11 +6,14 @@ import dev.rogueai.collection.service.CiuskyService;
 import dev.rogueai.collection.service.ImageService;
 import dev.rogueai.collection.service.OptionService;
 import dev.rogueai.collection.service.TagService;
+import dev.rogueai.collection.service.model.Book;
 import dev.rogueai.collection.service.model.Ciusky;
 import dev.rogueai.collection.service.model.CiuskyFilter;
 import dev.rogueai.collection.service.model.CiuskySearch;
+import dev.rogueai.collection.service.model.ECiuskyType;
 import dev.rogueai.collection.service.model.Option;
 import dev.rogueai.collection.service.model.Tag;
+import dev.rogueai.collection.util.TemplateUtils;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,6 +67,8 @@ public class CiuskyController {
     @GetMapping({ "/" })
     public String list(Model model) {
         List<Option> types = optionService.types();
+        // TODO: every time we go back to the home page the filters are inizialized again
+        // TODO: we should store the CiuskyFilter in session?
         CiuskyFilter filter = new CiuskyFilter("", types);
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
         model.addAttribute("ciuskyFilter", filter);
@@ -94,17 +100,70 @@ public class CiuskyController {
         }
     }
 
+    /**
+     * @see TemplateUtils getSaveAction
+     */
     @HxRequest
     @HxReselect("#forms")
-    @PostMapping({ "/ciusky" })
-    public String save(@ModelAttribute Ciusky ciusky, Model model, HtmxResponse htmxResponse) throws CiuskyNotFoundException {
+    @PostMapping({ "/ciusky/saveCiusky" })
+    public String saveCiusky(@ModelAttribute Ciusky ciusky, Model model, HtmxResponse htmxResponse) {
+        return save(ciusky, model, htmxResponse);
+    }
+
+    /**
+     * @see TemplateUtils getSaveAction
+     */
+    @HxRequest
+    @HxReselect("#forms")
+    @PostMapping({ "/ciusky/saveBook" })
+    public String saveBook(@ModelAttribute Book book, Model model, HtmxResponse htmxResponse) {
+        return save(book, model, htmxResponse);
+    }
+
+    public <T extends Ciusky> String save(T ciusky, Model model, HtmxResponse htmxResponse) {
         ciuskyService.save(ciusky);
 
         List<Option> types = optionService.types();
         model.addAttribute("types", types);
-        model.addAttribute("ciusky", ciuskyService.get(ciusky.getId()));
 
+        Ciusky refreshed = null;
+        try {
+            refreshed = ciuskyService.get(ciusky.getId());
+        } catch (CiuskyNotFoundException e) {
+            logger.warn(e.getMessage(), e);
+            return "redirect:/";
+        }
+
+        model.addAttribute("ciusky", refreshed);
         htmxResponse.addTrigger("showToast", createToast(true, "Ciusky aggiornato! GG"));
+        /*
+         TODO: instead of returning the entire page we should return only the updated form template
+           for now the with @HxReselect("form") we tell htmx to take from the response only the tag form
+         */
+        return "create";
+
+    }
+
+    @HxRequest
+    @HxReselect("#forms")
+    @PutMapping({ "/ciusky/changeType" })
+    public String changeType(@ModelAttribute Ciusky ciusky, Model model) {
+
+        List<Option> types = optionService.types();
+        model.addAttribute("types", types);
+
+        if (ECiuskyType.from(ciusky.getType()) == ECiuskyType.BOOK) {
+            Book book = new Book(ciusky);
+            if (ciusky.getId() != null) {
+                book.setImages(ciuskyService.getImages(ciusky.getId()));
+            }
+            model.addAttribute("ciusky", book);
+        } else {
+            if (ciusky.getId() != null) {
+                ciusky.setImages(ciuskyService.getImages(ciusky.getId()));
+            }
+            model.addAttribute("ciusky", ciusky);
+        }
 
         /*
          TODO: instead of returning the entire page we should return only the updated form template

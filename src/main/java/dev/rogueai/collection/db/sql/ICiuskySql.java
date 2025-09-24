@@ -37,9 +37,9 @@ public interface ICiuskySql {
             "SET AUTHOR = #{author}, FORMAT = #{format}, PUBLISHER = #{publisher}, PUBLISH_DATE = #{publishDate}, " + //
             "ISBN_13 = #{isbn13}, `LANGUAGE` = #{language} " + //
             "WHERE ID = #{id}")
-    void updateBook(BookEntity bookEntity);
+    int updateBook(BookEntity bookEntity);
 
     @Delete("DELETE CIUSKY WHERE ID = #{id}")
-    int delete(Long id);
+    void delete(Long id);
 
 }

@@ -9,32 +9,32 @@ import java.util.List;
 
 public class Ciusky {
 
-    private Long id;
+    protected Long id;
 
-    private String title;
+    protected String title;
 
-    private String description;
+    protected String description;
 
-    private long type;
+    protected long type;
 
-    private int quality;
+    protected int quality;
 
-    private String purchasePlace;
-    
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date purchaseDate;
+    protected String purchasePlace;
 
-    private BigDecimal paidPrice;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    protected Date purchaseDate;
 
-    private BigDecimal marketPrice;
+    protected BigDecimal paidPrice;
 
-    private String notes;
+    protected BigDecimal marketPrice;
 
-    private List<Tag> tags;
+    protected String notes;
 
-    private List<CiuskyImage> images;
+    protected List<Tag> tags;
 
-    private String rawTag;
+    protected List<CiuskyImage> images;
+
+    protected String rawTag;
 
     public Long getId() {
         return id;

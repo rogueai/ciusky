@@ -74,6 +74,7 @@ val copyJsAssets by tasks.registering(Copy::class) {
             files(
                 "node_modules/htmx.org/dist/htmx.min.js",
                 "node_modules/flowbite/dist/flowbite.min.js",
+                "node_modules/flowbite/dist/flowbite.min.js.map",
             )
         )
     })

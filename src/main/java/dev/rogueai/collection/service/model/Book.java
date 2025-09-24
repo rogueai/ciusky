@@ -12,12 +12,31 @@ public class Book extends Ciusky {
 
     private String publisher;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishDate;
 
     private String isbn13;
 
     private String language;
+
+    public Book() {
+
+    }
+
+    public Book(Ciusky ciusky) {
+        this.id = ciusky.id;
+        this.title = ciusky.title;
+        this.description = ciusky.description;
+        this.type = ciusky.type;
+        this.quality = ciusky.quality;
+        this.purchasePlace = ciusky.purchasePlace;
+        this.purchaseDate = ciusky.purchaseDate;
+        this.paidPrice = ciusky.paidPrice;
+        this.marketPrice = ciusky.marketPrice;
+        this.notes = ciusky.notes;
+        this.tags = ciusky.tags;
+        this.images = ciusky.images;
+    }
 
     public String getAuthor() {
         return author;

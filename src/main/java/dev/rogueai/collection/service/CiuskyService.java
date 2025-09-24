@@ -6,6 +6,7 @@ import dev.rogueai.collection.db.dto.CiuskyImageEntity;
 import dev.rogueai.collection.db.dto.TagEntity;
 import dev.rogueai.collection.service.model.Book;
 import dev.rogueai.collection.service.model.Ciusky;
+import dev.rogueai.collection.service.model.CiuskyImage;
 import dev.rogueai.collection.service.model.ECiuskyType;
 import dev.rogueai.collection.service.model.Tag;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class CiuskyService extends AbstractService {
         return model;
     }
 
+    public List<CiuskyImage> getImages(Long id) {
+        List<CiuskyImageEntity> imagesEntity = imageSql.getImages(id);
+        return mapper.toCiuskyImageList(imagesEntity);
+    }
+
     public void delete(Long id) {
         /* TODO: When I delete a Ciùsky from the database, the images on the filesystem are kept, for now.
             I am worried about accidentally removing the entire HOME directory. */
@@ -46,7 +52,7 @@ public class CiuskyService extends AbstractService {
     }
 
     @Transactional
-    private void insert(Ciusky model) {
+    protected void insert(Ciusky model) {
         CiuskyEntity entity = mapper.fromCiusky(model);
         ciuskySql.insertCiusky(entity);
         model.setId(entity.id);
@@ -61,13 +67,19 @@ public class CiuskyService extends AbstractService {
     }
 
     @Transactional
-    private void update(Ciusky model) {
+    protected void update(Ciusky model) {
         CiuskyEntity entity = mapper.fromCiusky(model);
         ciuskySql.updateCiusky(entity);
         model.setId(entity.id);
+
+        // TODO: if this ciusky WAS a book the db is left dirty with a non used reference in BOOK
         if (model.getType() == 2L && model instanceof Book) {
             BookEntity bookEntity = mapper.fromBook((Book) model);
-            ciuskySql.updateBook(bookEntity);
+            int updatedRows = ciuskySql.updateBook(bookEntity);
+            // check if something changed
+            if (updatedRows == 0) {
+                ciuskySql.insertBook(bookEntity);
+            }
         }
 
         tagSql.delete(model.getId());

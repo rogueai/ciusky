@@ -9,7 +9,9 @@
 
     <div id="forms" class="max-w-4xl mx-auto flex flex-col md:flex-row gap-4">
         <div class="w-full md:w-3/5">
-            <form action="#" th:hx-post="@{/ciusky}" th:object="${ciusky}" hx-target="#forms" hx-swap="outerHTML"
+
+            <form th:object="${ciusky}" th:hx-post="@{/ciusky/{action}(action=${@templateUtils.getSaveAction(ciusky.type)})}"
+                  hx-target="#forms" hx-swap="outerHTML"
                   class="max-w-xl mx-auto">
                 <div class="grid grid-cols-2 gap-2">
                     <input th:field="*{id}" type="hidden" id="id"/>
@@ -22,9 +24,10 @@
                         <input th:field="*{description}" type="text" id="description" class="csk-input"/>
                     </div>
                     <div class="mb-5">
-                        <label for="types"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-                        <select th:field="*{type}" id="types"
+                        <label for="types" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+                        <input th:if="${ciusky.id != null}" th:field="*{type}" type="hidden" />
+                        <select th:field="*{type}" th:disabled="${ciusky.id != null}" id="types"
+                                th:hx-put="@{/ciusky/changeType}" hx-target="#forms"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option th:value="-1" selected>Choose a type</option>
                             <option th:each="option : ${types}" th:value="${option.id}"
@@ -76,11 +79,8 @@
                                 </svg>
                             </span>
                             <input th:field="*{purchaseDate}" id="purchaseDate"
-                                   datepicker datepicker-autohide datepicker-buttons datepicker-orientation="top"
-                                   datepicker-format="dd/mm/yyyy" type="text"
-                                   placeholder="Select date"
-                                   autocomplete="off"
-                                   class="csk-input-addon"/>
+                                   type="date" placeholder="Select date"
+                                   autocomplete="off" class="csk-input-addon"/>
                         </div>
                     </div>
                     <div class="mb-5">
@@ -88,7 +88,64 @@
                         <input th:field="*{purchasePlace}" type="text" id="purchasePlace" class="csk-input"
                                placeholder=""/>
                     </div>
+
                     <div class="col-span-2" th:insert="~{components/tag-input.html :: tag-input}"></div>
+
+                    <th:block th:if="${ciusky.type == 2}">
+
+                        <div class="mb-5 col-span-2">
+                            <label for="author" class="csk-input-label">Author</label>
+                            <input th:field="*{author}" type="text" id="author" class="csk-input" placeholder="" required/>
+                        </div>
+
+                        <div class="mb-5 col-span-2">
+                            <label for="format" class="csk-input-label">Format</label>
+                            <input th:field="*{format}" type="text" id="format" class="csk-input" placeholder="" required/>
+                        </div>
+
+                        <div class="mb-5 col-span-2">
+                            <label for="publisher" class="csk-input-label">Publisher</label>
+                            <input th:field="*{publisher}" type="text" id="publisher" class="csk-input" placeholder="" required/>
+                        </div>
+
+                        <div class="mb-5 col-span-2">
+                            <label for="publishDate" class="csk-input-label">Publish date</label>
+                            <div class="flex">
+                            <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                </svg>
+                            </span>
+                                <input th:field="*{publishDate}" id="publishDate"
+                                       type="date" placeholder="Select date"
+                                       autocomplete="off"
+                                       class="csk-input-addon"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-5 col-span-2">
+                            <label for="isbn13" class="csk-input-label">ISBN-13</label>
+                            <div class="flex">
+                            <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                  <path d="M6 10h9.231M6 14h9.231M18 5.086A5.95 5.95 0 0 0 14.615 4c-3.738 0-6.769 3.582-6.769 8s3.031 8 6.769 8A5.94 5.94 0 0 0 18 18.916"
+                                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" fill="none"/>
+                                </svg>
+                            </span>
+                                <input th:field="*{isbn13}" type="text" id="isbn13" class="csk-input-addon" placeholder="978-1-56619-909-4">
+                            </div>
+                        </div>
+
+                        <div class="mb-5 col-span-2">
+                            <label for="language" class="csk-input-label">Language</label>
+                            <input th:field="*{language}" type="text" id="language" class="csk-input" placeholder="EN" required/>
+                        </div>
+
+                    </th:block>
+
                     <div class="mb-5 col-span-2">
                         <label for="notes" class="csk-input-label">Notes</label>
                         <textarea th:field="*{notes}" id="notes" rows="4" class="csk-input"

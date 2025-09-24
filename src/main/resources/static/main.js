@@ -2,7 +2,6 @@ window.addEventListener("load", (event) => {
   initFlowbite();
 });
 
-
 htmx.onLoad(function () {
 
     document.body.addEventListener("showToast", (event) => {
@@ -27,6 +26,7 @@ htmx.onLoad(function () {
         clearTimeout(window.toastTimeout);
         const $triggerEl = document.getElementById('toastTrigger');
         window.toastTimeout = setTimeout(() => $triggerEl.click(), 2000);
+
 
     });
 })
