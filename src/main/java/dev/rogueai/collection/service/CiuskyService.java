@@ -52,7 +52,7 @@ public class CiuskyService extends AbstractService {
     }
 
     @Transactional
-    private void insert(Ciusky model) {
+    protected void insert(Ciusky model) {
         CiuskyEntity entity = mapper.fromCiusky(model);
         ciuskySql.insertCiusky(entity);
         model.setId(entity.id);
@@ -67,7 +67,7 @@ public class CiuskyService extends AbstractService {
     }
 
     @Transactional
-    private void update(Ciusky model) {
+    protected void update(Ciusky model) {
         CiuskyEntity entity = mapper.fromCiusky(model);
         ciuskySql.updateCiusky(entity);
         model.setId(entity.id);

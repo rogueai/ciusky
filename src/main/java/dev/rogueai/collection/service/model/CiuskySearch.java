@@ -22,7 +22,7 @@ public class CiuskySearch {
 
     private String purchasePlace;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date purchaseDate;
 
     private BigDecimal paidPrice;

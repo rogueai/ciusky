@@ -12,7 +12,7 @@ public class Book extends Ciusky {
 
     private String publisher;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishDate;
 
     private String isbn13;
@@ -20,7 +20,7 @@ public class Book extends Ciusky {
     private String language;
 
     public Book() {
-        
+
     }
 
     public Book(Ciusky ciusky) {

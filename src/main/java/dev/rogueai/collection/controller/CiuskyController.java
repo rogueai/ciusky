@@ -13,6 +13,7 @@ import dev.rogueai.collection.service.model.CiuskySearch;
 import dev.rogueai.collection.service.model.ECiuskyType;
 import dev.rogueai.collection.service.model.Option;
 import dev.rogueai.collection.service.model.Tag;
+import dev.rogueai.collection.util.TemplateUtils;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
@@ -90,7 +91,6 @@ public class CiuskyController {
         try {
             Ciusky ciusky = id != null ? ciuskyService.get(id) : new Ciusky();
             model.addAttribute("ciusky", ciusky);
-            model.addAttribute("saveAction", getSaveAction(ciusky));
             List<Option> types = optionService.types();
             model.addAttribute("types", types);
             return "create";
@@ -100,6 +100,9 @@ public class CiuskyController {
         }
     }
 
+    /**
+     * @see TemplateUtils getSaveAction
+     */
     @HxRequest
     @HxReselect("#forms")
     @PostMapping({ "/ciusky/saveCiusky" })
@@ -107,6 +110,9 @@ public class CiuskyController {
         return save(ciusky, model, htmxResponse);
     }
 
+    /**
+     * @see TemplateUtils getSaveAction
+     */
     @HxRequest
     @HxReselect("#forms")
     @PostMapping({ "/ciusky/saveBook" })
@@ -129,7 +135,6 @@ public class CiuskyController {
         }
 
         model.addAttribute("ciusky", refreshed);
-        model.addAttribute("saveAction", getSaveAction(ciusky));
         htmxResponse.addTrigger("showToast", createToast(true, "Ciusky aggiornato! GG"));
         /*
          TODO: instead of returning the entire page we should return only the updated form template
@@ -153,13 +158,11 @@ public class CiuskyController {
                 book.setImages(ciuskyService.getImages(ciusky.getId()));
             }
             model.addAttribute("ciusky", book);
-            model.addAttribute("saveAction", getSaveAction(ciusky));
         } else {
             if (ciusky.getId() != null) {
                 ciusky.setImages(ciuskyService.getImages(ciusky.getId()));
             }
             model.addAttribute("ciusky", ciusky);
-            model.addAttribute("saveAction", getSaveAction(ciusky));
         }
 
         /*
@@ -242,14 +245,6 @@ public class CiuskyController {
     public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky) {
         ciusky.getTags().remove(id);
         return "components/tag-input";
-    }
-
-    private String getSaveAction(Ciusky ciusky) {
-        ECiuskyType type = ECiuskyType.from(ciusky != null ? ciusky.getType() : 0);
-        if (type == ECiuskyType.BOOK) {
-            return "saveBook";
-        }
-        return "saveCiusky";
     }
 
     private String createToast(boolean success, String message) {

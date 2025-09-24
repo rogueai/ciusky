@@ -3,7 +3,7 @@
     <span th:class="'csk-tag-'+ ${tagColor}"
           th:each="tag, i : *{__${field}__}"
           th:id="|badge-dismiss-${tag.key}-${tag.value}|"
-          th:with="tagColor=${@colors.getColor(tag.key)}">
+          th:with="tagColor=${@templateUtils.getColor(tag.key)}">
         <input type="hidden" th:field="*{__${field}__[__${i.index}__].key}">
         <input type="hidden" th:field="*{__${field}__[__${i.index}__].value}">
         [[${tag.key}]]: [[${tag.value}]]

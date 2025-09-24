@@ -32,7 +32,7 @@
                 <span th:class="'whitespace-nowrap csk-tag-'+ ${tagColor}"
                       th:each="tag : ${item.tags}"
                       th:text="|${tag.key}: ${tag.value}|"
-                      th:with="tagColor=${@colors.getColor(tag.key)}"></span>
+                      th:with="tagColor=${@templateUtils.getColor(tag.key)}"></span>
             </div>
         </td>
         <td>

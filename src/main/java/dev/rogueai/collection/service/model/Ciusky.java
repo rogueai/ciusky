@@ -21,7 +21,7 @@ public class Ciusky {
 
     protected String purchasePlace;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     protected Date purchaseDate;
 
     protected BigDecimal paidPrice;

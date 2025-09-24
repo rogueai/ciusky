@@ -1,5 +1,6 @@
 package dev.rogueai.collection.util;
 
+import dev.rogueai.collection.service.model.ECiuskyType;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Colors {
+public class TemplateUtils {
 
     private static final List<String> PALETTE = new ArrayList<>();
 
@@ -24,7 +25,6 @@ public class Colors {
         PALETTE.add("pink");
     }
 
-
     public String getColor(String key) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -38,5 +38,12 @@ public class Colors {
         }
     }
 
+    public String getSaveAction(Long typeId) {
+        ECiuskyType type = ECiuskyType.from(typeId != null ? typeId : 0);
+        if (type == ECiuskyType.BOOK) {
+            return "saveBook";
+        }
+        return "saveCiusky";
+    }
 
 }
