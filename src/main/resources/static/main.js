@@ -42,3 +42,62 @@ function toggleWideImage(el) {
     img.dataset.src = img.src;
     img.src = newSrc;
 }
+
+(function() {
+    let api;
+    htmx.defineExtension('bazinga', {
+        init: function(apiRef) {
+            api = apiRef;
+        },
+        getSelectors: function() {return null;},
+        onEvent : function(name, evt) {
+            if (name == 'htmx:beforeProcessNode') {
+
+               // The form that contains me
+               const formEl = htmx.closest(evt.target, 'form');
+               if (!formEl) {
+                    throw new Error("Form not found");
+               }
+
+               htmx.on(evt.target, "keydown", function(evt) {
+                   if (evt.keyCode === 13) {
+                         // Prevents the form to be submitted
+                       evt.preventDefault();
+                   }
+               });
+
+               // POST
+               const post_path = api.getAttributeValue(evt.target, "bazinga-post");
+               const post_target = api.getAttributeValue(evt.target, "bazinga-post-target");
+
+               // GET
+               const get_path = api.getAttributeValue(evt.target, "bazinga-get");
+               const get_target = api.getAttributeValue(evt.target, "bazinga-get-target");
+
+               htmx.on(evt.target, "keyup", function(evt) {
+                 if (evt.keyCode === 13) {
+                    // Enter
+                    const values = htmx.values(formEl);
+                    htmx.ajax('POST', post_path, { values: values,  target: post_target } );
+                 }
+                 else {
+                    // Simulate trigger changed
+                    if (event.target.prevValue != evt.target.value) {
+                        event.target.prevValue = evt.target.value;
+                        const values = {
+                            [evt.target.name] : evt.target.value
+                        };
+                        htmx.ajax('GET', get_path, { values: values, target: get_target, swap:'outerHTML'});
+                    }
+                 }
+               });
+
+            }
+            console.log(name, evt);
+        },
+        transformResponse : function(text, xhr, elt) {return text;},
+        isInlineSwap : function(swapStyle) {return false;},
+        handleSwap : function(swapStyle, target, fragment, settleInfo) {return false;},
+        encodeParameters : function(xhr, parameters, elt) {return null;}
+    });
+})();

@@ -10,7 +10,7 @@
     <div id="forms" class="max-w-4xl mx-auto flex flex-col md:flex-row gap-4">
         <div class="w-full md:w-3/5">
 
-            <form th:object="${ciusky}" th:hx-post="@{/ciusky/{action}(action=${@templateUtils.getSaveAction(ciusky.type)})}"
+            <form id="main-form" th:object="${ciusky}" th:hx-post="@{/ciusky/{action}(action=${@templateUtils.getSaveAction(ciusky.type)})}"
                   hx-target="#forms" hx-swap="outerHTML"
                   class="max-w-xl mx-auto">
                 <div class="grid grid-cols-2 gap-2">
