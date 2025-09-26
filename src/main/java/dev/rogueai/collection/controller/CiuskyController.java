@@ -9,6 +9,7 @@ import dev.rogueai.collection.service.TagService;
 import dev.rogueai.collection.service.model.Book;
 import dev.rogueai.collection.service.model.Ciusky;
 import dev.rogueai.collection.service.model.CiuskyFilter;
+import dev.rogueai.collection.service.model.CiuskyImage;
 import dev.rogueai.collection.service.model.CiuskySearch;
 import dev.rogueai.collection.service.model.ECiuskyType;
 import dev.rogueai.collection.service.model.Option;
@@ -17,6 +18,7 @@ import dev.rogueai.collection.util.TemplateUtils;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.Strings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -106,8 +109,8 @@ public class CiuskyController {
     @HxRequest
     @HxReselect("#forms")
     @PostMapping({ "/ciusky/saveCiusky" })
-    public String saveCiusky(@ModelAttribute Ciusky ciusky, Model model, HtmxResponse htmxResponse) {
-        return save(ciusky, model, htmxResponse);
+    public String saveCiusky(@ModelAttribute @Valid Ciusky ciusky, BindingResult bindingResult, Model model, HtmxResponse htmxResponse) {
+        return save(ciusky, bindingResult, model, htmxResponse);
     }
 
     /**
@@ -116,25 +119,36 @@ public class CiuskyController {
     @HxRequest
     @HxReselect("#forms")
     @PostMapping({ "/ciusky/saveBook" })
-    public String saveBook(@ModelAttribute Book book, Model model, HtmxResponse htmxResponse) {
-        return save(book, model, htmxResponse);
+    public String saveBook(@Valid @ModelAttribute(value = "ciusky") Book ciusky, BindingResult bindingResult, Model model, HtmxResponse htmxResponse) {
+        return save(ciusky, bindingResult, model, htmxResponse);
     }
 
-    public <T extends Ciusky> String save(T ciusky, Model model, HtmxResponse htmxResponse) {
+    public <T extends Ciusky> String save(T ciusky, BindingResult bindingResult, Model model, HtmxResponse htmxResponse) {
+
+        if (bindingResult.hasErrors()) {
+            // TODO: this is bad, we are forced to reload everything because the list of images are in the othe form
+            // TODO: if we fix this we can remove addAttribute
+
+            List<Option> types = optionService.types();
+            model.addAttribute("types", types);
+
+            List<CiuskyImage> images = ciuskyService.getImages(ciusky.getId());
+            ciusky.setImages(images);
+            model.addAttribute("ciusky", ciusky);
+            return "create";
+        }
+
         ciuskyService.save(ciusky);
 
+        // TODO: this is bad, we are forced to reload everything because the list of images are in the othe form
+        // TODO: if we fix this we can remove addAttribute
         List<Option> types = optionService.types();
         model.addAttribute("types", types);
 
-        Ciusky refreshed = null;
-        try {
-            refreshed = ciuskyService.get(ciusky.getId());
-        } catch (CiuskyNotFoundException e) {
-            logger.warn(e.getMessage(), e);
-            return "redirect:/";
-        }
+        List<CiuskyImage> images = ciuskyService.getImages(ciusky.getId());
+        ciusky.setImages(images);
 
-        model.addAttribute("ciusky", refreshed);
+        model.addAttribute("ciusky", ciusky);
         htmxResponse.addTrigger("showToast", createToast(true, "Ciusky aggiornato! GG"));
         /*
          TODO: instead of returning the entire page we should return only the updated form template

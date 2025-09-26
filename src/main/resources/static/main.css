@@ -2522,6 +2522,9 @@
   .text-red-500 {
     color: var(--color-red-500);
   }
+  .text-red-600 {
+    color: var(--color-red-600);
+  }
   .text-white {
     color: var(--color-white);
   }
@@ -2962,6 +2965,11 @@
       color: var(--color-red-200);
     }
   }
+  .dark\:text-red-500 {
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-red-500);
+    }
+  }
   .dark\:text-white {
     @media (prefers-color-scheme: dark) {
       color: var(--color-white);
@@ -3238,6 +3246,12 @@ tr.htmx-swapping td {
     &:focus {
       --tw-ring-color: var(--color-blue-500);
     }
+  }
+}
+.csk-input-error {
+  border-color: var(--color-red-500);
+  @media (prefers-color-scheme: dark) {
+    border-color: var(--color-red-500);
   }
 }
 .csk-tag-blue {

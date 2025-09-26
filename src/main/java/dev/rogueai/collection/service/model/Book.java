@@ -1,22 +1,33 @@
 package dev.rogueai.collection.service.model;
 
+import dev.rogueai.collection.controller.validator.IsbnConstraint;
+import dev.rogueai.collection.controller.validator.IsbnFormat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 public class Book extends Ciusky {
 
+    @Size(max = 256)
     private String author;
 
+    @Size(max = 256)
     private String format;
 
+    @Size(max = 256)
     private String publisher;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishDate;
 
+    @IsbnConstraint
+    @IsbnFormat
+    @NotBlank
     private String isbn13;
 
+    @Size(max = 2)
     private String language;
 
     public Book() {

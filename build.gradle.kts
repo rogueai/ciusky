@@ -41,6 +41,7 @@ dependencies {
     implementation("commons-io:commons-io:2.20.0")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")

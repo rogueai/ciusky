@@ -1,5 +1,8 @@
 package dev.rogueai.collection.service.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -11,12 +14,15 @@ public class Ciusky {
 
     protected Long id;
 
+    @Size(max = 256)
     protected String title;
 
     protected String description;
 
     protected long type;
 
+    @Min(0)
+    @Max(5)
     protected int quality;
 
     protected String purchasePlace;
