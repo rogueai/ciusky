@@ -2,6 +2,7 @@ package dev.rogueai.collection.service.model;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,6 +20,7 @@ public class Ciusky {
 
     protected String description;
 
+    @Positive(message = "{validation.constraints.type.message}")
     protected long type;
 
     @Min(0)

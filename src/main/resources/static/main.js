@@ -96,7 +96,6 @@ function toggleWideImage(el) {
                  }
                });
             }
-            console.log(name, evt);
         }
     });
 })();
