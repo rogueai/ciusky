@@ -1,5 +1,7 @@
 package dev.rogueai.collection.service.model;
 
+import java.util.Objects;
+
 public class Tag {
 
     private String key;
@@ -13,6 +15,18 @@ public class Tag {
     public Tag(String key, String value) {
         this.key = key;
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Tag tag))
+            return false;
+        return Objects.equals(key, tag.key) && Objects.equals(value, tag.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value);
     }
 
     public String getKey() {

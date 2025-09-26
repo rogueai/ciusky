@@ -1,6 +1,8 @@
 package dev.rogueai.collection.service;
 
+import dev.rogueai.collection.service.model.Tag;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,13 +32,13 @@ public class TagService extends AbstractService {
      * @param partialValue nullable
      * @return the list of values
      */
-    public List<String> getValues(String key, String partialValue) {
-        if (key == null) {
-            throw new IllegalArgumentException("Key is required");
-        }
+    public List<String> getValues(@NotNull String key, String partialValue) {
         String trimmedKey = StringUtils.trim(key);
         String trimmedPartialValue = StringUtils.trim(partialValue);
         return tagSql.searchTagValues(trimmedKey, trimmedPartialValue);
     }
 
+    public boolean isUnique(@NotNull List<Tag> tags, @NotNull Tag tag) {
+        return tags.stream().noneMatch(t -> t.equals(tag));
+    }
 }

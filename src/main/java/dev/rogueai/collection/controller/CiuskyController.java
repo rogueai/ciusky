@@ -23,11 +23,14 @@ import org.apache.commons.lang3.Strings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,6 +51,9 @@ import java.util.stream.Collectors;
 public class CiuskyController {
 
     private static final Log logger = LogFactory.getLog(CiuskyController.class);
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private SpringTemplateEngine templateEngine;
@@ -240,16 +246,25 @@ public class CiuskyController {
 
     @HxRequest()
     @PostMapping({ "/ciusky/tag/add" })
-    public String tagAdd(@ModelAttribute Ciusky ciusky, HtmxResponse htmxResponse) {
-        String tag = ciusky.getRawTag();
-        String[] split = tag.split(":");
-
-        if (Strings.CI.contains(tag, ":") && split.length == 2) {
-            ciusky.getTags().add(new Tag(split[0], split[1]));
-            ciusky.setRawTag(null);
+    public String tagAdd(@ModelAttribute Ciusky ciusky, BindingResult bindingResult, HtmxResponse htmxResponse) {
+        String rawTag = ciusky.getRawTag();
+        String[] split = rawTag.split(":");
+        if (Strings.CI.contains(rawTag, ":") && split.length == 2) {
+            Tag tag = new Tag(split[0], split[1]);
+            if (tagService.isUnique(ciusky.getTags(), tag)) {
+                ciusky.getTags().add(tag);
+                ciusky.setRawTag(null);
+            } else {
+                // TODO: maybe there is a better way to get the message,
+                // TODO: we can't use a validator on the object because the main save function does not require the rawTag to be valid.
+                String message = messageSource.getMessage("validation.constraints.duplicateTag.message", null, LocaleContextHolder.getLocale());
+                bindingResult.addError(new FieldError(bindingResult.getObjectName(), "rawTag", message));
+            }
         } else {
-            // TODO: Whe should show a validation error on the input field instead.
-            htmxResponse.addTrigger("showToast", createToast(false, "Invalid Tag"));
+            // TODO: maybe there is a better way to get the message,
+            // TODO: we can't use a validator on the object because the main save function does not require the rawTag to be valid.
+            String message = messageSource.getMessage("validation.constraints.tag.message", null, LocaleContextHolder.getLocale());
+            bindingResult.addError(new FieldError(bindingResult.getObjectName(), "rawTag", message));
         }
         return "components/tag-input";
     }
