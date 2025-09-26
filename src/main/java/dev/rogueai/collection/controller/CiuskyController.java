@@ -212,19 +212,23 @@ public class CiuskyController {
 
     @HxRequest()
     @PostMapping({ "/ciusky/image/upload" })
-    public String imageUpload(@ModelAttribute Ciusky ciusky, @RequestParam("imageFiles") MultipartFile[] files, Model model) throws IOException, CiuskyNotFoundException {
+    public String imageUpload(@ModelAttribute Ciusky ciusky, @RequestParam("imageFiles") MultipartFile[] files, Model model, HtmxResponse htmxResponse) throws IOException, CiuskyNotFoundException {
         for (MultipartFile file : files) {
-            imageService.addResource(ciusky.getId(), file.getName(), file.getBytes());
+            imageService.addResource(ciusky.getId(), file.getOriginalFilename(), file.getBytes());
         }
         model.addAttribute("ciusky", ciuskyService.get(ciusky.getId()));
+
+        htmxResponse.addTrigger("showToast", createToast(true, "File uploaded"));
+
         return "components/gallery :: gallery";
     }
 
     @HxRequest()
     @DeleteMapping({ "/ciusky/{id}/image/{uuid}" })
-    public String imageDelete(@PathVariable(required = true) Long id, @PathVariable(required = true) String uuid, Model model) throws CiuskyNotFoundException {
+    public String imageDelete(@PathVariable(required = true) Long id, @PathVariable(required = true) String uuid, Model model, HtmxResponse htmxResponse) throws CiuskyNotFoundException {
         imageService.delete(id, uuid);
         model.addAttribute("ciusky", ciuskyService.get(id));
+        htmxResponse.addTrigger("showToast", createToast(true, "Image deleted"));
         return "components/gallery :: gallery";
     }
 
@@ -271,7 +275,7 @@ public class CiuskyController {
 
     @HxRequest()
     @PostMapping({ "/ciusky/tag/delete/{id}" })
-    public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky) {
+    public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky, HtmxResponse htmxResponse) {
         ciusky.getTags().remove(id);
         return "components/tag-input";
     }

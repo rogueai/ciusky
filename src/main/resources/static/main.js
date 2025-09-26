@@ -37,10 +37,15 @@ function toggleWideImage(el) {
     htmx.toggleClass(el, "w-full");
     htmx.toggleClass(el, "bg-gray-700");
     htmx.toggleClass(el, "p-2");
-    const img = htmx.find(el, "img")
-    let newSrc = img.dataset.src;
-    img.dataset.src = img.src;
-    img.src = newSrc;
+
+    const $img = htmx.find(el, "img")
+    let newSrc = $img.dataset.src;
+    $img.dataset.src = $img.src;
+    $img.src = newSrc;
+
+    const $fileName = htmx.find(el, ".csk-gallery-fileName");
+    htmx.toggleClass($fileName, "hidden");
+
 }
 
 (function() {
@@ -49,7 +54,6 @@ function toggleWideImage(el) {
         init: function(apiRef) {
             api = apiRef;
         },
-        getSelectors: function() {return null;},
         onEvent : function(name, evt) {
             if (name === 'htmx:beforeProcessNode') {
 
@@ -91,13 +95,8 @@ function toggleWideImage(el) {
                     }
                  }
                });
-
             }
             console.log(name, evt);
-        },
-        transformResponse : function(text, xhr, elt) {return text;},
-        isInlineSwap : function(swapStyle) {return false;},
-        handleSwap : function(swapStyle, target, fragment, settleInfo) {return false;},
-        encodeParameters : function(xhr, parameters, elt) {return null;}
+        }
     });
 })();

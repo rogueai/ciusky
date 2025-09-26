@@ -3100,6 +3100,16 @@ tr.htmx-swapping td {
   --tw-ease: var(--ease-out);
   transition-timing-function: var(--ease-out);
 }
+.csk-star-animate:hover {
+  cursor: pointer;
+  animation: pulsar 1s ease-out infinite;
+}
+@keyframes pulsar {
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+}
 .csk-table {
   width: 100%;
   text-align: left;
@@ -3250,6 +3260,8 @@ tr.htmx-swapping td {
 }
 .csk-input-error {
   border-color: var(--color-red-500);
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   @media (prefers-color-scheme: dark) {
     border-color: var(--color-red-500);
   }
@@ -3262,8 +3274,8 @@ tr.htmx-swapping td {
   background-color: var(--color-blue-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-blue-800);
@@ -3282,8 +3294,8 @@ tr.htmx-swapping td {
   background-color: var(--color-gray-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-gray-800);
@@ -3302,8 +3314,8 @@ tr.htmx-swapping td {
   background-color: var(--color-red-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-red-800);
@@ -3322,8 +3334,8 @@ tr.htmx-swapping td {
   background-color: var(--color-green-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-green-800);
@@ -3342,8 +3354,8 @@ tr.htmx-swapping td {
   background-color: var(--color-yellow-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-yellow-800);
@@ -3362,8 +3374,8 @@ tr.htmx-swapping td {
   background-color: var(--color-indigo-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-indigo-800);
@@ -3382,8 +3394,8 @@ tr.htmx-swapping td {
   background-color: var(--color-purple-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-purple-800);
@@ -3402,8 +3414,8 @@ tr.htmx-swapping td {
   background-color: var(--color-pink-100);
   padding-inline: calc(var(--spacing) * 1);
   padding-block: calc(var(--spacing) * 0.5);
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-pink-800);
@@ -3412,6 +3424,20 @@ tr.htmx-swapping td {
   }
   @media (prefers-color-scheme: dark) {
     color: var(--color-pink-400);
+  }
+}
+.csk-gallery-fileName {
+  margin-inline-end: calc(var(--spacing) * 1);
+  justify-content: center;
+  overflow: hidden;
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  --tw-font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-normal);
+  text-overflow: ellipsis;
+  color: var(--color-gray-800);
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-gray-300);
   }
 }
 @layer base {
