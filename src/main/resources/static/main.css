@@ -2391,6 +2391,10 @@
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
+  .text-sm\/10 {
+    font-size: var(--text-sm);
+    line-height: calc(var(--spacing) * 10);
+  }
   .text-xl {
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
@@ -2572,6 +2576,9 @@
   }
   .uppercase {
     text-transform: uppercase;
+  }
+  .line-through {
+    text-decoration-line: line-through;
   }
   .antialiased {
     -webkit-font-smoothing: antialiased;

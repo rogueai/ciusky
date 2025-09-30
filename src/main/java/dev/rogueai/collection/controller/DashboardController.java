@@ -6,6 +6,7 @@ import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,31 +50,43 @@ public class DashboardController {
     public String ciuskyTypes(Model model) {
         List<Option> types = optionService.types();
         model.addAttribute("menus", menus);
-        model.addAttribute("optionView", new OptionView(types));
+        model.addAttribute("optionEditorView", new OptionEditorView(types));
         return "page/ciusky-types";
     }
 
     @HxRequest
     @HxReselect("form")
     @PostMapping("/types")
-    public String addTypes(@ModelAttribute OptionView optionView, Model model) {
-        optionView.getOptions().add(new Option());
+    public String addTypes(@ModelAttribute OptionEditorView optionEditorView, Model model) {
+        optionEditorView.getOptions().add(new OptionEdit());
+        optionEditorView.setDirty(true);
         return "page/ciusky-types";
     }
 
     @HxRequest
     @HxReselect("form")
     @PutMapping("/types")
-    public String updateTypes(@ModelAttribute OptionView optionView, Model model) {
-        // TODO
+    public String updateTypes(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model) {
+        optionService.saveTypes(optionEditorView.getOptions());
+        List<Option> types = optionService.types();
+        model.addAttribute("optionEditorView", new OptionEditorView(types));
+
+        // TODO: htmx forward?
+
         return "page/ciusky-types";
     }
 
     @HxRequest
     @HxReselect("form")
     @PutMapping("/types/{index}")
-    public String deleteTypes(@ModelAttribute OptionView optionView, @PathVariable int index, Model model) {
-        // TODO
+    public String deleteTypes(@ModelAttribute OptionEditorView optionEditorView, @PathVariable int index) {
+        OptionEdit deleted = optionEditorView.getOptions().get(index);
+        if (deleted.getId() != null) {
+            deleted.setDeleted(true);
+        } else {
+            optionEditorView.getOptions().remove(deleted);
+        }
+        optionEditorView.setDirty(true);
         return "page/ciusky-types";
     }
 
