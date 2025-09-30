@@ -12,12 +12,7 @@ htmx.onLoad(function () {
         const html = (event.detail || {}).value;
 
         var toastEl = htmx.find("#toast-default")
-        if (!toastEl) {
-            htmx.swap("body", html, { swapStyle: 'beforeend'} );
-        }
-        else {
-            htmx.swap("#toast-default", html, { swapStyle: 'outerHTML'} );
-        }
+        htmx.swap("#toast-default", html, { swapStyle: 'outerHTML'} );
 
         // We call initFlowbite otherwise the close modal button does not work
         initFlowbite();

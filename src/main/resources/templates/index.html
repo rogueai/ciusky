@@ -1,22 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="~{layout/head.html :: head}">
-    <title>Ciusky</title>
-</head>
-<body class="dark:bg-gray-900 antialiased">
-<header th:replace="~{layout/header.html :: header}"></header>
-<main class="p-6">
-
-    <!--    <ul>-->
-    <!--        <li th:each="item : ${listTag}" th:text="${item}"></li>-->
-    <!--    </ul>-->
-
-    <div class="relative min-h-1/2">
-        <div th:replace="~{layout/search.html :: search}"></div>
-        <div th:replace="~{ciusky-table.html :: ciusky-table}"></div>
+<html th:replace="~{layout/site-layout :: layout(~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+    <div id="content">
+        <div class="relative min-h-1/2">
+            <div th:replace="~{layout/search.html :: search}"></div>
+            <div th:replace="~{ciusky-table.html :: ciusky-table}"></div>
+        </div>
     </div>
-
-</main>
-
 </body>
 </html>

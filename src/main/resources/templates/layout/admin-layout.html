@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html th:fragment="layout (panel)" th:replace="~{layout/site-layout :: layout(~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+    <body>
+        <div id="content">
+            <aside id="default-sidebar" class="fixed top-0 left-0 z-10 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+                <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+                    <ul class="space-y-2 font-medium">
+                        <li th:each="menu: ${menus}" th:classappend="${requestURI?.equals(menu.link) ? 'bg-blue-800 rounded-lg':''}">
+                            <a th:href="@{${menu.link}}" class="flex items-center p-2 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <svg th:if="${menu.icon != null}" th:replace="~{components/icon.html :: icon(${menu.icon}, 'w-5 h-5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group-hover:text-gray-900 dark:group-hover:text-white')}"></svg>
+                                <span class="ms-3" th:text="${menu.text}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <div class="p-4 sm:ml-64">
+                <div th:replace="${panel}">
+                    <p>Panel content</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="~{layout/head.html :: head}">
-    <title>Ciusky</title>
-</head>
-<body class="dark:bg-gray-900 antialiased">
-<header th:replace="~{layout/header.html :: header}"></header>
-<main class="p-6 ">
-
+<html th:replace="~{layout/site-layout :: layout(~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div id="content">
     <div id="forms" class="max-w-4xl mx-auto flex flex-col md:flex-row gap-4">
         <div class="w-full md:w-3/5">
-
-            <form id="main-form" th:object="${ciusky}" th:hx-post="@{/ciusky/{action}(action=${@templateUtils.getSaveAction(ciusky.type)})}"
+            <form id="main-form" th:object="${ciusky}"
+                  th:hx-post="@{/ciusky/{action}(action=${@templateUtils.getSaveAction(ciusky.type)})}"
                   hx-target="#forms" hx-swap="outerHTML"
                   class="max-w-xl mx-auto">
                 <div class="grid grid-cols-2 gap-2">
@@ -26,8 +21,9 @@
                         <div th:replace="~{components/field-error('description')}"></div>
                     </div>
                     <div class="mb-5">
-                        <label for="types" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-                        <input th:if="${ciusky.id != null}" th:field="*{type}" type="hidden" />
+                        <label for="types"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+                        <input th:if="${ciusky.id != null}" th:field="*{type}" type="hidden"/>
                         <select th:field="*{type}" th:disabled="${ciusky.id != null}" id="types"
                                 th:hx-put="@{/ciusky/changeType}" hx-target="#forms"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -102,19 +98,22 @@
 
                         <div class="mb-5 col-span-2">
                             <label for="author" class="csk-input-label">Author</label>
-                            <input th:field="*{author}" type="text" id="author" class="csk-input" placeholder="" required/>
+                            <input th:field="*{author}" type="text" id="author" class="csk-input" placeholder=""
+                                   required/>
                             <div th:replace="~{components/field-error('author')}"></div>
                         </div>
 
                         <div class="mb-5 col-span-2">
                             <label for="format" class="csk-input-label">Format</label>
-                            <input th:field="*{format}" type="text" id="format" class="csk-input" placeholder="" required/>
+                            <input th:field="*{format}" type="text" id="format" class="csk-input" placeholder=""
+                                   required/>
                             <div th:replace="~{components/field-error('format')}"></div>
                         </div>
 
                         <div class="mb-5 col-span-2">
                             <label for="publisher" class="csk-input-label">Publisher</label>
-                            <input th:field="*{publisher}" type="text" id="publisher" class="csk-input" placeholder="" required/>
+                            <input th:field="*{publisher}" type="text" id="publisher" class="csk-input" placeholder=""
+                                   required/>
                             <div th:replace="~{components/field-error('publisher')}"></div>
                         </div>
 
@@ -146,7 +145,8 @@
                                             stroke-width="2" fill="none"/>
                                     </svg>
                                 </span>
-                                <input th:field="*{isbn13}" type="text" id="isbn13" th:classappend="${#fields.hasErrors('isbn13') ? 'csk-input-error' : ''}"
+                                <input th:field="*{isbn13}" type="text" id="isbn13"
+                                       th:classappend="${#fields.hasErrors('isbn13') ? 'csk-input-error' : ''}"
                                        class="csk-input-addon" placeholder="978-1-56619-909-4">
                             </div>
                             <div th:replace="~{components/field-error('isbn13')}"></div>
@@ -154,7 +154,8 @@
 
                         <div class="mb-5 col-span-2">
                             <label for="language" class="csk-input-label">Language</label>
-                            <input th:field="*{language}" type="text" id="language" class="csk-input" placeholder="EN" required/>
+                            <input th:field="*{language}" type="text" id="language" class="csk-input" placeholder="EN"
+                                   required/>
                             <div th:replace="~{components/field-error('language')}"></div>
                         </div>
 
@@ -182,7 +183,7 @@
                   hx-target="#image-gallery"
                   hx-swap="outerHTML"
                   hx-trigger="change from:#imageFiles">
-                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{id}"/>
                 <div class="mb-5">
                     <label for="imageFiles" class="csk-input-label">Image gallery</label>
                     <input th:disabled="*{id == null}" th:classappend="*{id == null} ? 'cursor-not-allowed' : ''"
@@ -193,18 +194,16 @@
             </form>
         </div>
     </div>
-</main>
-
-<script  th:inline="javascript">
-htmx.on('#form-upload', 'htmx:beforeRequest', function(evt) {
-    const pr = htmx.find('#upload-progress');
-    htmx.toggleClass(pr, 'hidden');
-});
-htmx.on('#form-upload', 'htmx:beforeSwap', function(evt) {
-    const pr = htmx.find('#upload-progress');
-    htmx.toggleClass(pr, 'hidden');
-});
-</script>
-
+    <script th:inline="javascript">
+        htmx.on('#form-upload', 'htmx:beforeRequest', function(evt) {
+            const pr = htmx.find('#upload-progress');
+            htmx.toggleClass(pr, 'hidden');
+        });
+        htmx.on('#form-upload', 'htmx:beforeSwap', function(evt) {
+            const pr = htmx.find('#upload-progress');
+            htmx.toggleClass(pr, 'hidden');
+        });
+    </script>
+</div>
 </body>
 </html>
