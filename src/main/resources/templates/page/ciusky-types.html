@@ -1,8 +1,65 @@
 <!DOCTYPE html>
 <html th:replace="~{layout/admin-layout :: layout(~{::#panel})}" xmlns:th="http://www.thymeleaf.org" lang="en">
     <body>
-        <div id="panel" class="p-4 sm:ml-64">
-            <p>Types</p>
+        <div id="panel" class="max-w-4xl mx-auto flex flex-col md:flex-col">
+
+            <form th:object="${optionView}" th:hx-put="@{/dashboard/types}" hx-target="form">
+
+                <div class="w-full mb-2">
+                    <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
+                        <div class="flex flex-col items-center justify-end p-2 space-y-3 md:flex-row md:space-y-0 md:space-x-2">
+                            <div class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
+
+                                <a th:hx-post="@{/dashboard/types}"
+                                   class="text-nowrap inline-flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                    <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
+                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path clip-rule="evenodd" fill-rule="evenodd"
+                                              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+                                    </svg>
+                                    Add Type
+                                </a>
+
+                                <a th:hx-put="@{/dashboard/types}" hx-include="form" class="inline-flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                    <svg th:replace="~{components/icon :: icon('save', 'fill-current h-3.5 w-3.5 mr-2')}"></svg>
+                                    Save All
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <table class="csk-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Native</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item, it : *{options}">
+                            <input type="hidden" th:field="*{options[__${it.index}__].id}" />
+                            <td th:text="${item.id}"></td>
+                            <td>
+                                <input th:field="*{options[__${it.index}__].descr}" type="text"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            </td>
+                            <td>true</td>
+                            <td class="align-middle text-center whitespace-nowrap py-1">
+                                <a href="#" th:hx-put="@{/dashboard/types/{index}(index=${it.index})}" hx-include="form"
+                                   class="inline-flex items-center gap-2 align-middle">
+                                    <div th:replace="~{components/icon.html :: icon('delete', 'w-6 h-6 text-red-500')}"></div>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </form>
         </div>
     </body>
 </html>

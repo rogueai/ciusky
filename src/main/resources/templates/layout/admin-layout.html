@@ -7,7 +7,7 @@
                     <ul class="space-y-2 font-medium">
                         <li th:each="menu: ${menus}" th:classappend="${requestURI?.equals(menu.link) ? 'bg-blue-800 rounded-lg':''}">
                             <a th:href="@{${menu.link}}" class="flex items-center p-2 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg th:if="${menu.icon != null}" th:replace="~{components/icon.html :: icon(${menu.icon}, 'w-5 h-5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group-hover:text-gray-900 dark:group-hover:text-white')}"></svg>
+                                <svg th:if="${menu.icon != null}" th:replace="~{components/icon :: icon(${menu.icon}, 'w-5 h-5 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group-hover:text-gray-900 dark:group-hover:text-white')}"></svg>
                                 <span class="ms-3" th:text="${menu.text}"></span>
                             </a>
                         </li>
