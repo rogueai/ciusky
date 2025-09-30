@@ -41,12 +41,7 @@
                         <label for="paidPrice" class="csk-input-label">Paid price</label>
                         <div class="flex">
                             <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                  <path d="M6 10h9.231M6 14h9.231M18 5.086A5.95 5.95 0 0 0 14.615 4c-3.738 0-6.769 3.582-6.769 8s3.031 8 6.769 8A5.94 5.94 0 0 0 18 18.916"
-                                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" fill="none"/>
-                                </svg>
+                                <svg th:replace="~{components/icon :: icon('euro', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
                             </span>
                             <input th:field="*{paidPrice}" type="text" id="paidPrice" class="csk-input-addon"
                                    placeholder="0.00">
@@ -57,13 +52,7 @@
                         <label for="marketPrice" class="csk-input-label">Market price</label>
                         <div class="flex">
                             <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        fill="none"
-                                        d="M6 10h9.231M6 14h9.231M18 5.086A5.95 5.95 0 0 0 14.615 4c-3.738 0-6.769 3.582-6.769 8s3.031 8 6.769 8A5.94 5.94 0 0 0 18 18.916"/>
-                                </svg>
+                                <svg th:replace="~{components/icon :: icon('euro', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
                             </span>
                             <input th:field="*{marketPrice}" type="text" id="marketPrice" class="csk-input-addon"
                                    placeholder="0.00">
@@ -74,10 +63,7 @@
                         <label for="purchaseDate" class="csk-input-label">Purchase date</label>
                         <div class="flex">
                             <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                </svg>
+                                <svg th:replace="~{components/icon :: icon('calendar-week', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
                             </span>
                             <input th:field="*{purchaseDate}" id="purchaseDate"
                                    type="date" placeholder="Select date"
@@ -120,12 +106,9 @@
                         <div class="mb-5 col-span-2">
                             <label for="publishDate" class="csk-input-label">Publish date</label>
                             <div class="flex">
-                            <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                </svg>
-                            </span>
+                                <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg th:replace="~{components/icon :: icon('calendar-week', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
+                                </span>
                                 <input th:field="*{publishDate}" id="publishDate"
                                        type="date" placeholder="Select date"
                                        autocomplete="off"
@@ -138,12 +121,7 @@
                             <label for="isbn13" class="csk-input-label">ISBN-13</label>
                             <div class="flex">
                                 <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                      <path d="M6 10h9.231M6 14h9.231M18 5.086A5.95 5.95 0 0 0 14.615 4c-3.738 0-6.769 3.582-6.769 8s3.031 8 6.769 8A5.94 5.94 0 0 0 18 18.916"
-                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" fill="none"/>
-                                    </svg>
+                                    <svg th:replace="~{components/icon :: icon('barcode', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
                                 </span>
                                 <input th:field="*{isbn13}" type="text" id="isbn13"
                                        th:classappend="${#fields.hasErrors('isbn13') ? 'csk-input-error' : ''}"
@@ -195,11 +173,11 @@
         </div>
     </div>
     <script th:inline="javascript">
-        htmx.on('#form-upload', 'htmx:beforeRequest', function(evt) {
+        htmx.on('#form-upload', 'htmx:beforeRequest', function (evt) {
             const pr = htmx.find('#upload-progress');
             htmx.toggleClass(pr, 'hidden');
         });
-        htmx.on('#form-upload', 'htmx:beforeSwap', function(evt) {
+        htmx.on('#form-upload', 'htmx:beforeSwap', function (evt) {
             const pr = htmx.find('#upload-progress');
             htmx.toggleClass(pr, 'hidden');
         });
