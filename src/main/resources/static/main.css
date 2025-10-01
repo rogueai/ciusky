@@ -2580,6 +2580,9 @@
   .line-through {
     text-decoration-line: line-through;
   }
+  .underline {
+    text-decoration-line: underline;
+  }
   .antialiased {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -2757,6 +2760,11 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .sm\:ml-32 {
+    @media (width >= 40rem) {
+      margin-left: calc(var(--spacing) * 32);
     }
   }
   .sm\:ml-64 {

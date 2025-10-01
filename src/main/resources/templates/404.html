@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout/site-layout :: layout(~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html th:replace="~{layout/site :: layout(_, ~{}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
     <div id="content">
         <div class="h-auto flex items-center justify-center">
