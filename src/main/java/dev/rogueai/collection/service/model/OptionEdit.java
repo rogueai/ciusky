@@ -1,4 +1,4 @@
-package dev.rogueai.collection.controller;
+package dev.rogueai.collection.service.model;
 
 public class OptionEdit {
 
@@ -6,17 +6,11 @@ public class OptionEdit {
 
     private String descr;
 
+    private int referenceCount;
+
+    private boolean nativ;
+
     private boolean deleted;
-
-    public OptionEdit() {
-
-    }
-
-    public OptionEdit(Long id, String descr) {
-        this.id = id;
-        this.descr = descr;
-        this.deleted = false;
-    }
 
     public Long getId() {
         return id;
@@ -32,6 +26,22 @@ public class OptionEdit {
 
     public void setDescr(String descr) {
         this.descr = descr;
+    }
+
+    public int getReferenceCount() {
+        return referenceCount;
+    }
+
+    public void setReferenceCount(int referenceCount) {
+        this.referenceCount = referenceCount;
+    }
+
+    public boolean isNativ() {
+        return nativ;
+    }
+
+    public void setNativ(boolean nativ) {
+        this.nativ = nativ;
     }
 
     public boolean isDeleted() {

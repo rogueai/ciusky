@@ -6,6 +6,14 @@ public class Option {
 
     private String descr;
 
+    public Option() {
+    }
+
+    public Option(Long id, String descr) {
+        this.id = id;
+        this.descr = descr;
+    }
+
     public Long getId() {
         return id;
     }
@@ -21,4 +29,5 @@ public class Option {
     public void setDescr(String descr) {
         this.descr = descr;
     }
+    
 }

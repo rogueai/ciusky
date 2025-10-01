@@ -37,6 +37,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Description</th>
                             <th scope="col">Native</th>
+                            <th scope="col">Reference Count</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -44,11 +45,12 @@
 
                         <tr th:each="item, it : *{options}" th:classappend="${item.deleted} ? 'line-through' : '' ">
                             <input type="hidden" th:field="*{options[__${it.index}__].id}" />
+                            <input type="hidden" th:field="*{options[__${it.index}__].nativ}" />
                             <input type="hidden" th:field="*{options[__${it.index}__].deleted}" />
 
                             <td th:text="${item.id}"></td>
 
-                            <td th:switch="${item.deleted}">
+                            <td th:switch="${item.deleted || item.nativ}">
 
                                 <div th:case="true">
                                     <input type="hidden" th:field="*{options[__${it.index}__].descr}" />
@@ -57,16 +59,12 @@
 
                                 <input th:case="false" th:field="*{options[__${it.index}__].descr}" type="text"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-
-                                <!--
-                                <div th:replace="~{components/field-error('isbn13')}"></div>
-                                -->
-
                             </td>
 
-                            <td>true</td>
+                            <td th:text="${item.nativ}"></td>
+                            <td th:text="${item.referenceCount}"></td>
                             <td class="align-middle text-center whitespace-nowrap py-1">
-                                <a th:if="${!item.deleted}" href="#" th:hx-put="@{/dashboard/types/{index}(index=${it.index})}" hx-include="form"
+                                <a th:if="${!item.nativ && !item.deleted}" href="#" th:hx-put="@{/dashboard/types/{index}(index=${it.index})}" hx-include="form"
                                    class="inline-flex items-center gap-2 align-middle">
                                     <div th:replace="~{components/icon.html :: icon('delete', 'w-6 h-6 text-red-500')}"></div>
                                 </a>

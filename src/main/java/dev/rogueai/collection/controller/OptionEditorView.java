@@ -1,6 +1,6 @@
 package dev.rogueai.collection.controller;
 
-import dev.rogueai.collection.service.model.Option;
+import dev.rogueai.collection.service.model.OptionEdit;
 
 import java.util.List;
 
@@ -14,10 +14,8 @@ public class OptionEditorView {
 
     }
 
-    public OptionEditorView(List<Option> options) {
-        this.options = options.stream()//
-                .map(option -> new OptionEdit(option.getId(), option.getDescr())) //
-                .toList();
+    public OptionEditorView(List<OptionEdit> options) {
+        this.options = options;
     }
 
     public List<OptionEdit> getOptions() {

@@ -1,7 +1,7 @@
 package dev.rogueai.collection.service;
 
-import dev.rogueai.collection.controller.OptionEdit;
 import dev.rogueai.collection.service.model.Option;
+import dev.rogueai.collection.service.model.OptionEdit;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +15,18 @@ public class OptionService extends AbstractService {
         return optionSql.types();
     }
 
+    public List<OptionEdit> typesForEdit() {
+        return optionSql.getTypesForEdit();
+    }
+
     public void insertType(String descr) {
-        // TODO: the table TYPE_OPTION have no sequence, we must change the database
+        Option option = new Option(null, StringUtils.trimToNull(descr));
+        optionSql.insertType(option);
     }
 
     public void updateType(Long id, String descr) {
-        optionSql.updateType(id, StringUtils.trimToNull(descr));
+        Option option = new Option(id, StringUtils.trimToNull(descr));
+        optionSql.updateType(option);
     }
 
     public void deleteType(Long id) {
@@ -30,6 +36,9 @@ public class OptionService extends AbstractService {
     @Transactional
     public void saveTypes(List<OptionEdit> options) {
         for (OptionEdit option : options) {
+            if (option.isNativ()) {
+                continue;
+            }
             if (option.getId() != null) {
                 if (option.isDeleted()) {
                     deleteType(option.getId());

@@ -5,14 +5,9 @@ import java.util.Map;
 
 public enum ECiuskyType {
 
-    UNKNOWN(0L ), //
-    CONSOLE(1L),  //
-    BOOK(2L), //
-    SOFTWARE(3L), //
-    GAME(4L), //
-    COMPUTER(5L), //
-    PERIPHERAL(6L), //
-    GADGET(7L);
+    UNKNOWN(0L), //
+    CIUSKY(1L),  //
+    BOOK(2L);
 
     private static final Map<Long, ECiuskyType> BY_ID = new HashMap<>();
 

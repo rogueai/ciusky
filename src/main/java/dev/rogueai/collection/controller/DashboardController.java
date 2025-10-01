@@ -1,7 +1,7 @@
 package dev.rogueai.collection.controller;
 
 import dev.rogueai.collection.service.OptionService;
-import dev.rogueai.collection.service.model.Option;
+import dev.rogueai.collection.service.model.OptionEdit;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
 import jakarta.annotation.PostConstruct;
@@ -48,7 +48,7 @@ public class DashboardController {
 
     @GetMapping("/types")
     public String ciuskyTypes(Model model) {
-        List<Option> types = optionService.types();
+        List<OptionEdit> types = optionService.typesForEdit();
         model.addAttribute("menus", menus);
         model.addAttribute("optionEditorView", new OptionEditorView(types));
         return "page/ciusky-types";
@@ -68,7 +68,7 @@ public class DashboardController {
     @PutMapping("/types")
     public String updateTypes(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model) {
         optionService.saveTypes(optionEditorView.getOptions());
-        List<Option> types = optionService.types();
+        List<OptionEdit> types = optionService.typesForEdit();
         model.addAttribute("optionEditorView", new OptionEditorView(types));
 
         // TODO: htmx forward?
