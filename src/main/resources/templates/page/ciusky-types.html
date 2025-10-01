@@ -3,14 +3,23 @@
     <body>
         <div id="panel" class="max-w-4xl mx-auto flex flex-col md:flex-col">
 
-            <form th:object="${optionEditorView}" th:hx-put="@{/dashboard/types}" hx-target="form">
+            <form th:object="${optionEditorView}" th:hx-put="@{/dashboard/types/save}" hx-target="form">
 
-                <div class="w-full mb-2">
+                <div id="actions" class="w-full mb-2">
+                    <input type="hidden" th:field="*{dirty}" />
                     <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                         <div class="flex flex-col items-center justify-end p-2 space-y-3 md:flex-row md:space-y-0 md:space-x-2">
                             <div class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
 
-                                <a th:hx-post="@{/dashboard/types}"
+                                <p th:if="${optionEditorView.dirty}" class="text-gray-300 text-sm text-nowrap"><i>Pending changes</i></p>
+
+                                <a th:hx-put="@{/dashboard/types/save}" hx-include="form"
+                                    class="cursor-pointer inline-flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                    <svg th:replace="~{components/icon :: icon('save', 'fill-current h-3.5 w-3.5 mr-2')}"></svg>
+                                    Save All
+                                </a>
+
+                                <a th:hx-post="@{/dashboard/type/add}"
                                    class="cursor-pointer text-nowrap inline-flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                     <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                                          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -18,11 +27,6 @@
                                               d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
                                     </svg>
                                     Add Type
-                                </a>
-
-                                <a th:hx-put="@{/dashboard/types}" hx-include="form" class="cursor-pointer inline-flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    <svg th:replace="~{components/icon :: icon('save', 'fill-current h-3.5 w-3.5 mr-2')}"></svg>
-                                    Save All
                                 </a>
 
                             </div>
@@ -46,6 +50,7 @@
                         <tr th:each="item, it : *{options}" th:classappend="${item.deleted} ? 'line-through' : '' ">
                             <input type="hidden" th:field="*{options[__${it.index}__].id}" />
                             <input type="hidden" th:field="*{options[__${it.index}__].nativ}" />
+                            <input type="hidden" th:field="*{options[__${it.index}__].referenceCount}" />
                             <input type="hidden" th:field="*{options[__${it.index}__].deleted}" />
 
                             <td th:text="${item.id}"></td>
@@ -58,13 +63,16 @@
                                 </div>
 
                                 <input th:case="false" th:field="*{options[__${it.index}__].descr}" type="text"
+                                       th:hx-put="@{/dashboard/type/change}" hx-include="form"
+                                       hx-target="#actions" hx-swap="outerHTML"
+                                       hx-trigger="keyup changed delay:300ms"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                             </td>
 
                             <td th:text="${item.nativ}"></td>
                             <td th:text="${item.referenceCount}"></td>
                             <td class="align-middle text-center whitespace-nowrap py-1">
-                                <a th:if="${!item.nativ && !item.deleted}" href="#" th:hx-put="@{/dashboard/types/{index}(index=${it.index})}" hx-include="form"
+                                <a th:if="${!item.nativ && !item.deleted}" href="#" th:hx-post="@{/dashboard/type/delete/{index}(index=${it.index})}"
                                    class="inline-flex items-center gap-2 align-middle">
                                     <div th:replace="~{components/icon.html :: icon('delete', 'w-6 h-6 text-red-500')}"></div>
                                 </a>

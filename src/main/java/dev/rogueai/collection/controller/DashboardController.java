@@ -54,31 +54,62 @@ public class DashboardController {
         return "page/ciusky-types";
     }
 
+    /**
+     * Add row
+     *
+     * @param optionEditorView
+     * @param model
+     * @return
+     */
     @HxRequest
     @HxReselect("form")
-    @PostMapping("/types")
-    public String addTypes(@ModelAttribute OptionEditorView optionEditorView, Model model) {
+    @PostMapping("/type/add")
+    public String addType(@ModelAttribute OptionEditorView optionEditorView, Model model) {
         optionEditorView.getOptions().add(new OptionEdit());
         optionEditorView.setDirty(true);
         return "page/ciusky-types";
     }
 
+    /**
+     * Save changes
+     *
+     * @param optionEditorView
+     * @param model
+     * @return
+     */
     @HxRequest
     @HxReselect("form")
-    @PutMapping("/types")
-    public String updateTypes(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model) {
+    @PutMapping("/types/save")
+    public String saveTypes(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model) {
         optionService.saveTypes(optionEditorView.getOptions());
-        List<OptionEdit> types = optionService.typesForEdit();
-        model.addAttribute("optionEditorView", new OptionEditorView(types));
+        return "redirect:htmx:/dashboard/types";
+    }
 
-        // TODO: htmx forward?
-
+    /**
+     * Save changes
+     *
+     * @param optionEditorView
+     * @param model
+     * @return
+     */
+    @HxRequest
+    @HxReselect("#actions")
+    @PutMapping("/type/change")
+    public String updateType(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model) {
+        optionEditorView.setDirty(true);
         return "page/ciusky-types";
     }
 
+    /**
+     * Delete row
+     *
+     * @param optionEditorView
+     * @param index
+     * @return
+     */
     @HxRequest
     @HxReselect("form")
-    @PutMapping("/types/{index}")
+    @PostMapping("/type/delete/{index}")
     public String deleteTypes(@ModelAttribute OptionEditorView optionEditorView, @PathVariable int index) {
         OptionEdit deleted = optionEditorView.getOptions().get(index);
         if (deleted.getId() != null) {
