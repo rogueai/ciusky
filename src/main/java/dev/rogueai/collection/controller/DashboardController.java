@@ -1,9 +1,12 @@
 package dev.rogueai.collection.controller;
 
+import dev.rogueai.collection.controller.view.DashboardMenu;
+import dev.rogueai.collection.controller.view.OptionEditorView;
 import dev.rogueai.collection.service.OptionService;
 import dev.rogueai.collection.service.model.OptionEdit;
+import dev.rogueai.collection.util.TemplateUtils;
+import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
-import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -29,6 +32,9 @@ public class DashboardController {
     @Autowired
     private OptionService optionService;
 
+    @Autowired
+    private TemplateUtils templateUtils;
+
     @PostConstruct
     public void init() {
         menus.add(new DashboardMenu("Dashboard", "dashboard", "/dashboard"));
@@ -47,7 +53,7 @@ public class DashboardController {
     }
 
     @GetMapping("/types")
-    public String ciuskyTypes(Model model) {
+    public String types(Model model) {
         List<OptionEdit> types = optionService.typesForEdit();
         model.addAttribute("menus", menus);
         model.addAttribute("optionEditorView", new OptionEditorView(types));
@@ -56,69 +62,53 @@ public class DashboardController {
 
     /**
      * Add row
-     *
-     * @param optionEditorView
-     * @param model
-     * @return
      */
     @HxRequest
-    @HxReselect("form")
     @PostMapping("/type/add")
-    public String addType(@ModelAttribute OptionEditorView optionEditorView, Model model) {
+    public String typeAdd(@ModelAttribute OptionEditorView optionEditorView, Model model) {
         optionEditorView.getOptions().add(new OptionEdit());
         optionEditorView.setDirty(true);
-        return "page/ciusky-types";
+        return "page/ciusky-types :: form";
     }
 
     /**
      * Save changes
-     *
-     * @param optionEditorView
-     * @param model
-     * @return
      */
     @HxRequest
-    @HxReselect("form")
     @PutMapping("/types/save")
-    public String saveTypes(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model) {
+    public String typesSave(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model, HtmxResponse htmxResponse) {
         optionService.saveTypes(optionEditorView.getOptions());
-        return "redirect:htmx:/dashboard/types";
+        templateUtils.toast(htmxResponse, true, "Saved");
+
+        List<OptionEdit> types = optionService.typesForEdit();
+        model.addAttribute("optionEditorView", new OptionEditorView(types));
+
+        return "page/ciusky-types :: form";
     }
 
     /**
      * Save changes
-     *
-     * @param optionEditorView
-     * @param model
-     * @return
      */
     @HxRequest
-    @HxReselect("#actions")
     @PutMapping("/type/change")
-    public String updateType(@ModelAttribute @Valid OptionEditorView optionEditorView, Model model) {
+    public String typeDelete(@ModelAttribute @Valid OptionEditorView optionEditorView) {
         optionEditorView.setDirty(true);
-        return "page/ciusky-types";
+        return "page/ciusky-types :: actions";
     }
 
     /**
      * Delete row
-     *
-     * @param optionEditorView
-     * @param index
-     * @return
      */
     @HxRequest
-    @HxReselect("form")
-    @PostMapping("/type/delete/{index}")
-    public String deleteTypes(@ModelAttribute OptionEditorView optionEditorView, @PathVariable int index) {
-        OptionEdit deleted = optionEditorView.getOptions().get(index);
-        if (deleted.getId() != null) {
-            deleted.setDeleted(true);
+    @PostMapping("/type/toggle/{index}")
+    public String typeToggle(@ModelAttribute OptionEditorView optionEditorView, @PathVariable int index) {
+        OptionEdit option = optionEditorView.getOptions().get(index);
+        if (option.getId() != null) {
+            option.setDeleted(!option.isDeleted());
         } else {
-            optionEditorView.getOptions().remove(deleted);
+            optionEditorView.getOptions().remove(option);
         }
         optionEditorView.setDirty(true);
-        return "page/ciusky-types";
+        return "page/ciusky-types :: form";
     }
-
 }

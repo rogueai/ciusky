@@ -2,6 +2,7 @@ package dev.rogueai.collection.db.sql;
 
 import dev.rogueai.collection.service.model.Option;
 import dev.rogueai.collection.service.model.OptionEdit;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
@@ -32,6 +33,10 @@ public interface IOptionSql {
     @Update("UPDATE TYPE_OPTION SET DESCR = #{descr} WHERE ID = #{id}")
     void updateType(Option option);
 
+    @Delete("DELETE TYPE_OPTION WHERE ID = #{id}")
+    void deleteType(Long id);
+
     @Select("SELECT COUNT(*) FROM CIUSKY WHERE TYPE_OPTION = #{id}")
     int getReferenceCount(Long id);
+
 }

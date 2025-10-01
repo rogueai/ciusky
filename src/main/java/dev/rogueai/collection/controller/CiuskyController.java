@@ -23,8 +23,6 @@ import org.apache.commons.lang3.Strings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,8 +38,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,12 +47,6 @@ import java.util.stream.Collectors;
 public class CiuskyController {
 
     private static final Log logger = LogFactory.getLog(CiuskyController.class);
-
-    @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
-    private SpringTemplateEngine templateEngine;
 
     @Autowired
     private CiuskySearchService ciuskySearchService;
@@ -72,6 +62,9 @@ public class CiuskyController {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private TemplateUtils templateUtils;
 
     @GetMapping({ "/" })
     public String list(Model model) {
@@ -155,7 +148,7 @@ public class CiuskyController {
         ciusky.setImages(images);
 
         model.addAttribute("ciusky", ciusky);
-        htmxResponse.addTrigger("showToast", createToast(true, "Ciusky aggiornato! GG"));
+        templateUtils.toast(htmxResponse, true, "Ciusky saved");
         /*
          TODO: instead of returning the entire page we should return only the updated form template
            for now the with @HxReselect("form") we tell htmx to take from the response only the tag form
@@ -217,9 +210,7 @@ public class CiuskyController {
             imageService.addResource(ciusky.getId(), file.getOriginalFilename(), file.getBytes());
         }
         model.addAttribute("ciusky", ciuskyService.get(ciusky.getId()));
-
-        htmxResponse.addTrigger("showToast", createToast(true, "File uploaded"));
-
+        templateUtils.toast(htmxResponse, true, "File uploaded");
         return "components/gallery :: gallery";
     }
 
@@ -228,7 +219,7 @@ public class CiuskyController {
     public String imageDelete(@PathVariable(required = true) Long id, @PathVariable(required = true) String uuid, Model model, HtmxResponse htmxResponse) throws CiuskyNotFoundException {
         imageService.delete(id, uuid);
         model.addAttribute("ciusky", ciuskyService.get(id));
-        htmxResponse.addTrigger("showToast", createToast(true, "Image deleted"));
+        templateUtils.toast(htmxResponse, true, "Image deleted");
         return "components/gallery :: gallery";
     }
 
@@ -261,13 +252,13 @@ public class CiuskyController {
             } else {
                 // TODO: maybe there is a better way to get the message,
                 // TODO: we can't use a validator on the object because the main save function does not require the rawTag to be valid.
-                String message = messageSource.getMessage("validation.constraints.duplicateTag.message", null, LocaleContextHolder.getLocale());
+                String message = templateUtils.i18n("validation.constraints.duplicateTag.message");
                 bindingResult.addError(new FieldError(bindingResult.getObjectName(), "rawTag", message));
             }
         } else {
             // TODO: maybe there is a better way to get the message,
             // TODO: we can't use a validator on the object because the main save function does not require the rawTag to be valid.
-            String message = messageSource.getMessage("validation.constraints.tag.message", null, LocaleContextHolder.getLocale());
+            String message = templateUtils.i18n("validation.constraints.tag.message");
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), "rawTag", message));
         }
         return "components/tag-input";
@@ -278,12 +269,6 @@ public class CiuskyController {
     public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky, HtmxResponse htmxResponse) {
         ciusky.getTags().remove(id);
         return "components/tag-input";
-    }
-
-    private String createToast(boolean success, String message) {
-        Context context = new Context();
-        context.setVariable("toast", new ToastMessage(success, message));
-        return templateEngine.process("toast", context);
     }
 
 }

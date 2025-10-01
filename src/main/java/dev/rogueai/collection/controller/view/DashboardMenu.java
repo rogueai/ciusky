@@ -1,4 +1,4 @@
-package dev.rogueai.collection.controller;
+package dev.rogueai.collection.controller.view;
 
 public class DashboardMenu {
 

@@ -30,7 +30,7 @@ public class OptionService extends AbstractService {
     }
 
     public void deleteType(Long id) {
-        // TODO: Before deleting we must change the type of all referenced ciuskys to a default value.
+        optionSql.deleteType(id);
     }
 
     @Transactional
