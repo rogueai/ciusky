@@ -76,6 +76,8 @@ val copyJsAssets by tasks.registering(Copy::class) {
                 "node_modules/htmx.org/dist/htmx.min.js",
                 "node_modules/flowbite/dist/flowbite.min.js",
                 "node_modules/flowbite/dist/flowbite.min.js.map",
+                "node_modules/apexcharts/dist/apexcharts.min.js",
+                "node_modules/apexcharts/dist/apexcharts.min.js.map",
             )
         )
     })
