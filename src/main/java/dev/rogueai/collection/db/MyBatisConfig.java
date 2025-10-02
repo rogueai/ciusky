@@ -18,6 +18,9 @@ public class MyBatisConfig {
 
     private final DataSource dataSource;
 
+    @Value("classpath:mybatis/*.xml")
+    private Resource[] mapperLocations;
+
     public MyBatisConfig(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -26,6 +29,7 @@ public class MyBatisConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
+        sqlSessionFactory.addMapperLocations(mapperLocations);
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setMapUnderscoreToCamelCase(true);
         sqlSessionFactory.setConfiguration(configuration);

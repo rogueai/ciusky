@@ -15,7 +15,7 @@ public class CiuskySearchService extends AbstractService {
         String text = StringUtils.trim(filter.getText());
         List<Long> types = filter.getTypes();
 
-        List<CiuskySearchEntity> entities = searchSql.filter(text, types);
+        List<CiuskySearchEntity> entities = searchSql.search(text, types);
         return mapper.toCiuskySearchList(entities);
     }
 
