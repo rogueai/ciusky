@@ -21,12 +21,34 @@
             INNER JOIN TYPE_OPTION t ON t.ID = c.TYPE_OPTION
         WHERE 1 = 1
         <if test="text != null">
-            AND (REGEXP_LIKE(c.TITLE, #{text}, 'i') OR REGEXP_LIKE(c.DESCRIPTION, #{text}, 'i'))
+            AND (
+                REGEXP_LIKE(c.TITLE, #{text}, 'i') OR REGEXP_LIKE(c.DESCRIPTION, #{text}, 'i')
+            )
         </if>
         <if test="(types != null and !types.isEmpty())">
-            AND
-            <foreach item="type" collection="types" open="t.ID in (" separator="," close=")" nullable="false">
+            <foreach item="type" collection="types" open="AND t.ID in (" separator="," close=")" nullable="false">
                 #{type}
+            </foreach>
+        </if>
+        <if test="(tags != null and !tags.isEmpty())">
+            <foreach item="tag" collection="tags" nullable="false">
+                <if test="tag.key != null and tag.value == null">
+                    AND EXISTS (
+                        SELECT 1
+                        FROM CIUSKY_TAG ct
+                        WHERE ct.ID = c.ID
+                        AND REGEXP_LIKE(`KEY`, CONCAT('^', #{tag.key}), 'i')
+                    )
+                </if>
+                <if test="tag.key != null and tag.value != null">
+                    AND EXISTS (
+                        SELECT 1
+                        FROM CIUSKY_TAG ct
+                        WHERE ct.ID = c.ID
+                        AND `KEY` = #{tag.key}
+                        AND REGEXP_LIKE(`VALUE`, CONCAT('^', #{tag.value}), 'i')
+                    )
+                </if>
             </foreach>
         </if>
     </select>

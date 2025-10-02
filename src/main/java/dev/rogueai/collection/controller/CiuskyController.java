@@ -71,7 +71,7 @@ public class CiuskyController {
         List<Option> types = optionService.types();
         // TODO: every time we go back to the home page the filters are inizialized again
         // TODO: we should store the CiuskyFilter in session?
-        CiuskyFilter filter = new CiuskyFilter("", types);
+        CiuskyFilter filter = new CiuskyFilter("", "", types);
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
         model.addAttribute("ciuskyFilter", filter);
         model.addAttribute("ciuskyTypes", types);
@@ -82,7 +82,6 @@ public class CiuskyController {
     @HxRequest()
     @PostMapping({ "/search" })
     public String search(@ModelAttribute CiuskyFilter filter, Model model) {
-        logger.info("Search Endpoint invoked with params: " + filter);
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
         model.addAttribute("listCiusky", listCiusky);
         return "ciusky-table";

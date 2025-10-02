@@ -10,11 +10,14 @@ public class CiuskyFilter {
 
     private List<Long> types;
 
+    private String tags;
+
     public CiuskyFilter() {
     }
 
-    public CiuskyFilter(String text, List<Option> types) {
+    public CiuskyFilter(String text, String tags, List<Option> types) {
         this.text = text;
+        this.tags = tags;
         if (types != null) {
             this.types = types.stream().map(Option::getId).collect(Collectors.toList());
         } else {
@@ -31,6 +34,14 @@ public class CiuskyFilter {
         this.text = text;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     public List<Long> getTypes() {
         return types;
     }
@@ -41,6 +52,6 @@ public class CiuskyFilter {
 
     @Override
     public String toString() {
-        return "CiuskyFilter{" + "text='" + text + '\'' + ", types=" + types + '}';
+        return "CiuskyFilter{" + "text='" + text + '\'' + ", types=" + types + ", tags='" + tags + '\'' + '}';
     }
 }
