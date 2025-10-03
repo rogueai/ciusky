@@ -1,8 +1,7 @@
-
-create table CIUSKY_LINK
-(
-    ID BIGINT not null references CIUSKY on delete cascade,
-    LINK_ID BIGINT auto_increment,
-    URL CHARACTER VARYING(2000),
-    primary key (ID, LINK_ID)
+CREATE TABLE CIUSKY_LINK(
+    ID BIGINT,
+    LINK_ID IDENTITY,
+    URL VARCHAR2(2000) NOT NULL,
+    PRIMARY KEY (LINK_ID),
+    FOREIGN KEY (ID) REFERENCES CIUSKY(ID) ON DELETE CASCADE
 );
