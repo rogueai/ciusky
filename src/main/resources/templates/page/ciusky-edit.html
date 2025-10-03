@@ -35,7 +35,7 @@
                     </div>
                     <div class="mb-5">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quality</label>
-                        <div th:replace="~{components/rating-input.html :: rating-input('quality')}"></div>
+                        <div th:replace="~{components/star-rating.html :: edit('quality')}"></div>
                     </div>
                     <div class="mb-5">
                         <label for="paidPrice" class="csk-input-label">Paid price</label>
@@ -78,7 +78,7 @@
                         <div th:replace="~{components/field-error :: text('purchasePlace')}"></div>
                     </div>
 
-                    <div class="col-span-2" th:insert="~{components/tag-input.html :: tag-input}"></div>
+                    <div class="col-span-2" th:insert="~{components/tag-editor.html :: tag-input}"></div>
 
                     <th:block th:if="${ciusky.type == 2}">
 
@@ -166,18 +166,18 @@
                 </div>
                 <div id="image-gallery" th:replace="~{components/gallery :: gallery}"></div>
             </form>
+            <script th:inline="javascript">
+                htmx.on('#form-upload', 'htmx:beforeRequest', function (evt) {
+                    const pr = htmx.find('#upload-progress');
+                    htmx.toggleClass(pr, 'hidden');
+                });
+                htmx.on('#form-upload', 'htmx:beforeSwap', function (evt) {
+                    const pr = htmx.find('#upload-progress');
+                    htmx.toggleClass(pr, 'hidden');
+                });
+            </script>
         </div>
     </div>
-    <script th:inline="javascript">
-        htmx.on('#form-upload', 'htmx:beforeRequest', function (evt) {
-            const pr = htmx.find('#upload-progress');
-            htmx.toggleClass(pr, 'hidden');
-        });
-        htmx.on('#form-upload', 'htmx:beforeSwap', function (evt) {
-            const pr = htmx.find('#upload-progress');
-            htmx.toggleClass(pr, 'hidden');
-        });
-    </script>
 </div>
 </body>
 </html>

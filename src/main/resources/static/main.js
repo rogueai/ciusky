@@ -1,30 +1,13 @@
-window.addEventListener("load", (event) => {
-  initFlowbite();
+window.document.addEventListener("showToast", (event) => {
+    clearTimeout(window.toastTimeout);
+    window.toastTimeout = setTimeout(() => {
+        const html = (event.detail || {}).value;
+        var toastEl = htmx.find("#toast-default")
+        htmx.swap("#toast-default", html, { swapStyle: 'outerHTML'} );
+        const $triggerEl = document.getElementById('toastTrigger');
+        window.toastTimeout = setTimeout(() => $triggerEl.click(), 2000);
+    }, 100);
 });
-
-htmx.onLoad(function () {
-
-    document.body.addEventListener("showToast", (event) => {
-        if (event.processed) {
-            return true;
-        }
-        event.processed = true;
-
-        clearTimeout(window.toastTimeout);
-        window.toastTimeout = setTimeout(() => {
-            const html = (event.detail || {}).value;
-            var toastEl = htmx.find("#toast-default")
-            htmx.swap("#toast-default", html, { swapStyle: 'outerHTML'} );
-
-            // We call initFlowbite otherwise the close modal button does not work
-            initFlowbite();
-
-            const $triggerEl = document.getElementById('toastTrigger');
-            window.toastTimeout = setTimeout(() => $triggerEl.click(), 2000);
-        }, 100);
-
-    });
-})
 
 function toggleWideImage(el) {
     htmx.toggleClass(el, "md:col-span-4");

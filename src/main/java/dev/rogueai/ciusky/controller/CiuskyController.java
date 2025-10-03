@@ -1,22 +1,18 @@
 package dev.rogueai.ciusky.controller;
 
 import dev.rogueai.ciusky.service.CiuskyNotFoundException;
-import dev.rogueai.ciusky.service.CiuskySearchService;
 import dev.rogueai.ciusky.service.CiuskyService;
 import dev.rogueai.ciusky.service.ImageService;
 import dev.rogueai.ciusky.service.OptionService;
 import dev.rogueai.ciusky.service.TagService;
 import dev.rogueai.ciusky.service.model.Book;
 import dev.rogueai.ciusky.service.model.Ciusky;
-import dev.rogueai.ciusky.service.model.CiuskyFilter;
 import dev.rogueai.ciusky.service.model.CiuskyImage;
-import dev.rogueai.ciusky.service.model.CiuskySearch;
 import dev.rogueai.ciusky.service.model.ECiuskyType;
 import dev.rogueai.ciusky.service.model.Option;
 import dev.rogueai.ciusky.service.model.Tag;
 import dev.rogueai.ciusky.util.TemplateUtils;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
-import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxReswap;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
 import jakarta.validation.Valid;
@@ -39,8 +35,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.FragmentsRendering;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,9 +44,6 @@ import java.util.stream.Collectors;
 public class CiuskyController {
 
     private static final Log logger = LogFactory.getLog(CiuskyController.class);
-
-    @Autowired
-    private CiuskySearchService ciuskySearchService;
 
     @Autowired
     private CiuskyService ciuskyService;
@@ -69,39 +60,6 @@ public class CiuskyController {
     @Autowired
     private TemplateUtils templateUtils;
 
-    @GetMapping({ "/" })
-    public String list(Model model) {
-        List<Option> types = optionService.types();
-        // TODO: every time we go back to the home page the filters are inizialized again
-        // TODO: we should store the CiuskyFilter in session?
-        CiuskyFilter filter = new CiuskyFilter("", "", types);
-        List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
-        model.addAttribute("ciuskyFilter", filter);
-        model.addAttribute("ciuskyTypes", types);
-        model.addAttribute("listCiusky", listCiusky);
-        return "index";
-    }
-
-    @HxRequest()
-    @PostMapping({ "/search" })
-    public View search(@ModelAttribute @Valid CiuskyFilter filter, BindingResult bindingResult, Model model, HtmxResponse htmxResponse) {
-
-        if (bindingResult.hasErrors()) {
-            htmxResponse.setRetarget("form");
-            htmxResponse.setReselect("form");
-            htmxResponse.setReswap(HtmxReswap.outerHtml());
-            return FragmentsRendering.with("layout/search").build();
-        }
-
-        List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
-        model.addAttribute("listCiusky", listCiusky);
-
-        return FragmentsRendering //
-                .with("ciusky-table") //
-                .fragment("layout/search") //
-                .build();
-    }
-
     @GetMapping({ "/ciusky", "/ciusky/{id}" })
     public String create(@PathVariable(required = false) Long id, Model model) {
         try {
@@ -109,7 +67,7 @@ public class CiuskyController {
             model.addAttribute("ciusky", ciusky);
             List<Option> types = optionService.types();
             model.addAttribute("types", types);
-            return "create";
+            return "page/ciusky-edit";
         } catch (CiuskyNotFoundException e) {
             logger.warn(e.getMessage(), e);
             return "redirect:/";
@@ -148,7 +106,7 @@ public class CiuskyController {
             List<CiuskyImage> images = ciuskyService.getImages(ciusky.getId());
             ciusky.setImages(images);
             model.addAttribute("ciusky", ciusky);
-            return "create";
+            return "page/ciusky-edit";
         }
 
         ciuskyService.save(ciusky);
@@ -167,7 +125,7 @@ public class CiuskyController {
          TODO: instead of returning the entire page we should return only the updated form template
            for now the with @HxReselect("form") we tell htmx to take from the response only the tag form
          */
-        return "create";
+        return "page/ciusky-edit";
 
     }
 
@@ -196,7 +154,7 @@ public class CiuskyController {
          TODO: instead of returning the entire page we should return only the updated form template
            for now the with @HxReselect("form") we tell htmx to take from the response only the tag form
          */
-        return "create";
+        return "page/ciusky-edit";
     }
 
     /**
@@ -250,7 +208,7 @@ public class CiuskyController {
             List<String> keys = tagService.getKeys(rawTag);
             model.addAttribute("tagSearchResult", keys);
         }
-        return "components/tag-search";
+        return "components/tag-editor :: tag-data-list";
     }
 
     @HxRequest()
@@ -275,14 +233,14 @@ public class CiuskyController {
             String message = templateUtils.i18n("validation.constraints.tag.message");
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), "rawTag", message));
         }
-        return "components/tag-input";
+        return "components/tag-editor :: tag-input";
     }
 
     @HxRequest()
     @PostMapping({ "/ciusky/tag/delete/{id}" })
     public String tagDelete(@PathVariable int id, @ModelAttribute Ciusky ciusky, HtmxResponse htmxResponse) {
         ciusky.getTags().remove(id);
-        return "components/tag-input";
+        return "components/tag-editor :: tag-input";
     }
 
 }
