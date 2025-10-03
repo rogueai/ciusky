@@ -5,7 +5,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -17,12 +16,6 @@ public class AppConfig {
 
     @Value("${ciusky.data}")
     private String ciuskyData;
-
-    private final ResourceLoader resourceLoader;
-
-    public AppConfig(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
 
     @Bean
     public LocalValidatorFactoryBean validator() {
@@ -57,28 +50,5 @@ public class AppConfig {
     public DataSourceTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
     }
-
-    // @Bean
-    // public ResourceDatabasePopulator databasePopulator() {
-    //     ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-    //     // The first time the db is created every drops should fail.
-    //     resourceDatabasePopulator.setIgnoreFailedDrops(true);
-    //     // The order of the scripts is important.
-    //     String[] scripts = new String[] { "classpath:/scripts/drop.sql", "classpath:/scripts/schema.sql", "classpath:/scripts/basic.sql" };
-    //     for (String script : scripts) {
-    //         resourceDatabasePopulator.addScript(resourceLoader.getResource(script));
-    //     }
-    //     return resourceDatabasePopulator;
-    // }
-    //
-    // @Bean
-    // public DataSourceInitializer dataSourceInitializer() {
-    //     DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-    //     dataSourceInitializer.setDataSource(dataSource());
-    //     dataSourceInitializer.setDatabasePopulator(databasePopulator());
-    //     dataSourceInitializer.setEnabled(false);
-    //     dataSourceInitializer.setCheckInitializationQuery("SELECT INIT_DATE FROM INFO");
-    //     return dataSourceInitializer;
-    // }
 
 }
