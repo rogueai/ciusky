@@ -1,7 +1,7 @@
 package dev.rogueai.collection.service.model;
 
-import dev.rogueai.collection.controller.validator.IsbnConstraint;
-import dev.rogueai.collection.controller.validator.IsbnFormat;
+import dev.rogueai.collection.controller.validation.IsbnConstraint;
+import dev.rogueai.collection.controller.validation.IsbnFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -1,6 +1,6 @@
 package dev.rogueai.collection.config;
 
-import dev.rogueai.collection.controller.validator.IsbnFormatter;
+import dev.rogueai.collection.controller.validation.IsbnFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

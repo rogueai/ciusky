@@ -16,6 +16,7 @@ import dev.rogueai.collection.service.model.Option;
 import dev.rogueai.collection.service.model.Tag;
 import dev.rogueai.collection.util.TemplateUtils;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
+import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxReswap;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxReselect;
 import jakarta.validation.Valid;
@@ -38,6 +39,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.FragmentsRendering;
 
 import java.io.IOException;
 import java.util.List;
@@ -81,10 +84,22 @@ public class CiuskyController {
 
     @HxRequest()
     @PostMapping({ "/search" })
-    public String search(@ModelAttribute CiuskyFilter filter, Model model) {
+    public View search(@ModelAttribute @Valid CiuskyFilter filter, BindingResult bindingResult, Model model, HtmxResponse htmxResponse) {
+
+        if (bindingResult.hasErrors()) {
+            htmxResponse.setRetarget("form");
+            htmxResponse.setReselect("form");
+            htmxResponse.setReswap(HtmxReswap.outerHtml());
+            return FragmentsRendering.with("layout/search").build();
+        }
+
         List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
         model.addAttribute("listCiusky", listCiusky);
-        return "ciusky-table";
+
+        return FragmentsRendering //
+                .with("ciusky-table") //
+                .fragment("layout/search") //
+                .build();
     }
 
     @GetMapping({ "/ciusky", "/ciusky/{id}" })

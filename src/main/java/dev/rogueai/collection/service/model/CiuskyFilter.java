@@ -1,5 +1,7 @@
 package dev.rogueai.collection.service.model;
 
+import dev.rogueai.collection.controller.validation.TagConstraint;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +12,11 @@ public class CiuskyFilter {
 
     private List<Long> types;
 
+    @TagConstraint(acceptMany = true)
     private String tags;
 
     public CiuskyFilter() {
+
     }
 
     public CiuskyFilter(String text, String tags, List<Option> types) {

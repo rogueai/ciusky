@@ -13,12 +13,12 @@
                     <div class="mb-5 col-span-2">
                         <label for="title" class="csk-input-label">Title</label>
                         <input th:field="*{title}" type="text" id="title" class="csk-input" placeholder="" required/>
-                        <div th:replace="~{components/field-error('title')}"></div>
+                        <div th:replace="~{components/field-error :: text('title')}"></div>
                     </div>
                     <div class="mb-5 col-span-2">
                         <label for="description" class="csk-input-label">Description</label>
                         <input th:field="*{description}" type="text" id="description" class="csk-input"/>
-                        <div th:replace="~{components/field-error('description')}"></div>
+                        <div th:replace="~{components/field-error :: text('description')}"></div>
                     </div>
                     <div class="mb-5">
                         <label for="types"
@@ -31,7 +31,7 @@
                             <option th:each="option : ${types}" th:value="${option.id}"
                                     th:text="${option.descr}"></option>
                         </select>
-                        <div th:replace="~{components/field-error('type')}"></div>
+                        <div th:replace="~{components/field-error :: text('type')}"></div>
                     </div>
                     <div class="mb-5">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quality</label>
@@ -45,7 +45,7 @@
                             </span>
                             <input th:field="*{paidPrice}" type="text" id="paidPrice" class="csk-input-addon"
                                    placeholder="0.00">
-                            <div th:replace="~{components/field-error('paidPrice')}"></div>
+                            <div th:replace="~{components/field-error :: text('paidPrice')}"></div>
                         </div>
                     </div>
                     <div class="mb-5">
@@ -56,7 +56,7 @@
                             </span>
                             <input th:field="*{marketPrice}" type="text" id="marketPrice" class="csk-input-addon"
                                    placeholder="0.00">
-                            <div th:replace="~{components/field-error('marketPrice')}"></div>
+                            <div th:replace="~{components/field-error :: text('marketPrice')}"></div>
                         </div>
                     </div>
                     <div class="mb-5">
@@ -68,14 +68,14 @@
                             <input th:field="*{purchaseDate}" id="purchaseDate"
                                    type="date" placeholder="Select date"
                                    autocomplete="off" class="csk-input-addon"/>
-                            <div th:replace="~{components/field-error('purchaseDate')}"></div>
+                            <div th:replace="~{components/field-error :: text('purchaseDate')}"></div>
                         </div>
                     </div>
                     <div class="mb-5">
                         <label for="purchasePlace" class="csk-input-label">Purchase Place</label>
                         <input th:field="*{purchasePlace}" type="text" id="purchasePlace" class="csk-input"
                                placeholder=""/>
-                        <div th:replace="~{components/field-error('purchasePlace')}"></div>
+                        <div th:replace="~{components/field-error :: text('purchasePlace')}"></div>
                     </div>
 
                     <div class="col-span-2" th:insert="~{components/tag-input.html :: tag-input}"></div>
@@ -86,21 +86,21 @@
                             <label for="author" class="csk-input-label">Author</label>
                             <input th:field="*{author}" type="text" id="author" class="csk-input" placeholder=""
                                    required/>
-                            <div th:replace="~{components/field-error('author')}"></div>
+                            <div th:replace="~{components/field-error :: text('author')}"></div>
                         </div>
 
                         <div class="mb-5 col-span-2">
                             <label for="format" class="csk-input-label">Format</label>
                             <input th:field="*{format}" type="text" id="format" class="csk-input" placeholder=""
                                    required/>
-                            <div th:replace="~{components/field-error('format')}"></div>
+                            <div th:replace="~{components/field-error :: text('format')}"></div>
                         </div>
 
                         <div class="mb-5 col-span-2">
                             <label for="publisher" class="csk-input-label">Publisher</label>
                             <input th:field="*{publisher}" type="text" id="publisher" class="csk-input" placeholder=""
                                    required/>
-                            <div th:replace="~{components/field-error('publisher')}"></div>
+                            <div th:replace="~{components/field-error :: text('publisher')}"></div>
                         </div>
 
                         <div class="mb-5 col-span-2">
@@ -114,7 +114,7 @@
                                        autocomplete="off"
                                        class="csk-input-addon"/>
                             </div>
-                            <div th:replace="~{components/field-error('publishDate')}"></div>
+                            <div th:replace="~{components/field-error :: text('publishDate')}"></div>
                         </div>
 
                         <div class="mb-5 col-span-2">
@@ -127,14 +127,14 @@
                                        th:classappend="${#fields.hasErrors('isbn13') ? 'csk-input-error' : ''}"
                                        class="csk-input-addon" placeholder="978-1-56619-909-4">
                             </div>
-                            <div th:replace="~{components/field-error('isbn13')}"></div>
+                            <div th:replace="~{components/field-error :: text('isbn13')}"></div>
                         </div>
 
                         <div class="mb-5 col-span-2">
                             <label for="language" class="csk-input-label">Language</label>
                             <input th:field="*{language}" type="text" id="language" class="csk-input" placeholder="EN"
                                    required/>
-                            <div th:replace="~{components/field-error('language')}"></div>
+                            <div th:replace="~{components/field-error :: text('language')}"></div>
                         </div>
 
                     </th:block>

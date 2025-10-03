@@ -1,4 +1,4 @@
-package dev.rogueai.collection.controller.validator;
+package dev.rogueai.collection.controller.validation;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.format.AnnotationFormatterFactory;

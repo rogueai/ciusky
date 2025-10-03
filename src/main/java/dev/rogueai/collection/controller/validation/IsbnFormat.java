@@ -1,4 +1,4 @@
-package dev.rogueai.collection.controller.validator;
+package dev.rogueai.collection.controller.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

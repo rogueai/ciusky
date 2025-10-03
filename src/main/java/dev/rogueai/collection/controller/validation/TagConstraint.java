@@ -1,4 +1,4 @@
-package dev.rogueai.collection.controller.validator;
+package dev.rogueai.collection.controller.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,16 +10,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Constraint(validatedBy = IsbnValidator.class)
+@Constraint(validatedBy = TagValidator.class)
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface IsbnConstraint {
-    String message() default "{validation.constraints.Isbn.message}";
+public @interface TagConstraint {
+
+    boolean acceptMany() default false;
+
+    String message() default "{validation.constraints.tag.message}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 }
-
-
-

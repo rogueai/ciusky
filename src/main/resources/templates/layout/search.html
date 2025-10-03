@@ -1,4 +1,4 @@
-<section th:fragment="search" class="bg-gray-50 dark:bg-gray-900 flex items-center" xmlns:th="http://www.thymeleaf.org">
+<section id="search" hx-swap-oob="true" th:fragment="search" class="bg-gray-50 dark:bg-gray-900 flex items-center" xmlns:th="http://www.thymeleaf.org">
     <div class="w-full mb-2">
         <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
             <form th:object="${ciuskyFilter}" hx-post="/search" hx-target="#ciusky-table">
@@ -42,7 +42,11 @@
                                        autocomplete="off"
                                        class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                        placeholder="Search Tags">
+
+                                <div th:replace="~{components/field-error :: input-icon('tags')}"></div>
+
                             </div>
+
 
                         </div>
 

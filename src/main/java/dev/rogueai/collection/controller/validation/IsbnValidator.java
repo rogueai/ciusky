@@ -1,4 +1,4 @@
-package dev.rogueai.collection.controller.validator;
+package dev.rogueai.collection.controller.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
