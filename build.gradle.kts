@@ -7,7 +7,6 @@ plugins {
     id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.github.node-gradle.node") version "7.1.0"
-    id("org.flywaydb.flyway") version "11.13.2"
     kotlin("jvm") version "2.2.20"
     kotlin("plugin.spring") version "2.2.20"
     kotlin("kapt") version "2.2.20"
@@ -25,12 +24,6 @@ java {
 
 node {
     download = true
-}
-
-flyway {
-    url = "jdbc:h2:~/.config/ciusky/collections;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1"
-    validateOnMigrate = true
-    validateMigrationNaming = true
 }
 
 tasks.withType<JavaCompile> {

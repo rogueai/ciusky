@@ -26,7 +26,7 @@ public class CiuskyTest {
         for (int i = 0; i < 10000; i++) {
             Ciusky ciusky = new Ciusky();
             ciusky.setTitle(Randomizer.string(200));
-            ciusky.setType(4L);
+            ciusky.setType(1L);
             ciusky.setQuality(Randomizer.any(0, 1, 2, 3, 4, 5));
             ciusky.setPaidPrice(Randomizer.bigDecimal());
             ciusky.setMarketPrice(Randomizer.bigDecimal());
