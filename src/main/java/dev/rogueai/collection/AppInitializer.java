@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@DependsOn(value = "dataSourceInitializer")
 public class AppInitializer {
 
     @Autowired
