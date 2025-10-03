@@ -1,4 +1,4 @@
-<!--/*@thymesVar id="tag" type="dev.rogueai.collection.service.model.Tag"*/-->
+<!--/*@thymesVar id="tag" type="dev.rogueai.ciusky.service.model.Tag"*/-->
 <div th:fragment="tag-list(field)" class="flex flex-wrap gap-2 overflow-x-auto whitespace-nowrap py-1">
     <span th:class="'csk-tag-'+ ${tagColor}"
           th:each="tag, i : *{__${field}__}"

@@ -1,5 +1,5 @@
-<!--/*@thymesVar id="ciusky" type="dev.rogueai.collection.service.model.Ciusky"*/-->
-<!--/*@thymesVar id="image" type="dev.rogueai.collection.service.model.CiuskyImage"*/-->
+<!--/*@thymesVar id="ciusky" type="dev.rogueai.ciusky.service.model.Ciusky"*/-->
+<!--/*@thymesVar id="image" type="dev.rogueai.ciusky.service.model.CiuskyImage"*/-->
 <div id="image-gallery" th:fragment="gallery" th:object="${ciusky}">
     <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
         <div th:each="image : ${ciusky.images}" class="relative group rounded-lg border-gray-600"

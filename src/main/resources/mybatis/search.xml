@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="dev.rogueai.collection.db.sql.ICiuskySearchSql">
+<mapper namespace="dev.rogueai.ciusky.db.sql.ICiuskySearchSql">
 
     <select id="search" resultMap="ciuskySearchEntity">
         SELECT
@@ -53,7 +53,7 @@
         </if>
     </select>
 
-    <select id="selectTags" resultType="dev.rogueai.collection.db.dto.TagEntity">
+    <select id="selectTags" resultType="dev.rogueai.ciusky.db.dto.TagEntity">
         SELECT `KEY`, `VALUE` FROM CIUSKY_TAG WHERE ID = #{id}
     </select>
 
@@ -61,7 +61,7 @@
         SELECT `UUID` FROM CIUSKY_IMG WHERE ID = #{id}
     </select>
 
-    <resultMap id="ciuskySearchEntity" type="dev.rogueai.collection.db.dto.CiuskySearchEntity">
+    <resultMap id="ciuskySearchEntity" type="dev.rogueai.ciusky.db.dto.CiuskySearchEntity">
         <id property="id" column="ID" />
         <collection property="tags" javaType="ArrayList" column="ID" select="selectTags"/>
         <collection property="uuidImages" javaType="ArrayList" column="ID" select="selectImages"/>
