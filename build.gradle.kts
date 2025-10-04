@@ -26,6 +26,14 @@ node {
     download = true
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir(layout.buildDirectory.dir("generated/resources"))
+        }
+    }
+}
+
 tasks.withType<JavaCompile> {
     val compilerArgs = options.compilerArgs
     compilerArgs.addAll(listOf("-Amapstruct.verbose=true", "-Amapstruct.defaultComponentModel=spring"))
@@ -64,13 +72,15 @@ tasks.withType<Test> {
 val pnpmInstall = tasks.withType<PnpmInstallTask>()
 
 val compileCss by tasks.registering(PnpmTask::class) {
-    args = listOf("run", "build:css")
+    args = listOf("exec", "tailwindcss",
+        "-i", "tailwind/main.css",
+        "-o", "${layout.buildDirectory}/generated/resources/static/main.css")
     dependsOn(pnpmInstall)
 }
 
 val copyJsAssets by tasks.registering(Copy::class) {
     dependsOn(pnpmInstall)
-    into(layout.projectDirectory.dir("src/main/resources/static"))
+    into(layout.buildDirectory.dir("generated/resources/static"))
     with(copySpec {
         from(
             files(

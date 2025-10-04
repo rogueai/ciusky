@@ -1,3 +1,4 @@
+
 htmx.onLoad(function (target) {
     initFlowbiteHtmx(target);
 });
