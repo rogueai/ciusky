@@ -71,15 +71,21 @@ tasks.withType<Test> {
 
 val pnpmInstall = tasks.withType<PnpmInstallTask>()
 
+val defaultTailwindArgs = listOf(
+    "exec", "tailwindcss",
+    "-i", "tailwind/main.css",
+    "-o", "${layout.buildDirectory.get().asFile.path}/generated/resources/static/main.css",
+    "--minify"
+)
+
 val compileCss by tasks.registering(PnpmTask::class) {
-    args = listOf("exec", "tailwindcss",
-        "-i", "tailwind/main.css",
-        "-o", "${layout.buildDirectory.get().asFile.path}/generated/resources/static/main.css",
-        "--minify")
+    group = "ciusky"
+    args = defaultTailwindArgs
     dependsOn(pnpmInstall)
 }
 
 val copyJsAssets by tasks.registering(Copy::class) {
+    group = "ciusky"
     dependsOn(pnpmInstall)
     into(layout.buildDirectory.dir("generated/resources/static"))
     with(copySpec {
