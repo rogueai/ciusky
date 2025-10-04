@@ -74,7 +74,8 @@ val pnpmInstall = tasks.withType<PnpmInstallTask>()
 val compileCss by tasks.registering(PnpmTask::class) {
     args = listOf("exec", "tailwindcss",
         "-i", "tailwind/main.css",
-        "-o", "${layout.buildDirectory}/generated/resources/static/main.css")
+        "-o", "${layout.buildDirectory.get().asFile.path}/generated/resources/static/main.css",
+        "--minify")
     dependsOn(pnpmInstall)
 }
 
