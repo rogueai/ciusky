@@ -4,7 +4,10 @@
     <div id="content">
         <div class="relative min-h-1/2">
             <div th:replace="~{this :: search}"></div>
-            <div th:replace="~{this :: table}"></div>
+
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <div th:replace="~{this :: table}"></div>
+            </div>
         </div>
     </div>
 </body>
