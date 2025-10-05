@@ -40,9 +40,13 @@ public class Ciusky {
 
     protected List<Tag> tags;
 
+    protected List<Link> links;
+
     protected List<CiuskyImage> images;
 
     protected String rawTag;
+
+    protected String rawLink;
 
     public Long getId() {
         return id;
@@ -135,6 +139,17 @@ public class Ciusky {
         this.tags = tags;
     }
 
+    public List<Link> getLinks() {
+        if (links == null) {
+            links = new ArrayList<>();
+        }
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
     public List<CiuskyImage> getImages() {
         return images;
     }
@@ -149,5 +164,13 @@ public class Ciusky {
 
     public void setRawTag(String rawTag) {
         this.rawTag = rawTag;
+    }
+
+    public String getRawLink() {
+        return rawLink;
+    }
+
+    public void setRawLink(String rawLink) {
+        this.rawLink = rawLink;
     }
 }

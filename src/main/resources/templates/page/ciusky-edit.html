@@ -26,7 +26,7 @@
                         <input th:if="${ciusky.id != null}" th:field="*{type}" type="hidden"/>
                         <select th:field="*{type}" th:disabled="${ciusky.id != null}" id="types"
                                 th:hx-put="@{/ciusky/changeType}" hx-target="#forms"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                class="csk-select">
                             <option th:value="-1" selected>Choose a type</option>
                             <option th:each="option : ${types}" th:value="${option.id}"
                                     th:text="${option.descr}"></option>
@@ -78,10 +78,9 @@
                         <div th:replace="~{components/field-error :: text('purchasePlace')}"></div>
                     </div>
 
-                    <div class="col-span-2" th:insert="~{components/tag-editor.html :: tag-input}"></div>
+                    <div class="col-span-2" th:insert="~{components/tag-editor :: tag-input}"></div>
 
                     <th:block th:if="${ciusky.type == 2}">
-
                         <div class="mb-5 col-span-2">
                             <label for="author" class="csk-input-label">Author</label>
                             <input th:field="*{author}" type="text" id="author" class="csk-input" placeholder=""
@@ -138,6 +137,8 @@
                         </div>
 
                     </th:block>
+
+                    <div class="mb-5 col-span-2" th:insert="~{components/link-editor :: link-input}"></div>
 
                     <div class="mb-5 col-span-2">
                         <label for="notes" class="csk-input-label">Notes</label>

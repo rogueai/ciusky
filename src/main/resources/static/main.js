@@ -71,7 +71,7 @@ function toggleWideImage(el) {
                  }
                  else {
                     // Simulate trigger changed
-                    if (event.target.prevValue != evt.target.value) {
+                    if (event.target.prevValue !== evt.target.value) {
                         event.target.prevValue = evt.target.value;
                         const values = {
                             [evt.target.name] : evt.target.value
