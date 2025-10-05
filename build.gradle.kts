@@ -29,7 +29,7 @@ node {
 sourceSets {
     main {
         resources {
-            srcDir(layout.buildDirectory.dir("generated/resources"))
+            srcDir(layout.projectDirectory.dir("src/generated/resources"))
         }
     }
 }
@@ -74,7 +74,7 @@ val pnpmInstall = tasks.withType<PnpmInstallTask>()
 val defaultTailwindArgs = listOf(
     "exec", "tailwindcss",
     "-i", "tailwind/main.css",
-    "-o", "${layout.buildDirectory.get().asFile.path}/generated/resources/static/main.css",
+    "-o", "${layout.projectDirectory.asFile.path}/src/generated/resources/static/main.css",
     "--minify"
 )
 
@@ -87,7 +87,7 @@ val compileCss by tasks.registering(PnpmTask::class) {
 val copyJsAssets by tasks.registering(Copy::class) {
     group = "ciusky"
     dependsOn(pnpmInstall)
-    into(layout.buildDirectory.dir("generated/resources/static"))
+    into(layout.projectDirectory.dir("src/generated/resources/static"))
     with(copySpec {
         from(
             files(
