@@ -37,8 +37,8 @@ function initDropdownsHtmx(rootElement) {
                     triggerType: triggerType ? triggerType: 'click',
                     offsetSkidding: offsetSkidding ? parseInt(offsetSkidding) : 0,
                     offsetDistance: offsetDistance ? parseInt(offsetDistance) : 10,
-                    delay: delay ? parseInt(delay) : 300,
-                    ignoreClickOutsideClass: ignoreClickOutsideClass ? ignoreClickOutsideClass : false,
+                    delay: delay ? parseInt(delay) : 100,
+                    ignoreClickOutsideClass: ignoreClickOutsideClass ? ignoreClickOutsideClass : true,
                 }
             );
         } else {

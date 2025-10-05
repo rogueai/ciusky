@@ -1,6 +1,7 @@
 package dev.rogueai.ciusky.util;
 
 import dev.rogueai.ciusky.controller.ToastMessage;
+import dev.rogueai.ciusky.controller.ToastMessageEvent;
 import dev.rogueai.ciusky.service.model.ECiuskyType;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +60,16 @@ public class TemplateUtils {
         return "saveCiusky";
     }
 
-    public void toast(HtmxResponse htmxResponse, boolean success, String message) {
+    public void toast(HtmxResponse htmxResponse, boolean success, String message, String detail) {
         Context context = new Context();
-        context.setVariable("toast", new ToastMessage(success, message));
-        htmxResponse.addTrigger("showToast", templateEngine.process("toast", context));
+        context.setVariable("toast", new ToastMessage(success, message, detail));
+        int timeout = success ? 2000 : 0;
+        ToastMessageEvent event = new ToastMessageEvent(templateEngine.process("toast", context), timeout);
+        htmxResponse.addTrigger("showToast", event);
+    }
+
+    public void toast(HtmxResponse htmxResponse, boolean success, String message) {
+        toast(htmxResponse, success, message, null);
     }
 
     public String i18n(String code) {

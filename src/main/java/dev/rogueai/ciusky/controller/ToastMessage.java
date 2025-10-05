@@ -9,8 +9,11 @@ public class ToastMessage {
 
     public String message;
 
-    public ToastMessage(boolean success, String message) {
+    public String detail;
+
+    public ToastMessage(boolean success, String message, String detail) {
         this.success = success;
         this.message = message;
+        this.detail = detail;
     }
 }

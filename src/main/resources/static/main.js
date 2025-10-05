@@ -1,11 +1,18 @@
 window.document.addEventListener("showToast", (event) => {
     clearTimeout(window.toastTimeout);
     window.toastTimeout = setTimeout(() => {
-        const html = (event.detail || {}).value;
+        const detail = (event.detail || {});
+
+        const html = detail.html;
+        const timeout = detail.timeout;
+
         var toastEl = htmx.find("#toast-default")
         htmx.swap("#toast-default", html, { swapStyle: 'outerHTML'} );
-        const $triggerEl = document.getElementById('toastTrigger');
-        window.toastTimeout = setTimeout(() => $triggerEl.click(), 2000);
+
+        if (timeout > 0) {
+            const $triggerEl = document.getElementById('toastTrigger');
+            window.toastTimeout = setTimeout(() => $triggerEl.click(), timeout);
+        }
     }, 100);
 });
 
