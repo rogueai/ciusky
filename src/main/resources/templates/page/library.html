@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html th:fragment="default" th:replace="~{layout/site :: layout(_, ~{}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+    <div id="content">
+        <div class="relative min-h-1/2 w-full md:w-3/5 mx-auto">
+
+            <div th:fragment="loading" th:if="${docs == null}" th:hx-get="@{/library?title={title}(title=${title})}" hx-trigger="load delay:5s" hx-swap="outerHTML">
+                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div class="bg-blue-600 h-2.5 rounded-full" th:style="'width: ' + ${timeToWaitPercent} + '%'"></div>
+                </div>
+            </div>
+            <div th:fragment="complete" th:if="${docs != null}">
+                <div th:replace="~{this :: cards}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<div th:fragment="cards" xmlns:th="http://www.thymeleaf.org">
+    <div class="grid grid-cols-2 gap-2">
+        <a th:href="|https://openlibrary.org/${doc.key}|" target="_blank" th:each="doc : ${docs}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+            <img th:if="${doc.cover_edition_key != null}" th:src="|https://covers.openlibrary.org/b/olid/${doc.cover_edition_key}-M.jpg|" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" alt="" />
+            <img th:unless="${doc.cover_edition_key != null}" th:src="@{/images/image-4@2x.jpg}" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" alt="" />
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <h5 th:text="${doc.title}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></h5>
+                <b th:each="author_name : ${doc.author_name}" th:text="|By: ${author_name}|" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></b>
+                <p th:text="${doc.subtitle}" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
+                <p th:if="${doc.first_publish_year > 0}" th:text="|Published: ${doc.first_publish_year}|" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
+            </div>
+        </a>
+    </div>
+</div>
+

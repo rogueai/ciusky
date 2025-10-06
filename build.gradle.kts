@@ -53,6 +53,7 @@ dependencies {
     implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5")
     implementation("org.flywaydb:flyway-core")
+    implementation("com.bucket4j:bucket4j-core:8.10.1")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     implementation("org.mapstruct:mapstruct:1.6.3")
     kapt("org.mapstruct:mapstruct-processor:1.6.3")
