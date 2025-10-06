@@ -1,0 +1,3 @@
+@utility d-input {
+    @apply focus:border-info focus:outline-offset-0 focus:outline-info;
+}

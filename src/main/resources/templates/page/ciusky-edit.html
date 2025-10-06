@@ -10,54 +10,60 @@
                   class="max-w-xl mx-auto">
                 <div class="grid grid-cols-2 gap-2">
                     <input th:field="*{id}" type="hidden" id="id"/>
-                    <div class="mb-5 col-span-2">
-                        <label for="title" class="csk-input-label">Title</label>
-                        <input th:field="*{title}" type="text" id="title" class="csk-input" placeholder="" required/>
+                    <div class="col-span-2">
+                        <fieldset class="d-fieldset">
+                            <legend class="d-fieldset-legend">Title</legend>
+                            <input th:field="*{title}" type="text" id="title" class="d-input w-full" placeholder=""
+                                   required/>
+                        </fieldset>
                         <div th:replace="~{components/field-error :: text('title')}"></div>
                     </div>
-                    <div class="mb-5 col-span-2">
-                        <label for="description" class="csk-input-label">Description</label>
-                        <input th:field="*{description}" type="text" id="description" class="csk-input"/>
+                    <div class="col-span-2">
+                        <fieldset class="d-fieldset">
+                            <legend class="d-fieldset-legend">Description</legend>
+                            <input th:field="*{description}" type="text" id="description" class="d-input w-full"/>
+                        </fieldset>
                         <div th:replace="~{components/field-error :: text('description')}"></div>
                     </div>
-                    <div class="mb-5">
-                        <label for="types"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-                        <input th:if="${ciusky.id != null}" th:field="*{type}" type="hidden"/>
-                        <select th:field="*{type}" th:disabled="${ciusky.id != null}" id="types"
-                                th:hx-put="@{/ciusky/changeType}" hx-target="#forms"
-                                class="csk-select">
-                            <option th:value="-1" selected>Choose a type</option>
-                            <option th:each="option : ${types}" th:value="${option.id}"
-                                    th:text="${option.descr}"></option>
-                        </select>
+                    <div>
+                        <fieldset class="d-fieldset">
+                            <legend class="d-fieldset-legend">Type</legend>
+                            <input th:if="${ciusky.id != null}" th:field="*{type}" type="hidden"/>
+                            <select th:field="*{type}" th:disabled="${ciusky.id != null}" id="types"
+                                    th:hx-put="@{/ciusky/changeType}" hx-target="#forms"
+                                    class="d-select w-full">
+                                <option th:value="-1" selected>Choose a type</option>
+                                <option th:each="option : ${types}" th:value="${option.id}"
+                                        th:text="${option.descr}"></option>
+                            </select>
+                        </fieldset>
                         <div th:replace="~{components/field-error :: text('type')}"></div>
                     </div>
-                    <div class="mb-5">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quality</label>
-                        <div th:replace="~{components/star-rating.html :: edit('quality')}"></div>
+                    <div>
+                        <fieldset class="d-fieldset">
+                            <legend class="d-fieldset-legend">Quality</legend>
+                            <div th:replace="~{components/star-rating.html :: edit('quality')}"></div>
+                        </fieldset>
                     </div>
-                    <div class="mb-5">
-                        <label for="paidPrice" class="csk-input-label">Paid price</label>
-                        <div class="flex">
-                            <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                    <div>
+                        <fieldset class="d-fieldset">
+                            <legend class="d-fieldset-legend">Paid price</legend>
+                            <label class="d-input">
                                 <svg th:replace="~{components/icon :: icon('euro', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
-                            </span>
-                            <input th:field="*{paidPrice}" type="text" id="paidPrice" class="csk-input-addon"
-                                   placeholder="0.00">
-                            <div th:replace="~{components/field-error :: text('paidPrice')}"></div>
-                        </div>
+                                <input th:field="*{paidPrice}" type="text" id="paidPrice" placeholder="0.00">
+                                <div th:replace="~{components/field-error :: text('paidPrice')}"></div>
+                            </label>
+                        </fieldset>
                     </div>
-                    <div class="mb-5">
-                        <label for="marketPrice" class="csk-input-label">Market price</label>
-                        <div class="flex">
-                            <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                    <div>
+                        <fieldset class="d-fieldset">
+                            <legend class="d-fieldset-legend">Market price</legend>
+                            <label class="d-input">
                                 <svg th:replace="~{components/icon :: icon('euro', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
-                            </span>
-                            <input th:field="*{marketPrice}" type="text" id="marketPrice" class="csk-input-addon"
-                                   placeholder="0.00">
-                            <div th:replace="~{components/field-error :: text('marketPrice')}"></div>
-                        </div>
+                                <input th:field="*{marketPrice}" type="text" id="marketPrice" placeholder="0.00">
+                                <div th:replace="~{components/field-error :: text('marketPrice')}"></div>
+                            </label>
+                        </fieldset>
                     </div>
                     <div class="mb-5">
                         <label for="purchaseDate" class="csk-input-label">Purchase date</label>
@@ -146,7 +152,8 @@
                                   placeholder="Write your notes here..."></textarea>
                     </div>
                 </div>
-                <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                <button type="submit"
+                        class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded inline-flex items-center">
                     <svg th:replace="~{components/icon :: icon('save', 'fill-current w-6 h-6 mr-2')}"></svg>
                     <span>Save</span>
                 </button>

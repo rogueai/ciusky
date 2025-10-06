@@ -14,8 +14,10 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.13",
     "apexcharts": "^5.3.5",
+    "daisyui": "^5.1.27",
     "flowbite": "^3.1.2",
     "htmx.org": "^2.0.7",
+    "pnpm": "^10.18.0",
     "tailwindcss": "^4.1.13"
   }
 }

@@ -1,11 +1,17 @@
 @import "tailwindcss";
 @import "./components.css";
+@import "./daisyui.css";
 
 /*@import "flowbite/src/themes/default";*/
-@plugin "flowbite/plugin";
-@source "../node_modules/flowbite";
+/*@plugin "flowbite/plugin";*/
+/*@source "../node_modules/flowbite";*/
 /*@source "../node_modules/flowbite-datepicker";*/
 @source "../node_modules/apexcharts";
+
+@plugin "daisyui" {
+    themes: night --default;
+    prefix: d-;
+}
 
 /* HTMLX */
 tr.htmx-swapping td {

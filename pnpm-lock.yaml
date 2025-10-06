@@ -14,12 +14,18 @@ importers:
       apexcharts:
         specifier: ^5.3.5
         version: 5.3.5
+      daisyui:
+        specifier: ^5.1.27
+        version: 5.1.27
       flowbite:
         specifier: ^3.1.2
         version: 3.1.2
       htmx.org:
         specifier: ^2.0.7
         version: 2.0.7
+      pnpm:
+        specifier: ^10.18.0
+        version: 10.18.0
       tailwindcss:
         specifier: ^4.1.13
         version: 4.1.13
@@ -283,6 +289,9 @@ packages:
     resolution: {integrity: sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==}
     engines: {node: '>=18'}
 
+  daisyui@5.1.27:
+    resolution: {integrity: sha512-oCC2RwjrGRPTeEpaXoNmYydzVfSRdyJCthFsi/Q5PErAvaoD8kDarxlW+wiPAx2WmM8W8lXvyAHJUqjObCMWOQ==}
+
   deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
@@ -465,6 +474,11 @@ packages:
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
+
+  pnpm@10.18.0:
+    resolution: {integrity: sha512-6AT4ifHOzEDVctsITuw+SIFzn43sacD/ENLRvv+aTjCTg7ontbdQBZ1/TBSVNbbNDSyx7Trrc5I5pChKaPQM+g==}
+    engines: {node: '>=18.12'}
+    hasBin: true
 
   postcss@8.5.6:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
@@ -717,6 +731,8 @@ snapshots:
 
   chownr@3.0.0: {}
 
+  daisyui@5.1.27: {}
+
   deepmerge@4.3.1: {}
 
   detect-libc@1.0.3: {}
@@ -861,6 +877,8 @@ snapshots:
   picomatch@2.3.1: {}
 
   picomatch@4.0.3: {}
+
+  pnpm@10.18.0: {}
 
   postcss@8.5.6:
     dependencies:

@@ -75,7 +75,7 @@ val defaultTailwindArgs = listOf(
     "exec", "tailwindcss",
     "-i", "tailwind/main.css",
     "-o", "${layout.projectDirectory.asFile.path}/src/generated/resources/static/main.css",
-    "--minify"
+//    "--minify"
 )
 
 val compileCss by tasks.registering(PnpmTask::class) {
