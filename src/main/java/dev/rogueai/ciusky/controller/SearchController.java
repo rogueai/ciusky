@@ -16,12 +16,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.FragmentsRendering;
 
 import java.util.List;
 
 @Controller
+@SessionAttributes("ciuskyFilter")
 public class SearchController {
 
     @Autowired
@@ -30,14 +32,17 @@ public class SearchController {
     @Autowired
     private OptionService optionService;
 
-    @GetMapping({ "/" })
-    public String list(Model model) {
+    @ModelAttribute("ciuskyFilter")
+    public CiuskyFilter ciuskyFilter() {
         List<Option> types = optionService.types();
-        // TODO: every time we go back to the home page the filters are inizialized again
-        // TODO: we should store the CiuskyFilter in session?
-        CiuskyFilter filter = new CiuskyFilter("", "", types);
-        List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
-        model.addAttribute("ciuskyFilter", filter);
+        return new CiuskyFilter("", "", types);
+    }
+
+    @GetMapping({ "/" })
+    public String list(@ModelAttribute CiuskyFilter ciuskyFilter, Model model) {
+        List<Option> types = optionService.types();
+        List<CiuskySearch> listCiusky = ciuskySearchService.findAll(ciuskyFilter);
+        model.addAttribute("ciuskyFilter", ciuskyFilter);
         model.addAttribute("ciuskyTypes", types);
         model.addAttribute("listCiusky", listCiusky);
         return "page/index :: default";
