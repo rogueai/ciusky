@@ -217,7 +217,7 @@ public class CiuskyController {
         String rawTag = ciusky.getRawTag();
         String[] split = rawTag.split(":");
         if (Strings.CI.contains(rawTag, ":") && split.length == 2) {
-            Tag tag = new Tag(split[0], split[1]);
+            Tag tag = new Tag(split[0].toLowerCase(), split[1].toLowerCase());
             if (tagService.isUnique(ciusky.getTags(), tag)) {
                 ciusky.getTags().add(tag);
                 ciusky.setRawTag(null);

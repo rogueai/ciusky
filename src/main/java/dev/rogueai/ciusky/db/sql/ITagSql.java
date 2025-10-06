@@ -13,7 +13,7 @@ public interface ITagSql {
     @Select("SELECT `KEY`, `VALUE` FROM CIUSKY_TAG WHERE ID = #{id}")
     List<TagEntity> getTags(Long id);
 
-    @Insert("INSERT INTO CIUSKY_TAG (ID, `KEY`, `VALUE`) VALUES (#{id}, #{entity.key}, #{entity.value})")
+    @Insert("INSERT INTO CIUSKY_TAG (ID, `KEY`, `VALUE`) VALUES (#{id}, LOWER(#{entity.key}), LOWER(#{entity.value}))")
     void insert(Long id, TagEntity entity);
 
     @Delete("DELETE FROM CIUSKY_TAG WHERE ID = #{id}")

@@ -45,7 +45,7 @@
                         SELECT 1
                         FROM CIUSKY_TAG ct
                         WHERE ct.ID = c.ID
-                        AND `KEY` = #{tag.key}
+                        AND `KEY` = LOWER(#{tag.key})
                         AND REGEXP_LIKE(`VALUE`, CONCAT('^', #{tag.value}), 'i')
                     )
                 </if>

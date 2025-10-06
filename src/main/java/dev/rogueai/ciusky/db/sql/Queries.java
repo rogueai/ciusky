@@ -20,7 +20,7 @@ public class Queries {
         return new SQL() {{
             SELECT_DISTINCT("`VALUE`");
             FROM("CIUSKY_TAG");
-            WHERE("`KEY` = #{key}");
+            WHERE("`KEY` = LOWER(#{key})");
             if (StringUtils.isNotBlank(partialValue)) {
                 WHERE("REGEXP_LIKE(`VALUE`, CONCAT('^', #{partialValue}), 'i')");
             }
