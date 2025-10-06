@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.FragmentsRendering;
 import java.util.List;
 
 @Controller
-@SessionAttributes("ciuskyFilter")
+@SessionAttributes("filter")
 public class SearchController {
 
     @Autowired
@@ -32,17 +32,17 @@ public class SearchController {
     @Autowired
     private OptionService optionService;
 
-    @ModelAttribute("ciuskyFilter")
-    public CiuskyFilter ciuskyFilter() {
+    @ModelAttribute(name = "filter")
+    public CiuskyFilter filter() {
         List<Option> types = optionService.types();
         return new CiuskyFilter("", "", types);
     }
 
     @GetMapping({ "/" })
-    public String list(@ModelAttribute CiuskyFilter ciuskyFilter, Model model) {
+    public String list(@ModelAttribute("filter") CiuskyFilter filter, Model model) {
         List<Option> types = optionService.types();
-        List<CiuskySearch> listCiusky = ciuskySearchService.findAll(ciuskyFilter);
-        model.addAttribute("ciuskyFilter", ciuskyFilter);
+        List<CiuskySearch> listCiusky = ciuskySearchService.findAll(filter);
+        model.addAttribute("filter", filter);
         model.addAttribute("ciuskyTypes", types);
         model.addAttribute("listCiusky", listCiusky);
         return "page/index :: default";
@@ -50,7 +50,7 @@ public class SearchController {
 
     @HxRequest()
     @PostMapping({ "/search" })
-    public View search(@ModelAttribute @Valid CiuskyFilter filter, BindingResult bindingResult, Model model, HtmxResponse htmxResponse) {
+    public View search(@ModelAttribute("filter") @Valid CiuskyFilter filter, BindingResult bindingResult, Model model, HtmxResponse htmxResponse) {
 
         if (bindingResult.hasErrors()) {
             htmxResponse.setRetarget("#search-inputs");
