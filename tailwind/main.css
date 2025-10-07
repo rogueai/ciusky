@@ -1,11 +1,15 @@
 @import "tailwindcss";
+@import "./utilities.css";
 @import "./components.css";
 
-/*@import "flowbite/src/themes/default";*/
 @plugin "flowbite/plugin";
+
 @source "../node_modules/flowbite";
-/*@source "../node_modules/flowbite-datepicker";*/
 @source "../node_modules/apexcharts";
+@source "./utilities";
+@source "./components";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* HTMLX */
 tr.htmx-swapping td {
