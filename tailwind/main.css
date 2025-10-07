@@ -9,14 +9,33 @@
 @source "../node_modules/apexcharts";
 @source "./components";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
-    --color-error: var(--color-red-400);
+    --color-success: var(--color-green-400);
+    --color-warning: var(--color-yellow-800);
+    --color-error: var(--color-red-800);
+
 }
 
+/* Theme: using browser system dark mode detection */
 @media (prefers-color-scheme: dark) {
-    --color-error: var(--color-green-400);
+    :root {
+        --color-success: var(--color-green-400);
+        --color-warning: var(--color-yellow-400);
+        --color-error: var(--color-red-400);
+    }
+}
+
+/* Theme: using class variant on root element
+@custom-variant dark (&:where(.dark, .dark *));
+*/
+@layer theme {
+    :root {
+        @variant dark {
+            --color-success: var(--color-green-400);
+            --color-warning: var(--color-yellow-400);
+            --color-error: var(--color-red-400);
+        }
+    }
 }
 
 

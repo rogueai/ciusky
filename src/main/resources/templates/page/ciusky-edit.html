@@ -45,8 +45,8 @@
                             </span>
                             <input th:field="*{paidPrice}" type="text" id="paidPrice" class="csk-input-addon"
                                    placeholder="0.00">
-                            <div th:replace="~{components/field-error :: text('paidPrice')}"></div>
                         </div>
+                        <div th:replace="~{components/field-error :: text('paidPrice')}"></div>
                     </div>
                     <div class="mb-5">
                         <label for="marketPrice" class="csk-input-label">Market price</label>
@@ -56,8 +56,8 @@
                             </span>
                             <input th:field="*{marketPrice}" type="text" id="marketPrice" class="csk-input-addon"
                                    placeholder="0.00">
-                            <div th:replace="~{components/field-error :: text('marketPrice')}"></div>
                         </div>
+                        <div th:replace="~{components/field-error :: text('marketPrice')}"></div>
                     </div>
                     <div class="mb-5">
                         <label for="purchaseDate" class="csk-input-label">Purchase date</label>
@@ -68,8 +68,8 @@
                             <input th:field="*{purchaseDate}" id="purchaseDate"
                                    type="date" placeholder="Select date"
                                    autocomplete="off" class="csk-input-addon"/>
-                            <div th:replace="~{components/field-error :: text('purchaseDate')}"></div>
                         </div>
+                        <div th:replace="~{components/field-error :: text('purchaseDate')}"></div>
                     </div>
                     <div class="mb-5">
                         <label for="purchasePlace" class="csk-input-label">Purchase Place</label>

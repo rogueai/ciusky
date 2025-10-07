@@ -1,5 +1,5 @@
 <th:block th:fragment="text(field)" xmlns:th="http://www.thymeleaf.org">
-    <p th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}" class="mt-2 text-sm text-red-600 dark:text-red-500"></p>
+    <p th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}" class="mt-2 text-sm text-error"></p>
 </th:block>
 
 <th:block th:fragment="input-icon(field)" xmlns:th="http://www.thymeleaf.org">
