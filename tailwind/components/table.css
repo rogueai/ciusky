@@ -1,0 +1,19 @@
+.csk-table {
+    @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400
+}
+
+.csk-table > thead {
+    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400
+}
+
+.csk-table > thead > tr > th {
+    @apply px-2 py-2;
+}
+
+.csk-table > tbody > tr {
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200;
+}
+
+.csk-table > tbody > tr > td {
+    @apply px-2 py-2;
+}
