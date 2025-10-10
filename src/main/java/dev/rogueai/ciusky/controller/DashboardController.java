@@ -8,7 +8,6 @@ import dev.rogueai.ciusky.util.TemplateUtils;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -51,11 +50,6 @@ public class DashboardController {
     @ModelAttribute("menus")
     public List<DashboardMenu> menus() {
         return menus;
-    }
-
-    @ModelAttribute("requestURI")
-    public String requestURI(final HttpServletRequest request) {
-        return request.getRequestURI();
     }
 
     @GetMapping()

@@ -67,4 +67,10 @@ public class SearchController {
                 .fragment("page/index :: search-inputs") //
                 .build();
     }
+
+    @GetMapping({ "/about" })
+    public String about() {
+        return "page/about :: default";
+    }
+
 }
