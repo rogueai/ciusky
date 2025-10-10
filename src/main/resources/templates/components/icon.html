@@ -1,5 +1,5 @@
 <!-- fragments/icon.html -->
 <svg th:fragment="icon(name, classes)" xmlns:th="http://www.thymeleaf.org"
      th:classappend="${classes}">
-    <use th:href="@{'/images/icons.svg#' + ${name}}"></use>
+    <use th:href="'/images/icons.svg#' + ${name}"></use>
 </svg>

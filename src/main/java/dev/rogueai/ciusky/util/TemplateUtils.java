@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -37,7 +37,7 @@ public class TemplateUtils {
     private MessageSource messageSource;
 
     @Autowired
-    private SpringTemplateEngine templateEngine;
+    private TemplateEngine templateEngine;
 
     public String getColor(String key) {
         try {
