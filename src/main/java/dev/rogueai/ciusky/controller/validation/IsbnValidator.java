@@ -2,6 +2,7 @@ package dev.rogueai.ciusky.controller.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.apache.commons.lang3.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 
@@ -20,7 +21,8 @@ public class IsbnValidator implements ConstraintValidator<IsbnConstraint, String
     }
 
     @Override
-    public boolean isValid(String isbn, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        String isbn = StringUtils.trimToNull(s);
         if (isbn == null) {
             return true;
         }

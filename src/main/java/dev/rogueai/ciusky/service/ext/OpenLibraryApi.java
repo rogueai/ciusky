@@ -19,12 +19,12 @@ public class OpenLibraryApi {
     }
 
     public Root getRoot(String url) {
-        logger.debug("Calling api " + url);
+        logger.info("Calling api " + url);
         return restTemplate.getForObject(url, Root.class);
     }
 
     public byte[] getImage(String url) {
-        logger.debug("Calling api " + url);
+        logger.info("Calling api " + url);
         return restTemplate.getForObject(url, byte[].class);
     }
 

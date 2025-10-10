@@ -28,14 +28,14 @@ public class OpenLibraryController {
     private OpenLibrary openLibrary;
 
     @GetMapping
-    public String library(@RequestParam String title, @RequestParam(required = false, defaultValue = "5") int limit, Model model) {
+    public String library(@RequestParam String title, @RequestParam(required = false, defaultValue = "10") int limit, Model model) {
         searchByTitle(title, limit, model);
         return "page/library :: default";
     }
 
     @HxRequest
     @GetMapping
-    public String htmxLibrary(@RequestParam String title, @RequestParam(required = false, defaultValue = "5") int limit, Model model) {
+    public String htmxLibrary(@RequestParam String title, @RequestParam(required = false, defaultValue = "10") int limit, Model model) {
         Throttled<Root> res = searchByTitle(title, limit, model);
         if (res.model.isPresent()) {
             return "page/library :: complete";
@@ -52,6 +52,7 @@ public class OpenLibraryController {
     public Throttled<Root> searchByTitle(String title, int limit, Model model) {
         Throttled<Root> res = openLibrary.searchByTitle(title, limit);
         model.addAttribute("title", title);
+        model.addAttribute("limit", limit);
         model.addAttribute("timeToWaitPercent", res.timeToWaitPercent);
         model.addAttribute("docs", res.model.orElse(new Root()).docs);
         return res;

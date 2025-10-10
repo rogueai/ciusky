@@ -4,7 +4,7 @@
     <div id="content">
         <div class="relative min-h-1/2 w-full md:w-3/5 mx-auto">
 
-            <div th:fragment="loading" th:if="${docs == null}" th:hx-get="@{/library?title={title}(title=${title})}" hx-trigger="load delay:5s" hx-swap="outerHTML">
+            <div th:fragment="loading" th:if="${docs == null}" th:hx-get="@{/library?title={title}&limit={limit}(title=${title},limit=${limit})}" hx-trigger="load delay:5s" hx-swap="outerHTML">
                 <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                     <div class="bg-blue-600 h-2.5 rounded-full" th:style="'width: ' + ${timeToWaitPercent} + '%'"></div>
                 </div>
@@ -24,8 +24,8 @@
             <img th:if="${doc.cover_edition_key != null}" th:src="@{/library/cover/{olid}.jpg(olid=${doc.cover_edition_key})}" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" alt="" />
             <img th:unless="${doc.cover_edition_key != null}" th:src="@{/images/image-4@2x.jpg}" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" alt="" />
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <h5 th:text="${doc.title}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></h5>
-                <b th:each="author_name : ${doc.author_name}" th:text="|By: ${author_name}|" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></b>
+                <h5 th:text="${doc.title}" class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white"></h5>
+                <b th:each="author_name : ${doc.author_name}" th:text="|By: ${author_name}|" class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white"></b>
                 <p th:text="${doc.subtitle}" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
                 <p th:if="${doc.first_publish_year > 0}" th:text="|Published: ${doc.first_publish_year}|" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
             </div>

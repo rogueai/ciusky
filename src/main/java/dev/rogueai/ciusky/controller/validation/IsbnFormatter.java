@@ -53,7 +53,7 @@ public class IsbnFormatter implements AnnotationFormatterFactory<IsbnFormat> {
             @NotNull
             @Override
             public String parse(@NotNull String text, @NotNull Locale locale) throws ParseException {
-                return text.replace("-", "");
+                return text.trim().replace("-", "");
             }
         };
     }

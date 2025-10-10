@@ -5,6 +5,8 @@ import dev.rogueai.ciusky.service.ext.Root;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.ConsumptionProbe;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -17,7 +19,9 @@ import java.time.Duration;
 @CacheConfig(cacheNames = { "openLibraryData", "openLibraryImages" })
 public class OpenLibrary {
 
-    private final static int BANDWIDTH_CAPACITY = 1;
+    private static final Log logger = LogFactory.getLog(OpenLibrary.class);
+
+    private final static int BANDWIDTH_CAPACITY = 2;
 
     private final static int BANDWIDTH_REFILL = 1;
 
@@ -39,6 +43,9 @@ public class OpenLibrary {
 
     public Throttled<Root> searchByTitle(String title, int limit) {
         String key = openLibraryApi.querySearchByTitle(title, limit);
+
+        logger.info("looking at " + key);
+
         Cache cache = cacheManager.getCache("openLibraryData");
 
         if (cache == null) {
@@ -47,6 +54,7 @@ public class OpenLibrary {
 
         Root value = cache.get(key, Root.class);
         if (value != null) {
+            logger.info("returned cached value for key " + key);
             return new Throttled<>(value, 0);
         }
 
@@ -54,9 +62,12 @@ public class OpenLibrary {
         if (probe.isConsumed()) {
             value = openLibraryApi.getRoot(key);
             cache.put(key, value);
+            logger.info("returned fresh value for key " + key);
             return new Throttled<>(value, 0);
         }
+
         float waitForRefill = (float) probe.getNanosToWaitForRefill() / 1_000_000_000;
+        logger.info("waiting for refill " + waitForRefill + " seconds");
         return new Throttled<>(null, (int) ((waitForRefill / BANDWIDTH_REFILL_SECONDS) * 100));
     }
 

@@ -1,5 +1,17 @@
 <!DOCTYPE html>
-<html th:replace="~{layout/site :: layout(_, ~{}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html th:replace="~{layout/site :: layout(_, ~{::script}, ~{::#content})}" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title></title>
+    <script th:inline="javascript">
+        const searchTitle = (url) => {
+             const titleEl = htmx.find("#title");
+             const value =  titleEl.value;
+             if (value && value.length > 0) {
+                window.open(url + "?title=" + value + "&limit=10");
+             }
+         }
+    </script>
+</head>
 <body>
 <div id="content">
     <div id="forms" class="max-w-4xl mx-auto flex flex-col md:flex-row gap-4">
@@ -10,16 +22,26 @@
                   class="max-w-xl mx-auto">
                 <div class="grid grid-cols-2 gap-2">
                     <input th:field="*{id}" type="hidden" id="id"/>
+
                     <div class="mb-5 col-span-2">
                         <label for="title" class="csk-input-label">Title</label>
-                        <input th:field="*{title}" type="text" id="title" class="csk-input" placeholder="" required/>
+                        <div class="relative w-full">
+                            <input th:field="*{title}" type="text" id="title" class="csk-input" placeholder="" required/>
+
+                            <a href="#" th:hx-on:click="'searchTitle(\'' + @{/library} + '\')'" class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <div th:replace="~{components/icon.html :: icon('search', 'w-6 h-6 text-gray-100')}"></div>
+                            </a>
+
+                        </div>
                         <div th:replace="~{components/field-error :: text('title')}"></div>
                     </div>
+
                     <div class="mb-5 col-span-2">
                         <label for="description" class="csk-input-label">Description</label>
                         <input th:field="*{description}" type="text" id="description" class="csk-input"/>
                         <div th:replace="~{components/field-error :: text('description')}"></div>
                     </div>
+
                     <div class="mb-5">
                         <label for="types"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
@@ -118,14 +140,29 @@
 
                         <div class="mb-5 col-span-2">
                             <label for="isbn13" class="csk-input-label">ISBN-13</label>
+
                             <div class="flex">
+
                                 <span class="inline-flex items-center p-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                                     <svg th:replace="~{components/icon :: icon('barcode', 'w-4 h-4 text-gray-500 dark:text-gray-400')}"></svg>
                                 </span>
-                                <input th:field="*{isbn13}" type="text" id="isbn13"
-                                       th:classappend="${#fields.hasErrors('isbn13') ? 'csk-input-error' : ''}"
-                                       class="csk-input-addon" placeholder="978-1-56619-909-4">
+
+                                <div class="relative w-full">
+
+                                    <input th:field="*{isbn13}" type="text" id="isbn13"
+                                           th:classappend="${#fields.hasErrors('isbn13') ? 'csk-input-error' : ''}"
+                                           class="csk-input-addon" placeholder="978-1-56619-909-4" />
+
+                                    <a th:if="*{isbn13 != null}" th:href="|https://openlibrary.org/isbn/*{#strings.replace(isbn13,'-','')}|" target="_blank"
+                                       class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        <div th:replace="~{components/icon.html :: icon('link', 'w-6 h-6 text-gray-100')}"></div>
+                                    </a>
+
+                                </div>
                             </div>
+
+
+
                             <div th:replace="~{components/field-error :: text('isbn13')}"></div>
                         </div>
 
