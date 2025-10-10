@@ -1,6 +1,9 @@
 package dev.rogueai.ciusky.config;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +13,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class AppConfig {
@@ -49,6 +53,19 @@ public class AppConfig {
     @Bean
     public DataSourceTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
+    }
+
+    @Bean
+    public Caffeine<Object, Object> caffeineConfig() {
+        return Caffeine.newBuilder().expireAfterWrite(30, TimeUnit.DAYS).maximumSize(100_000).recordStats();
+    }
+
+    @Bean
+    public CacheManager cacheManager(Caffeine<Object, Object> caffeine) {
+        CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager();
+        caffeineCacheManager.setAllowNullValues(false);
+        caffeineCacheManager.setCaffeine(caffeine);
+        return caffeineCacheManager;
     }
 
 }

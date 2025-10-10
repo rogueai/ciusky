@@ -20,8 +20,8 @@
 
 <div th:fragment="cards" xmlns:th="http://www.thymeleaf.org">
     <div class="grid grid-cols-2 gap-2">
-        <a th:href="|https://openlibrary.org/${doc.key}|" target="_blank" th:each="doc : ${docs}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-            <img th:if="${doc.cover_edition_key != null}" th:src="|https://covers.openlibrary.org/b/olid/${doc.cover_edition_key}-M.jpg|" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" alt="" />
+        <a th:href="|https://openlibrary.org${doc.key}|" target="_blank" th:each="doc : ${docs}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+            <img th:if="${doc.cover_edition_key != null}" th:src="@{/library/cover/{olid}.jpg(olid=${doc.cover_edition_key})}" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" alt="" />
             <img th:unless="${doc.cover_edition_key != null}" th:src="@{/images/image-4@2x.jpg}" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" alt="" />
             <div class="flex flex-col justify-between p-4 leading-normal">
                 <h5 th:text="${doc.title}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></h5>

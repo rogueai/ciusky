@@ -11,6 +11,9 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCache;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -35,10 +39,18 @@ public class DashboardController {
     @Autowired
     private TemplateUtils templateUtils;
 
+    @Autowired
+    public CacheManager cacheManager;
+
     @PostConstruct
     public void init() {
         menus.add(new DashboardMenu("Dashboard", "dashboard", "/dashboard"));
         menus.add(new DashboardMenu("Ciusky Types", null, "/dashboard/types"));
+    }
+
+    @ModelAttribute("menus")
+    public List<DashboardMenu> menus() {
+        return menus;
     }
 
     @ModelAttribute("requestURI")
@@ -48,14 +60,31 @@ public class DashboardController {
 
     @GetMapping()
     public String dashboard(Model model) {
-        model.addAttribute("menus", menus);
+
+        // TODO: move and generalize this code
+        CaffeineCacheManager caffeineCacheManager = (CaffeineCacheManager) cacheManager;
+
+        Collection<String> cacheNames = caffeineCacheManager.getCacheNames();
+        Collection<Long> series = new ArrayList<>();
+
+        for (String cacheName : cacheNames) {
+            CaffeineCache cache = (CaffeineCache) cacheManager.getCache(cacheName);
+            if (cache == null) {
+                continue;
+            }
+            long cacheSize = cache.getNativeCache().estimatedSize();
+            series.add(cacheSize);
+        }
+
+        model.addAttribute("series", series);
+        model.addAttribute("labels", cacheNames);
+
         return "page/dashboard";
     }
 
     @GetMapping("/types")
     public String types(Model model) {
         List<OptionEdit> types = optionService.typesForEdit();
-        model.addAttribute("menus", menus);
         model.addAttribute("optionEditorView", new OptionEditorView(types));
         return "page/ciusky-types";
     }

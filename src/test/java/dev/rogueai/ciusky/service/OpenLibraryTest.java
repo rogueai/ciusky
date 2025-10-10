@@ -2,7 +2,7 @@ package dev.rogueai.ciusky.service;
 
 import dev.rogueai.ciusky.TestConfig;
 import dev.rogueai.ciusky.db.MyBatisConfig;
-import dev.rogueai.ciusky.service.model.openlibrary.Root;
+import dev.rogueai.ciusky.service.ext.Root;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,9 +21,9 @@ public class OpenLibraryTest {
     @Test
     void types() throws IOException {
 
-        Throttled<Root> root = openLibrary.search("il signore degli anelli", 1);
+        Throttled<Root> root = openLibrary.searchByTitle("il signore degli anelli", 1);
         Assert.notNull(root, "root is null");
-        root = openLibrary.search("il signore degli anelli", 1);
+        root = openLibrary.searchByTitle("il signore degli anelli", 1);
         Assert.isTrue(root.timeToWaitPercent > 0, "Throttle is broken");
 
     }

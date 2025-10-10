@@ -1,4 +1,4 @@
-package dev.rogueai.ciusky.service.model.openlibrary;
+package dev.rogueai.ciusky.service.ext;
 
 import java.util.List;
 
