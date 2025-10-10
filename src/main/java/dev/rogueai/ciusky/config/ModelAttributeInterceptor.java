@@ -12,7 +12,9 @@ public class ModelAttributeInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView) throws Exception {
-        assert modelAndView != null;
+        if (modelAndView == null) {
+            return;
+        }
         modelAndView.addObject("requestURI", request.getRequestURI());
     }
 
