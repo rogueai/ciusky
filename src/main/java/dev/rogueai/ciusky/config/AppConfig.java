@@ -10,16 +10,56 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
+@EnableWebSecurity
 public class AppConfig {
 
     @Value("${ciusky.data}")
     private String ciuskyData;
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        UserDetails user1 = User.withUsername("doraemon@ciusky.com").password(passwordEncoder().encode("ciusky")).roles("USER").build();
+        UserDetails admin = User.withUsername("admin@ciusky.com").password(passwordEncoder().encode("admin")).roles("ADMIN").build();
+        return new InMemoryUserDetailsManager(user1, admin);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http //
+                .authorizeHttpRequests(authorize -> authorize //
+                        .requestMatchers("/favicon.ico", "/*.css", "/*.js", "/images/**").permitAll() //
+                        .anyRequest().authenticated()) //
+                .formLogin(formLogin -> formLogin //
+                        .loginPage("/login").permitAll()//
+                        .defaultSuccessUrl("/", true)//
+                        .failureUrl("/login?error=true")) //
+                .logout(LogoutConfigurer::permitAll) //
+                .rememberMe(Customizer.withDefaults());
+        return http.build();
+
+    }
 
     @Bean
     public LocalValidatorFactoryBean validator() {

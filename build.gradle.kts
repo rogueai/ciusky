@@ -49,6 +49,7 @@ dependencies {
     implementation("commons-io:commons-io:2.20.0")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1")
