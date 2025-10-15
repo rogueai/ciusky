@@ -26,6 +26,17 @@
         </main>
         <div id="toast-default"></div>
     </body>
+    <!--/* FIXME: https://github.com/wimdeblauwe/htmx-spring-boot/issues/36 */-->
+    <!--/* inject spring security CSRF header to all htmx requests */-->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            const csrfHeader = /*[[${_csrf.headerName}]]*/ 'X-Sample-CSRF-Header';
+            const csrfToken = /*[[${_csrf.token}]]*/ 'sample-csrf-token';
+            event.detail.headers[csrfHeader] = csrfToken;
+        });
+        /*]]>*/
+    </script>
 </html>
 
 <header th:fragment="header" class="antialiased z-20 relative" xmlns:th="http://www.thymeleaf.org">

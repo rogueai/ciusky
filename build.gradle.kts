@@ -3,7 +3,7 @@ import com.github.gradle.node.pnpm.task.PnpmTask
 
 plugins {
     java
-    war
+    application
     id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.github.node-gradle.node") version "7.1.0"
@@ -15,6 +15,11 @@ plugins {
 group = "dev.rogueai"
 version = "0.0.1-SNAPSHOT"
 description = "ciusky"
+
+application {
+    mainClass = "dev.rogueai.ciusky.CiuskyApplication"
+}
+
 
 java {
     toolchain {
@@ -45,7 +50,6 @@ repositories {
 
 dependencies {
     implementation("org.apache.commons:commons-lang3:3.18.0")
-    // https://mvnrepository.com/artifact/commons-io/commons-io
     implementation("commons-io:commons-io:2.20.0")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -58,11 +62,9 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("com.bucket4j:bucket4j-core:8.10.1")
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.2")
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     implementation("org.mapstruct:mapstruct:1.6.3")
     kapt("org.mapstruct:mapstruct-processor:1.6.3")
     runtimeOnly("com.h2database:h2")
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
