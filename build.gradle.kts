@@ -53,6 +53,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5")
     implementation("org.flywaydb:flyway-core")
     implementation("com.bucket4j:bucket4j-core:8.10.1")

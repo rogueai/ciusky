@@ -49,7 +49,7 @@ public class AppConfig {
 
         http //
                 .authorizeHttpRequests(authorize -> authorize //
-                        .requestMatchers("/favicon.ico", "/*.css", "/*.js", "/images/**").permitAll() //
+                        .requestMatchers("/public/**", "/about").permitAll() //
                         .anyRequest().authenticated()) //
                 .formLogin(formLogin -> formLogin //
                         .loginPage("/login").permitAll()//

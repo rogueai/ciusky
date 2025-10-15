@@ -2,7 +2,7 @@
 <html th:replace="~{layout/admin :: layout(~{::#panel})}" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Ciusky: Dashboard</title>
-    <script th:src="@{/apexcharts.min.js}"></script>
+    <script th:src="@{/public/apexcharts.min.js}"></script>
     <script th:inline="javascript">
         htmx.onLoad(function () {
             const getChartOptions = () => {
